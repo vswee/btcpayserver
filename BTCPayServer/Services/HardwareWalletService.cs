@@ -10,6 +10,7 @@ using LedgerWallet;
 using NBitcoin;
 using NBXplorer.DerivationStrategy;
 using Newtonsoft.Json;
+using BTCPayServer.Logging;
 
 namespace BTCPayServer.Services
 {
@@ -36,21 +37,26 @@ namespace BTCPayServer.Services
             public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(10);
             public async Task<byte[][]> Exchange(byte[][] apdus)
             {
+                Logs.PayServer.LogInformation("<EXCHANGE>");
                 List<byte[]> responses = new List<byte[]>();
+
                 using (CancellationTokenSource cts = new CancellationTokenSource(Timeout))
                 {
                     foreach (var apdu in apdus)
                     {
+                        Logs.PayServer.LogInformation("Send " + NBitcoin.DataEncoders.Encoders.Hex.EncodeData(apdu));
                         await this.webSocket.SendAsync(new ArraySegment<byte>(apdu), WebSocketMessageType.Binary, true, cts.Token);
                     }
                     foreach (var apdu in apdus)
                     {
                         byte[] response = new byte[300];
                         var result = await this.webSocket.ReceiveAsync(new ArraySegment<byte>(response), cts.Token);
+                        Logs.PayServer.LogInformation("RECEIVE " + NBitcoin.DataEncoders.Encoders.Hex.EncodeData(response));
                         Array.Resize(ref response, result.Count);
                         responses.Add(response);
                     }
                 }
+                Logs.PayServer.LogInformation("</EXCHANGE>");
                 return responses.ToArray();
             }
         }
