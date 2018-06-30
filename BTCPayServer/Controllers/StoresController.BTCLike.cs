@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using NBitcoin;
 using NBXplorer.DerivationStrategy;
 using Newtonsoft.Json;
+using BTCPayServer.Logging;
 
 namespace BTCPayServer.Controllers
 {
@@ -302,17 +304,19 @@ namespace BTCPayServer.Controllers
                             throw new ArgumentOutOfRangeException(nameof(element.amount), "The amount should be above zero");
                     }
 
+                    Logs.PayServer.LogInformation("BEFORE GETKEYPATH");
                     var foundKeyPath = await hw.GetKeyPath(network, strategy);
+                    Logs.PayServer.LogInformation("AFTER GETKEYPATH");
                     if (foundKeyPath == null)
                     {
                         throw new HardwareWalletException($"This store is not configured to use this ledger");
                     }
-
+                    Logs.PayServer.LogInformation("BEFORE ADDCOINS");
                     TransactionBuilder builder = new TransactionBuilder();
                     builder.StandardTransactionPolicy.MinRelayTxFee = summary.Status.BitcoinStatus.MinRelayTxFee;
                     builder.SetConsensusFactory(network.NBitcoinNetwork);
                     builder.AddCoins(unspentCoins.Select(c => c.Coin).ToArray());
-
+                    Logs.PayServer.LogInformation("AFTER ADDCOINS");
                     foreach (var element in send)
                     {
                         builder.Send(element.destination, element.amount);
@@ -322,21 +326,23 @@ namespace BTCPayServer.Controllers
                     builder.SetChange(changeAddress.Item1);
                     builder.SendEstimatedFees(feeRateValue);
                     builder.Shuffle();
+                    Logs.PayServer.LogInformation("BEFORE BUILDTX");
                     var unsigned = builder.BuildTransaction(false);
-
+                    Logs.PayServer.LogInformation("AFTER BUILDTX");
                     var keypaths = new Dictionary<Script, KeyPath>();
                     foreach (var c in unspentCoins)
                     {
                         keypaths.TryAdd(c.Coin.ScriptPubKey, c.KeyPath);
                     }
-
+                    
                     var hasChange = unsigned.Outputs.Count == 2;
                     var usedCoins = builder.FindSpentCoins(unsigned);
 
                     Dictionary<uint256, Transaction> parentTransactions = new Dictionary<uint256, Transaction>();
-
-                    if(!strategy.Segwit)
+                    
+                    if (!strategy.Segwit)
                     {
+                        Logs.PayServer.LogInformation("BEFORE FETCHING");
                         var parentHashes = usedCoins.Select(c => c.Outpoint.Hash).ToHashSet();
                         var explorer = _ExplorerProvider.GetExplorerClient(network);
                         var getTransactionAsyncs = parentHashes.Select(h => (Op: explorer.GetTransactionAsync(h), Hash: h)).ToList();
@@ -347,8 +353,10 @@ namespace BTCPayServer.Controllers
                                 throw new Exception($"Parent transaction {getTransactionAsync.Hash} not found");
                             parentTransactions.Add(tx.Transaction.GetHash(), tx.Transaction);
                         }
+                        Logs.PayServer.LogInformation("AFTER FETCHING");
                     }
 
+                    Logs.PayServer.LogInformation("BEFORE SIGNING");
                     var transaction = await hw.SignTransactionAsync(usedCoins.Select(c => new SignatureRequest
                     {
                         InputTransaction = parentTransactions.TryGet(c.Outpoint.Hash),
@@ -356,7 +364,7 @@ namespace BTCPayServer.Controllers
                         KeyPath = foundKeyPath.Derive(keypaths[c.TxOut.ScriptPubKey]),
                         PubKey = strategy.Root.Derive(keypaths[c.TxOut.ScriptPubKey]).PubKey
                     }).ToArray(), unsigned, hasChange ? foundKeyPath.Derive(changeAddress.Item2) : null);
-                    
+                    Logs.PayServer.LogInformation("AFTER SIGNING");
                     try
                     {
                         var broadcastResult = await wallet.BroadcastTransactionsAsync(new List<Transaction>() { transaction });
@@ -370,6 +378,7 @@ namespace BTCPayServer.Controllers
                         throw new Exception("Error while broadcasting: " + ex.Message);
                     }
                     wallet.InvalidateCache(strategyBase);
+                    Logs.PayServer.LogInformation("END");
                     result = new SendToAddressResult() { TransactionId = transaction.GetHash().ToString() };
                 }
             }
