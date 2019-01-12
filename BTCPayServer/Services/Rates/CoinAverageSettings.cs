@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -34,8 +34,8 @@ namespace BTCPayServer.Services.Rates
         {
             get
             {
-                return Name == CoinAverageRateProvider.CoinAverageName ? $"https://apiv2.bitcoinaverage.com/indices/global/ticker/short"
-                                     : $"https://apiv2.bitcoinaverage.com/exchanges/{Name}";
+                return Name == CoinAverageRateProvider.CoinAverageName ? $"https://apiv2-staging.bitcoinaverage.com/indices/global/ticker/short"
+                                     : $"https://apiv2-staging.bitcoinaverage.com/exchanges/{Name}";
             }
         }
     }
