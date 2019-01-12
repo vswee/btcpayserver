@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
 using System;
@@ -113,8 +113,8 @@ namespace BTCPayServer.Services.Rates
 
         public async Task<ExchangeRates> GetRatesAsync()
         {
-            string url = Exchange == CoinAverageName ? $"https://apiv2.bitcoinaverage.com/indices/{Market}/ticker/short"
-                                         : $"https://apiv2.bitcoinaverage.com/exchanges/{Exchange}";
+            string url = Exchange == CoinAverageName ? $"https://apiv2-staging.bitcoinaverage.com/indices/{Market}/ticker/short"
+                                         : $"https://apiv2-staging.bitcoinaverage.com/exchanges/{Exchange}";
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
             var auth = Authenticator;
@@ -159,7 +159,7 @@ namespace BTCPayServer.Services.Rates
 
         public async Task TestAuthAsync()
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://apiv2.bitcoinaverage.com/blockchain/tx_price/BTCUSD/8a3b4394ba811a9e2b0bbf3cc56888d053ea21909299b2703cdc35e156c860ff");
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://apiv2-staging.bitcoinaverage.com/blockchain/tx_price/BTCUSD/8a3b4394ba811a9e2b0bbf3cc56888d053ea21909299b2703cdc35e156c860ff");
             var auth = Authenticator;
             if (auth != null)
             {
@@ -171,7 +171,7 @@ namespace BTCPayServer.Services.Rates
 
         public async Task<GetRateLimitsResponse> GetRateLimitsAsync()
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://apiv2.bitcoinaverage.com/info/ratelimits");
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://apiv2-staging.bitcoinaverage.com/info/ratelimits");
             var auth = Authenticator;
             if (auth != null)
             {
@@ -202,7 +202,7 @@ namespace BTCPayServer.Services.Rates
 
         public async Task<GetExchangeTickersResponse> GetExchangeTickersAsync()
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://apiv2.bitcoinaverage.com/symbols/exchanges/ticker");
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://apiv2-staging.bitcoinaverage.com/symbols/exchanges/ticker");
             var auth = Authenticator;
             if (auth != null)
             {
