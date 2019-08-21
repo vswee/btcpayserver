@@ -78,11 +78,16 @@
                     their
                     business.
                 </p>
-                <a class="main-head-link pri_" href="#learnMore">Learn more</a>
-                <a class="main-head-link sec_" href="https://btcpayserver.org" target="_blank">
-                    Official
-                    website
-                </a>
+                <div class="sponsors-showcase">
+                    <span class="small-uppercase">our sponsors</span>
+                    <div class="sponsor-icon-flex">
+                        <div class="sponsor-icon"></div>
+                        <div class="sponsor-icon"></div>
+                        <div class="sponsor-icon"></div>
+                        <div class="sponsor-icon"></div>
+                        <div class="sponsor-icon"></div>
+                    </div>
+                </div>
             </div>
 
             @if (env.IsSecure)
@@ -204,24 +209,6 @@
         </div>
 
     </masterLand>
-
-    <div id="learnMore">
-        <div style="display: grid;" class="delay-build">
-            <div class="dark-parent delay-build">
-                <h1>Learn more about BTCPAY Server</h1>
-                <p>Watch this video to learn more or some text to that effect.</p>
-            </div>
-            <video onclick="scrollTo('unfetteredVideoFrame');"
-                   poster="https://include.flat18.co.uk/img/vidph-dark-2.svg" class="unfetteredVideoFrame"
-                   id="unfetteredVideoFrame" playsinline="" controls="">
-                <track src="https://btcpayserver.org/vtt/en.vtt" label="English" kind="subtitles" srclang="en"
-                       default="">
-                <source src="https://btcpayserver.org/video/602.webm" type="video/webm">
-                <source src="https://btcpayserver.org/video/602.m4v" type="video/m4v">
-                <source src="https://btcpayserver.org/video/602.mp4" type="video/mp4">
-            </video>
-        </div>
-    </div>
 }
 
 
