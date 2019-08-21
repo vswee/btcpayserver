@@ -1,4 +1,4 @@
-@inject SignInManager<ApplicationUser> SignInManager
+﻿@inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject RoleManager<IdentityRole> RoleManager
 @inject BTCPayServer.Services.BTCPayServerEnvironment env
@@ -37,7 +37,6 @@
 </head>
 
 <body id="page-top">
-
     @{
         if (ViewBag.AlwaysShrinkNavBar == null)
         {
@@ -57,16 +56,15 @@
 
     @RenderSection("Scripts", required: false)
 
-        <script type="text/javascript">
+    <script type="text/javascript">
         var expectedDomain = @Safe.Json(env.ExpectedHost);
         var expectedProtocol = @Safe.Json(env.ExpectedProtocol);
         if (window.location.host != expectedDomain || window.location.protocol != expectedProtocol + ":") {
             document.getElementById("badUrl").style.display = "block";
             document.getElementById("browserScheme").innerText = window.location.protocol.substr(0, window.location.protocol.length -1);
         }
-        </script>
+    </script>
 
 </body>
-
-    <script type="text/javascript" src="https://include.flat18.co.uk/js/btcpay-0.js"></script>
+<script type="text/javascript" src="https://include.flat18.co.uk/js/btcpay-0.js"></script>
 </html>
