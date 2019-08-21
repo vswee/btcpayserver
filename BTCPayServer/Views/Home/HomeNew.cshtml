@@ -62,7 +62,6 @@
                     <polygon fill="var(--white-text)"
                              points="193.551,35.271 195.655,35.271 195.655,35.564 186.479,52.484 186.479,64.732 184.459,64.732
                             184.459,52.484 175.243,35.523 175.243,35.271 177.39,35.271 181.387,42.763 185.43,50.549 185.47,50.549 189.551,42.763 	" />
-
                                 </g>
                             </svg>
                     @if (env.NetworkType != NBitcoin.NetworkType.Mainnet)
@@ -91,12 +90,12 @@
         @if (SignInManager.IsSignedIn(User))
         {
             <ul class="navbar-nav ml-auto">
-                if (User.IsInRole(Roles.ServerAdmin))
+                @if (User.IsInRole(Roles.ServerAdmin))
                 {
-                <li class="nav-item">
-                    <a asp-area="" asp-controller="Server" asp-action="ListUsers"
-                       class="nav-link js-scroll-trigger" id="ServerSettings">Server settings</a>
-                </li>
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Server" asp-action="ListUsers"
+                           class="nav-link js-scroll-trigger" id="ServerSettings">Server settings</a>
+                    </li>
                 }
                 <li class="nav-item">
                     <a asp-area="" asp-controller="UserStores" asp-action="ListStores"
@@ -132,7 +131,6 @@
             @if (User.Identity.IsAuthenticated)
             {
                 <div class="container text-right">@env.ToString()</div>
-
             }
         }
         else if (env.IsSecure)
@@ -179,7 +177,6 @@
 
                     @if (themeManager.ShowRegister)
                     {
-
                         <a asp-area="" asp-controller="Account" asp-action="Register" class="fp-button-sec" id="Register">Register</a>
                     }
 

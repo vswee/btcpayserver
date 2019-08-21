@@ -7,7 +7,8 @@
             "wwwroot/vendor/font-awesome/css/font-awesome.css",
             "wwwroot/main/**/*.css",
             "wwwroot/vendor/animatecss/animate.css",
-            "wwwroot/vendor/flatpickr/flatpickr.css"
+            "wwwroot/vendor/flatpickr/flatpickr.css",
+            "wwwroot/main-new/**/*.css"
         ]
     },
     {
@@ -22,7 +23,8 @@
             "wwwroot/vendor/bootstrap4-creativestart/*.js",
             "wwwroot/vendor/moment/moment.min.js",
             "wwwroot/vendor/flatpickr/flatpickr.js",
-            "wwwroot/main/**/*.js"
+            "wwwroot/main/**/*.js",
+            "wwwroot/main-new/**/*.js"
         ]
     },
     {
