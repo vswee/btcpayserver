@@ -1,12 +1,13 @@
 :root {
     --body-white: #eeeeee;
     --black-text: #fff;
-    --body-back: #F4F5F5;
-    --body-back-2: #E5E5E5;
-    --button-dark: #202C39;
-    --button-dark-text: #CEDC21;
-    --lime: #51B13E;
-    --gauze: rgba(0,0,0,0.1);
+    --body-back: #f4f5f5;
+    --body-back-2: #e5e5e5;
+    --button-dark: #202c39;
+    --button-dark-text: #cedc21;
+    --lime: #51b13e;
+    --gauze: rgba(0, 0, 0, 0.1);
+    --shadow-dark: rgba(8, 0, 50, 0.3);
 }
 
 section {
@@ -21,7 +22,8 @@ section {
     margin: auto;
 }
 
-a, button {
+a,
+button {
     cursor: pointer;
     transition: 0.2s ease;
 }
@@ -34,19 +36,20 @@ h1 {
     /* or 150% */
     letter-spacing: 0.1em;
 }
-
 body {
-    font-family: 'Montserrat';
+    font-family: "Montserrat";
     background: var(--body-back);
     margin: 0;
+
     padding: 0;
+
     min-height: 100vh;
-    width: 100%;
-    max-width: 100%;
+
+    width: 100vw;
 }
 
 p {
-    font-family: 'Montserrat';
+    font-family: "Montserrat";
     font-style: normal;
     font-weight: 100;
     font-size: 18px;
@@ -54,6 +57,31 @@ p {
     /* or 183% */
     letter-spacing: 0.1em;
     color: #000000;
+}
+
+.sponsors-showcase {
+    margin-top: 5rem;
+}
+.sponsor-icon {
+    width: 69px;
+    height: 69px;
+    left: 84px;
+    border-radius: 300px;
+    background: var(--button-dark);
+}
+.sponsor-icon-flex {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+.small-uppercase {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-family: Montserrat;
 }
 
 .main-head-link {
@@ -73,23 +101,19 @@ p {
     border-width: 2px;
     border-style: solid;
 }
-
 .pri_ {
     background: var(--button-dark);
     color: var(--button-dark-text);
     border-color: var(--button-dark);
 }
-
 .sec_ {
     color: var(--button-dark);
     background: var(--body-back);
     border-color: var(--button-dark);
 }
-
-    .sec_:hover {
-        border-color: var(--lime);
-    }
-
+.sec_:hover {
+    border-color: var(--lime);
+}
 .main-head-link:hover {
     color: var(--lime);
     text-decoration: none;
@@ -102,23 +126,29 @@ p {
     margin: 2.5em 0;
 }
 
-.triangle_, .square_ {
+.triangle_,
+.square_ {
     position: absolute;
     z-index: 0;
 }
-
 .s-sh-a {
     transform-origin: 25px 25px;
     animation-name: hoverAboutSlightlyStupidly;
-    animation-duration: 18s;
-    animation-timing-function: ease-in-out;
+    animation-duration: 15s;
+    animation-timing-function: linear;
     animation-direction: alternate;
     animation-iteration-count: infinite;
 }
 
 @keyframes hoverAboutSlightlyStupidly {
-    to {
-        transform: scale(1.1)rotate(-15deg)translate(0px,10px)
+    0% {
+        transform: scale(1) rotate(0deg)translate(0px, -10px);
+    }
+    50% {
+        transform: scale(1) rotate(-180deg)translate(0px, 15px);
+    }
+    100% {
+        transform: scale(1) rotate(-360deg)translate(0px, -10px);
     }
 }
 
@@ -127,14 +157,14 @@ p {
     width: 500px;
     max-width: calc(90vw - 100px);
     /* min-width: calc(50vw - 100px); */
-    margin: auto 7vw auto 2vw;
+    margin: auto 7vw auto 5vw;
     text-align: left;
 }
 
 .modern-login-register-inner {
     display: block;
     background: #fff;
-    box-shadow: 0 2px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.1);
     max-width: calc(90vw - 100px);
     width: 500px;
     /* min-width: calc(50vw - 100px); */
@@ -149,18 +179,18 @@ p {
     margin-bottom: 1.5em;
 }
 
-    .modern-login-register form input {
-        border-width: 0px 0px 2px 0px;
-        border-color: #000;
-        font-family: Montserrat;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 22px;
-        letter-spacing: 0.04em;
-        color: #000;
-        padding: 1em 0;
-    }
+.modern-login-register form input {
+    border-width: 0px 0px 2px 0px;
+    border-color: #000;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: 0.04em;
+    color: #000;
+    padding: 1em 0;
+}
 
 .form-name {
     text-transform: uppercase;
@@ -180,6 +210,7 @@ p {
 }
 
 .fp-button {
+    text-align: center;
     color: var(--button-dark-text);
     background: var(--button-dark);
     border-radius: 10px;
@@ -192,6 +223,15 @@ p {
     line-height: 17px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
+    text-decoration: none;
+}
+
+.fp-button:hover {
+    text-decoration: none;
+    color: var(--button-dark-text);
+    background: var(--button-dark);
+    box-shadow: 0px 5px 15px var(--shadow-dark);
+    /* transform: translateY(-4px); */
 }
 
 .f-el {
@@ -206,11 +246,9 @@ p {
 
 masterland {
     display: grid;
-    min-height: calc(100vh - 10px);
-    width: 100%;
-    max-width: 100%;
+    min-height: calc(100vh - 0px);
+    width: 100vw;
 }
-
 
 .unbuilt_ {
     display: none;
@@ -218,17 +256,18 @@ masterland {
 
 .dark-parent {
     margin: 5vw auto auto 5vw;
-    max-width: 90vw;}
+    width: 40vw;
+    max-width: 90vw;
+}
 
-    .dark-parent * {
-        color: var(--body-back);
-    }
+.dark-parent * {
+    color: var(--body-back);
+}
 
 .build-in-up {
     opacity: 0;
     animation: fadeUp 0.5s ease forwards 1;
 }
-
 .delay-build {
     animation-delay: 0.4s;
 }
@@ -238,7 +277,6 @@ masterland {
         transform: translate(0px, 50px);
         opacity: 0;
     }
-
     to {
         transform: translate(0px, 0px);
         opacity: 1;
@@ -251,19 +289,19 @@ masterland {
     position: relative;
     top: 0;
     bottom: 0;
+
     left: 0;
+
     right: 0;
     margin: auto;
     max-width: 1300px;
 }
-
 #learnMore {
     position: relative;
     display: grid;
     min-height: 100vh;
     background: var(--button-dark);
 }
-
 .header-content-inner {
     display: block;
     max-width: calc(90vw - 100px);
@@ -271,45 +309,6 @@ masterland {
     padding: 50px 0 50px 50px;
     margin: auto 0 auto 5vw;
 }
-
-.unfetteredVideoFrame {
-    width: 100%;
-    max-width: 100%;
-    height: calc(100vw * 0.56);
-    margin: auto;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* dashboard */
 
@@ -338,7 +337,6 @@ sidebar {
     grid-template-rows: auto 1fr auto;
     padding: 2rem;
 }
-
 workspace {
     grid-column: 2/3;
     grid-row: 1/2;
@@ -356,7 +354,6 @@ possiblyPointlessShortcuts {
     padding: 1rem 2rem;
 }
 
-
 .user-cluster {
     display: grid;
     grid-auto-flow: row;
@@ -364,22 +361,19 @@ possiblyPointlessShortcuts {
     max-width: 200px;
     margin: 2rem auto auto auto;
 }
-
 .controls-hor {
     display: grid;
     grid-auto-flow: column;
 }
-
 .control-icon-button svg {
-    width: calc(.5rem + 30px);
-    height: calc(.5rem + 30px);
+    width: calc(0.5rem + 30px);
+    height: calc(0.5rem + 30px);
     padding: 0.5rem;
 }
 
-
-    .control-icon-button svg path {
-        fill: var(--button-dark);
-    }
+.control-icon-button svg path {
+    fill: var(--button-dark);
+}
 
 .profile-pic {
     height: 120px;
@@ -398,35 +392,30 @@ possiblyPointlessShortcuts {
     margin: 4rem auto auto auto;
 }
 
-    .sidebar-menu li a {
-        display: grid;
-        grid-auto-flow: column;
-        grid-template-columns: 50px auto;
-        padding: 1rem;
-        border-radius: 15px;
-        cursor: pointer;
-    }
+.sidebar-menu li a {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 50px auto;
+    padding: 1rem;
+    border-radius: 15px;
+    cursor: pointer;
+}
 
-        .sidebar-menu li a, .sidebar-menu li a:hover {
-            text-decoration: none;
-            font-weight: 100;
-            color: var(--button-dark);
-            font-style: normal;
-        }
+.sidebar-menu li a,
+.sidebar-menu li a:hover {
+    text-decoration: none;
+    font-weight: 100;
+    color: var(--button-dark);
+    font-style: normal;
+}
 
-            .sidebar-menu li a:hover {
-                background: var(--gauze);
-            }
+.sidebar-menu li a:hover {
+    background: var(--gauze);
+}
 
-    .sidebar-menu li svg path {
-        fill: var(--button-dark)
-    }
-
-
-
-
-
-
+.sidebar-menu li svg path {
+    fill: var(--button-dark);
+}
 
 .social-link-item svg * {
     fill: var(--black-text) !important;
@@ -436,8 +425,6 @@ possiblyPointlessShortcuts {
     height: 30px;
 }
 
-
-
 .social-link {
     display: grid;
     margin: auto;
@@ -445,7 +432,6 @@ possiblyPointlessShortcuts {
     grid-auto-flow: column;
     text-align: right;
 }
-
 
 .control-icon-button {
     border-radius: 100px;
@@ -455,51 +441,61 @@ possiblyPointlessShortcuts {
     cursor: pointer;
 }
 
-
-    .control-icon-button:hover svg path {
-        /* fill: var(--black-text); */
-    }
-
-    .control-icon-button:hover {
-        background: var(--button-dark-text);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
+.control-icon-button:hover svg path {
+    /* fill: var(--black-text); */
+}
+.control-icon-button:hover {
+    background: var(--button-dark-text);
+}
 
 /* latin */
 @font-face {
-    font-family: 'Montserrat';
+    font-family: "Montserrat";
     font-style: normal;
     font-weight: 100;
     src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.eot");
-    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.eot?#iefix") format("embedded-opentype"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.woff2") format("woff2"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.woff") format("woff"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.ttf") format("truetype");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.eot?#iefix")
+            format("embedded-opentype"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.woff2")
+            format("woff2"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.woff")
+            format("woff"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.ttf")
+            format("truetype");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
+        U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
 /* latin */
 @font-face {
-    font-family: 'Montserrat';
+    font-family: "Montserrat";
     font-style: normal;
     font-weight: 400;
     src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.eot");
-    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.eot?#iefix") format("embedded-opentype"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.woff2") format("woff2"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.woff") format("woff"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.ttf") format("truetype");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.eot?#iefix")
+            format("embedded-opentype"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.woff2")
+            format("woff2"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.woff")
+            format("woff"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.ttf")
+            format("truetype");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
+        U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
 /* latin */
 @font-face {
-    font-family: 'Montserrat';
+    font-family: "Montserrat";
     font-style: normal;
     font-weight: 700;
     src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.eot");
-    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.eot?#iefix") format("embedded-opentype"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.woff2") format("woff2"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.woff") format("woff"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.ttf") format("truetype");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.eot?#iefix")
+            format("embedded-opentype"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.woff2")
+            format("woff2"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.woff")
+            format("woff"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.ttf")
+            format("truetype");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
+        U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }

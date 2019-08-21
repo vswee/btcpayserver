@@ -23,7 +23,12 @@
             "wwwroot/vendor/bootstrap4-creativestart/*.js",
             "wwwroot/vendor/moment/moment.min.js",
             "wwwroot/vendor/flatpickr/flatpickr.js",
-            "wwwroot/main/**/*.js",
+            "wwwroot/main/**/*.js"
+        ]
+    },
+    {
+        "outputFileName": "wwwroot/bundles/main-bundle-post-body.min.js",
+        "inputFiles": [
             "wwwroot/main-new/**/*.js"
         ]
     },
