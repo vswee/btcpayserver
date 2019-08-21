@@ -1,137 +1,505 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
-    ViewBag.AlwaysShrinkNavBar = false;
+Layout = "_LayoutNew";
 }
 
+@inject SignInManager<ApplicationUser> SignInManager
+    @inject UserManager<ApplicationUser> UserManager
+        @inject RoleManager<IdentityRole> RoleManager
+            @inject BTCPayServer.Services.BTCPayServerEnvironment env
+            @inject BTCPayServer.HostedServices.NBXplorerDashboard dashboard
+            @inject BTCPayServer.HostedServices.CssThemeManager themeManager
 
-<header class="masthead">
-    <div class="header-content">
-        <div class="header-content-inner text-white">
-            <h1>Welcome to BTCPay Server</h1>
-            <hr />
-            <p>BTCPay Server is a free and open source server for merchants wanting to accept Bitcoin for their business.</p>
-            <a style="background-color: #fff;color: #222;display:inline-block;text-align: center;white-space: nowrap;vertical-align: middle;user-select: none;line-height: 1.25;font-size: 1rem;text-decoration:none;font-weight: 700;    text-transform: uppercase;border: none;border-radius: 300px;padding: 15px 30px;" href="https://btcpayserver.org" target="_blank">Official website</a>
-        </div>
-    </div>
-</header>
+            @model RegisterViewModel
 
-<section id="services">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h2 class="section-heading">A Payment Server for Bitcoin</h2>
-                <hr class="primary">
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4 col-md-6 text-center">
-                <div class="service-box">
-                    <img src="~/img/lock-logo.png" />
-                    <h3 class="text-dark">Secure</h3>
-                    <p class="text-muted">The payment server does not need to know your private keys, so your money can't be stolen.</p>
+            @if (!User.Identity.IsAuthenticated){
+            <masterLand>
+                <div class="header-content">
+                    <div class="header-content-inner">
+                        <div class="iconography">
+                            <a class="navbar-brand js-scroll-trigger" href="~/">
+                                <svg class="_Logo" onclick="window.location=\'/\'" version="1.1" id="_Logo_1"
+                                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    x="0px" y="0px" width="200px" height="100px" viewBox="0 0 200 100"
+                                    enable-background="new 0 0 200 100" xml:space="preserve">
+                                    <g>
+                                        <path fill="#CEDC21" d="M9.206,91.433c-2.684,0-4.859-2.177-4.859-4.861V13.431c0-2.685,2.176-4.861,4.859-4.861
+                            s4.86,2.177,4.86,4.861v73.141C14.066,89.256,11.89,91.433,9.206,91.433" />
+                                        <path fill="#51B13E"
+                                            d="M9.209,91.433c-1.818,0-3.561-1.025-4.394-2.777c-1.151-2.424-0.118-5.322,2.308-6.476L36.43,68.274
+                            L6.323,46.093c-2.16-1.593-2.621-4.635-1.029-6.796s4.636-2.622,6.795-1.03l36.647,26.999c1.377,1.016,2.12,2.678,1.956,4.381
+                            c-0.164,1.7-1.209,3.19-2.755,3.925L11.289,90.964C10.618,91.281,9.907,91.433,9.209,91.433" />
+                                        <path fill="#CEDC21"
+                                            d="M9.211,62.684c-1.493,0-2.965-0.685-3.917-1.979c-1.592-2.159-1.131-5.204,1.03-6.795L36.43,31.73
+                            L7.123,17.821c-2.426-1.151-3.459-4.05-2.309-6.475c1.152-2.426,4.051-3.459,6.475-2.309l36.648,17.394
+                            c1.546,0.733,2.591,2.225,2.755,3.926c0.164,1.702-0.579,3.364-1.956,4.379l-36.647,27C11.22,62.375,10.211,62.684,9.211,62.684" />
+                                        <polygon fill="#1E7A44" points="14.066,39.725 14.066,60.278 28.01,50.006 	" />
+                                        <path fill="#CEDC21"
+                                            d="M14.066,13.431c0-2.685-2.177-4.861-4.86-4.861s-4.859,2.177-4.859,4.861v61.165h9.72V13.431z" />
+                                        <path fill="var(--white-text)" d="M78.355,49.412c3.114,0.884,4.84,3.704,4.84,7.238c0,5.513-3.368,8.082-7.955,8.082H64.761V35.271h9.259
+                            c4.504,0,7.997,2.146,7.997,7.743C82.017,45.835,80.838,48.444,78.355,49.412 M74.062,48.696c3.324,0,6.018-1.179,6.018-5.724
+                            c0-4.586-2.776-5.808-6.145-5.808h-7.197v11.531H74.062z M75.114,62.795c3.366,0,6.06-1.768,6.06-6.145
+                            c0-4.713-3.072-6.144-6.901-6.144h-7.534v12.288H75.114z" />
+                                        <polygon fill="var(--white-text)" points="102.893,35.271 102.893,37.081 94.771,37.081 94.771,64.732 92.792,64.732 92.792,37.081 
+                            84.669,37.081 84.669,35.271 	" />
+                                        <path fill="var(--white-text)"
+                                            d="M116.738,34.85c5.01,0,9.554,2.524,10.987,8.543h-1.895c-1.348-4.923-5.303-6.732-9.134-6.732
+                            c-6.944,0-10.605,5.681-10.605,13.341c0,8.08,3.661,13.256,10.646,13.256c4.125,0,7.828-1.85,9.26-7.279h1.895
+                            c-1.264,6.271-6.229,9.174-11.154,9.174c-7.87,0-12.583-5.808-12.583-15.15C104.155,41.037,109.124,34.85,116.738,34.85" />
+                                        <path fill="var(--white-text)"
+                                            d="M142.709,35.271c5.091,0,8.795,3.326,8.795,9.764c0,6.06-3.704,9.722-8.795,9.722h-7.746v9.976h-1.935
+                            V35.271H142.709z M142.709,52.82c3.745,0,6.816-2.397,6.816-7.827c0-5.429-2.947-7.869-6.816-7.869h-7.746V52.82H142.709z" />
+                                        <path fill="var(--white-text)" d="M151.841,64.732v-0.255l11.741-29.29h0.885l11.615,29.29v0.255h-2.062l-3.322-8.501H157.27l-3.324,8.501
+                            H151.841z M164.005,38.68l-6.059,15.697h12.078L164.005,38.68z" />
+                                        <polygon fill="var(--white-text)"
+                                            points="193.551,35.271 195.655,35.271 195.655,35.564 186.479,52.484 186.479,64.732 184.459,64.732 
+                            184.459,52.484 175.243,35.523 175.243,35.271 177.39,35.271 181.387,42.763 185.43,50.549 185.47,50.549 189.551,42.763 	" />
+                                    </g>
+                                </svg>
+                                @if (env.NetworkType != NBitcoin.NetworkType.Mainnet)
+                                {
+                                <span class="badge badge-warning"
+                                    style="font-size:10px;">@env.NetworkType.ToString()</span>
+                                }
+                            </a>
+                            @if (env.OnionUrl != null)
+                            {
+                            <span>
+                                <a href="@env.OnionUrl" target="_blank">
+                                    <img src="~/img/icons/onion.svg" width="26" height="32" />
+                                </a>
+                            </span>
+                            }
+                        </div>
+                        <h1>Welcome to BTCPay Server</h1>
+                        <span class="short-horiz"></span>
+                        <p>BTCPay Server is a free and open source server for merchants wanting to accept Bitcoin for
+                            their
+                            business.</p>
+                        <a class="main-head-link pri_" href="#learnMore">Learn more</a>
+                        <a class="main-head-link sec_" href="https://btcpayserver.org" target="_blank">Official
+                            website</a>
+                    </div>
+
+                    @if (env.IsSecure)
+                    {
+
+
+                    <div class="modern-login-register">
+                        <div class="shape-hold triangle_"
+                            style="transform: rotate(-14deg)translate(-18px,-46px)scale(2);"><svg
+                                style="animation-delay:1.5s;" class="s-sh-a" enable-background="new 0 0 50 50"
+                                height="50" viewBox="0 0 50 50" width="50" xmlns="http://www.w3.org/2000/svg">
+                                <path d="m25 6.514-25 36.972h50z" fill="#1e7a44" /></svg></div>
+
+                        <div class="shape-hold square_" style="transform: rotate(-32deg)translate(83px,-50px)scale(1);">
+                            <svg class="s-sh-a" enable-background="new 0 0 50 50" height="50" viewBox="0 0 50 50"
+                                width="50" xmlns="http://www.w3.org/2000/svg">
+                                <path d="m0 0h50v50h-50z" fill="#cedc21" /></svg></div>
+                        <div class="modern-login-register-inner">
+                            <div class="build-in-up" id="loginForm_">
+                                <form asp-route-returnurl="@ViewData[" ReturnUrl"]" method="post">
+                                    <span class="form-name">Sign in</span>
+                                    <div class="f-el">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <span class="form-lab">email</span>
+                                        <input asp-for="Email" class="form-input" placeholder="" required="required" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="f-el">
+                                        <span class="form-lab">password</span>
+                                        <input asp-for="Password" class="form-input" placeholder="" required="required"
+                                            type="password" />
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="f-el">
+                                        <button type="submit" class="fp-button" id="LoginButton"
+                                            asp-controller="Account" asp-action="Login">login</button>
+                                    </div>
+                                </form>
+
+                                <a class="fp-button-sec" asp-controller="Account" asp-action="ForgotPassword">Forgot
+                                    your password?</a>
+
+                                @if (themeManager.ShowRegister)
+                                {
+
+                                <a class="fp-button-sec" id="Register">Register</a>
+                                }
+                            </div>
+
+                            <div class="build-in-up" id="registerForm_" style="display:none;">
+                                <form asp-route-returnurl="@ViewData[" ReturnUrl"]" method="post">
+                                    <span class="form-name">Register</span>
+                                    <div class="f-el">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <span class="form-lab">email</span>
+                                        <input asp-for="Email" class="form-input" placeholder="" required="required" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="f-el">
+                                        <span class="form-lab">password</span>
+                                        <input asp-for="Password" class="form-input" placeholder="" required="required"
+                                            type="password" />
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="f-el">
+                                        <span class="form-lab">confirm password</span>
+                                        <input asp-for="ConfirmPassword" class="form-input" placeholder=""
+                                            required="required" type="password" />
+                                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                    </div>
+
+                                    @if (ViewData["AllowIsAdmin"] is true)
+                                    {
+                                    <div class="f-el">
+                                        <span class="form-lab">Administrator Acount?</span>
+                                        <input asp-for="IsAdmin" type="checkbox" class="form-check-inline" />
+                                        <span asp-validation-for="IsAdmin" class="text-danger"></span>
+                                    </div>
+                                    }
+                                    <div class="f-el">
+                                        <button type="submit" class="fp-button" id="RegisterButton">create
+                                            account</button>
+                                    </div>
+                                </form>
+
+                                <a class="fp-button-sec" id="SignIn">Sign in</a>
+                                @section Scripts {
+                                @await Html.PartialAsync("_ValidationScriptsPartial")
+                                }
+
+                            </div>
+
+                        </div>
+                        <div class="shape-hold triangle_"
+                            style="transform: rotate(52deg)translate(-13px,-40px)scale(1.4);z-index:2;float: right;position: relative;">
+                            <svg class="s-sh-a" enable-background="new 0 0 50 50" height="50" viewBox="0 0 50 50"
+                                width="50" xmlns="http://www.w3.org/2000/svg">
+                                <path d="m25 6.514-25 36.972h50z" fill="#cedc21" /></svg></div>
+
+                        <div class="shape-hold square_ "
+                            style="transform: rotate(11deg)translate(68px,-108px)scale(0.8);z-index: 3;float: right;position: relative;">
+                            <svg style="animation-delay:2s;" class="s-sh-a" enable-background="new 0 0 50 50"
+                                height="50" viewBox="0 0 50 50" width="50" xmlns="http://www.w3.org/2000/svg">
+                                <path d="m0 0h50v50h-50z" fill="#51B13E" /></svg></div>
+                    </div>
+                    }
+                </div>
+
+            </masterLand>
+
+            <div id="learnMore">
+                <div style="display: grid;" class="delay-build">
+                    <div class="dark-parent delay-build">
+                        <h1>Learn more about BTCPAY Server</h1>
+                        <span class="short-horiz"></span>
+                        <p>Watch this video to learn more or some text to that effect.</p>
+                    </div>
+                    <video onclick="scrollTo('unfetteredVideoFrame');"
+                        poster="https://include.flat18.co.uk/img/vidph-dark-2.svg" class="unfetteredVideoFrame"
+                        id="unfetteredVideoFrame" playsinline="" controls=""
+                        style="width: 100vw;height: calc(100vw * 0.56);margin:auto;">
+                        <track src="https://btcpayserver.org/vtt/en.vtt" label="English" kind="subtitles" srclang="en"
+                            default="">
+                        <source src="https://btcpayserver.org/video/602.webm" type="video/webm">
+                        <source src="https://btcpayserver.org/video/602.m4v" type="video/m4v">
+                        <source src="https://btcpayserver.org/video/602.mp4" type="video/mp4"></video>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 text-center">
-                <div class="service-box">
-                    <img src="~/img/qr-logo.png" />
-                    <h3 class="text-dark">Easy</h3>
-                    <p class="text-muted">A user-friendly Bitcoin checkout page for your customers.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 text-center">
-                <div class="service-box">
-                    <img src="~/img/money-logo.png" />
-                    <h3 class="text-dark">Visibility</h3>
-                    <p class="text-muted">Manage, generate reports, and search for your invoices easily.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+            }
 
 
 
-<div class="call-to-action bg-dark text-white">
-    <div class="container text-center">
-        <h2>Video tutorials</h2>
-        <div class="row">
-            <div class="col-md-2 text-center">
-            </div>
-            <div class="col-md-8 text-center">
-                <a href="https://www.youtube.com/channel/UCpG9WL6TJuoNfFVkaDMp9ug" target="_blank">
-                    <img src="~/img/youtube.png" class="img-fluid" />
-                </a>
-            </div>
-            <div class="col-md-2 text-center">
-            </div>
-        </div>
-    </div>
-</div>
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto text-center">
-                <h2 class="section-heading">Donate!</h2>
-                <hr class="primary">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 mr-auto text-center"></div>
-            <div class="col-lg-4 ml-auto text-center">
-                <form method="POST" action="https://donate.btcpayserver.org/api/v1/invoices">
-                    <input type="hidden" name="storeId" value="EErYwCthBNfJUpuU1etH1uhg3x1YVH1q1F2zez7u1AAX" />
-                    <div style="text-align:center;display:inline;width:209px"><div><button style="cursor:pointer; font-size:25px; line-height: 25px; background: rgba(0,0,0,.1); height: 30px; width: 45px; border:none; border-radius: 60px; margin: auto;" onclick="event.preventDefault(); var price = parseInt(document.querySelector('#btcpay-input-price').value); if ('-' == '-' && (price - 1) < 1) { return; } document.querySelector('#btcpay-input-price').value = parseInt(document.querySelector('#btcpay-input-price').value) - 1;">-</button><input type="text" id="btcpay-input-price" name="price" value="10" style="border: none; background-image: none; background-color: transparent; -webkit-box-shadow: none ; -moz-box-shadow: none ; -webkit-appearance: none ; width: 3em; text-align: center; font-size: 25px; margin: auto; border-radius: 5px; line-height: 35px; background: #fff;" oninput="event.preventDefault();isNaN(event.target.value) || event.target.value <= 0 ? document.querySelector('#btcpay-input-price').value = 10 : event.target.value" /><button style="cursor:pointer; font-size:25px; line-height: 25px; background: rgba(0,0,0,.1); height: 30px; width: 45px; border:none; border-radius: 60px; margin: auto;" onclick="event.preventDefault(); var price = parseInt(document.querySelector('#btcpay-input-price').value); if ('+' == '-' && (price - 1) < 1) { return; } document.querySelector('#btcpay-input-price').value = parseInt(document.querySelector('#btcpay-input-price').value) + 1;">+</button></div><select onchange="document.querySelector('input[type = hidden][name = currency]').value = event.target.value" style="-webkit-appearance: none; border: 0; display: block; padding: 0 3em; margin: auto auto 5px auto; font-size: 11px; background: 0 0; cursor: pointer;"><option value="USD">USD</option><option value="GBP">GBP</option><option value="EUR">EUR</option><option value="BTC">BTC</option></select></div>
-                    <input type="hidden" name="currency" value="USD" />
-                    <input type="image" src="~/img/paybutton/pay.png" name="submit" style="width:209px" alt="Pay with BtcPay, Self-Hosted Bitcoin Payment Processor">
-                </form>
-            </div>
-            <div class="col-lg-4 mr-auto text-center"></div>
-        </div>
-    </div>
-</section>
+            @if (SignInManager.IsSignedIn(User))
+            {
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 mx-auto text-center">
-            <h2 class="section-heading">Let's Get In Touch!</h2>
-            <hr class="primary">
-            <p>
-                An open source project is nothing without its community<br />
-                Come and get in touch with us!
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-3 ml-auto text-center">
-            <a href="https://chat.btcpayserver.org/" target="_blank">
-                <img src="~/img/mattermost.png" height="100" />
-            </a>
-            <p><a href="https://chat.btcpayserver.org/" target="_blank">On Mattermost</a></p>
-        </div>
-        <div class="col-lg-3 ml-auto text-center">
-            <a href="https://slack.btcpayserver.org/" target="_blank">
-                <img src="~/img/slack.png" height="100" />
-            </a>
-            <p><a href="http://slack.forkbitpay.ninja/" target="_blank">On Slack</a></p>
-        </div>
-        <div class="col-lg-3 mr-auto text-center">
-            <a href="https://twitter.com/BtcpayServer" target="_blank">
-                <img src="~/img/twitter.png" height="100" />
-            </a>
-            <p>
-                <a href="https://twitter.com/BtcpayServer" target="_blank">On Twitter</a>
-            </p>
-        </div>
-        <div class="col-lg-3 mr-auto text-center">
-            <a href="https://github.com/btcpayserver/btcpayserver" target="_blank">
-                <img src="~/img/github.png" height="100" />
-            </a>
-            <p>
-                <a href="https://github.com/btcpayserver/btcpayserver" target="_blank">On Github</a>
-            </p>
-        </div>
-    </div>
-</div>
 
+
+
+
+            <dashboard>
+
+
+
+
+
+                <sidebar>
+
+                    <div class="user-cluster">
+                        <div class="profile-pic"></div>
+                        <div class="controls-hor">
+                            <a class="control-icon-button" id="settings_">
+                                <svg enable-background="new 0 0 100 100" viewBox="0 0 100 100"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="m67.8 49c0-.3 0-.5-.1-.8 0-.3-.1-.6-.1-.9s-.1-.7-.2-1c0-.2-.1-.3-.1-.5 0-.1 0-.1-.1-.2-.1-.3-.2-.7-.3-1-.1-.2-.1-.5-.2-.7s-.2-.5-.3-.7c-.1-.3-.3-.6-.4-1-.1-.2-.2-.3-.2-.5-.2-.4-.4-.8-.6-1.1 0 0 0-.1-.1-.1-.1-.1-.1-.2-.2-.2-.2-.4-.5-.7-.7-1.1-.1-.2-.3-.3-.4-.5-.2-.3-.4-.5-.7-.8-.2-.2-.5-.5-.7-.7-.1-.1-.3-.3-.4-.4-.3-.3-.7-.6-1.1-.9-.1 0-.1-.1-.2-.1-.4-.3-.9-.7-1.4-.9-.5-.3-.9-.6-1.4-.8 0 0-.1 0-.1-.1-.4-.2-.8-.4-1.3-.6-.1-.1-.3-.1-.4-.2-.3-.1-.7-.2-1.1-.3-.2-.1-.4-.1-.7-.2-.1 0-.2-.1-.3-.1-.2-.1-.5-.1-.7-.1s-.5-.1-.7-.1c-.4-.1-.8-.1-1.2-.1-.1 0-.3 0-.4 0-.5 0-1.1 0-1.6 0-3.1.1-6.1 1-8.7 2.6-3.8 2.4-6.6 6-7.8 10.4v.2c0 .2-.1.3-.1.5-.1.3-.1.6-.2.9 0 .1 0 .2-.1.3-.1.5-.1.9-.2 1.4v.3 1.5.2c0 .5.1 1.1.1 1.6v.1c.1.6.2 1.1.3 1.7v.1c.1.4.2.8.3 1.2 0 .2.1.3.2.5.1.3.2.6.3.9s.2.5.3.7.2.4.3.6c.2.3.3.6.5 1 .1.1.1.2.2.3 0 0 .1.1.1.1.2.4.5.7.7 1.1.1.1.1.2.2.3.3.4.7.8 1 1.2l.6.6c.2.1.3.3.5.4.3.2.5.4.8.7.1.1.3.2.4.3.3.2.6.4.8.6.2.1.3.2.5.3.3.2.6.3.8.5.2.1.5.2.7.4.2.1.4.2.7.3 1 .5 2.1.8 3.2 1.1.6.2 1.3.3 2 .3h.1c.7.1 1.3.1 2 .1 1.3 0 2.7-.2 4.1-.5 4.5-1.1 8.3-3.8 10.8-7.6.1-.1.1-.2.2-.3.2-.3.3-.5.4-.8.1-.1.1-.2.2-.3.2-.4.4-.7.5-1.1 0-.1.1-.2.1-.3.2-.4.3-.9.5-1.3 0 0 0 0 0-.1.5-1.6.8-3.2.9-4.9 0-.1 0-.2 0-.4.2-.1.2-.5.2-1zm-5.5 1.4c0 .8-.1 1.6-.3 2.4-.3 1.2-.7 2.3-1.3 3.3 0 0 0 .1-.1.1-.2.3-.4.6-.6.9 0 0 0 .1-.1.1-.9 1.3-2.1 2.4-3.5 3.2-1 .6-2.1 1.1-3.3 1.4-.3.1-.7.2-1.1.2h-.1c-.4.1-.7.1-1.1.1h-.1c-1.2.1-2.4 0-3.6-.3-.4-.1-.7-.2-1.1-.3h-.1c-.3-.1-.6-.2-.8-.3-.1-.1-.2-.1-.4-.2s-.4-.2-.6-.3-.4-.2-.5-.3-.3-.2-.4-.2c-.2-.1-.4-.3-.6-.4-.1-.1-.2-.2-.3-.2-.2-.2-.4-.3-.6-.5-.1-.1-.2-.2-.3-.3-.2-.2-.3-.3-.5-.5-.1-.1-.3-.3-.4-.5-.1-.1-.2-.3-.4-.4-.1-.2-.3-.4-.4-.6-.1-.1-.2-.3-.3-.4-.1-.2-.2-.4-.3-.6s-.2-.4-.3-.5-.1-.2-.2-.4c-.1-.3-.2-.5-.3-.8v-.1c-.1-.4-.2-.7-.3-1.1 0-.5 0-.9-.1-1.3-.1-.4-.1-.8-.1-1.2 0 0 0 0 0-.1 0-.4 0-.8 0-1.1v-.1c0-.4.1-.7.1-1.1v-.1c.8-4.7 4.3-8.7 9.3-9.8 1.1-.3 2.3-.4 3.4-.3h.4c.3 0 .5.1.8.1.2 0 .4.1.6.1s.5.1.7.2c.1 0 .2.1.3.1.3.1.6.2.9.3 0 0 .1 0 .1.1.7.3 1.4.6 2.1 1 .3.2.7.4 1 .7.3.2.6.4.8.7.1.1.2.2.3.2l.5.5c.1.2.3.3.4.5.1.1.2.2.3.4.2.2.3.5.5.7.1.1.1.2.2.3.2.3.3.5.4.8.1.1.1.2.2.3.1.2.2.4.3.7.1.2.1.3.2.5s.1.4.2.5c.1.2.1.4.2.7 0 .2.1.3.1.5s.1.4.1.6.1.5.1.7v.4z" />
+                                    <path
+                                        d="m94.1 61-9.2-5.2c.3-2.1.5-4 .5-5.7 0-2-.2-4-.5-5.8l9.3-5.3c.9-.5 1.5-1.3 1.8-2.3s.1-2-.4-2.9l-8.7-15.1c-1-1.8-3.3-2.4-5.1-1.4l-9.3 5.3c-2.9-2.4-6.3-4.3-9.9-5.7v-10.7c0-2.1-1.7-3.8-3.8-3.8h-17.4c-2.1 0-3.8 1.7-3.8 3.8v10.8c-3.7 1.4-7 3.4-9.9 5.7l-9.3-5.3c-1.8-1-4.1-.4-5.1 1.4l-8.8 15.1c-.5.9-.6 1.9-.4 2.9.3 1 .9 1.8 1.8 2.3l9.3 5.2c-.3 1.7-.5 3.7-.5 5.7 0 1.9.1 3.9.4 5.7l-9.4 5.4c-.9.5-1.5 1.3-1.8 2.3s-.1 2 .4 2.8l8.7 15.1c1 1.8 3.3 2.4 5.1 1.4l9.3-5.3c2.9 2.4 6.3 4.3 9.9 5.7v10.7c0 2.1 1.7 3.8 3.8 3.8h17.4c2.1 0 3.8-1.7 3.8-3.8v-10.8c3.7-1.4 7-3.4 9.9-5.7l9.3 5.3c1.8 1 4.1.4 5.1-1.4l8.7-15.1c.5-.9.6-1.9.4-2.9s-.7-1.7-1.6-2.2zm-11.2 16-11.3-6.5-1.5 1.4c-3.1 2.9-7 5.2-11.3 6.6l-1.9.6v13h-13.9v-12.9l-1.9-.6c-4.3-1.4-8.2-3.7-11.3-6.6l-1.5-1.4-11.3 6.5-7-12.1 11.2-6.4-.4-1.9c-.4-2.1-.6-4.3-.6-6.6 0-2.4.2-4.6.7-6.5l.5-2-11.3-6.4 7-12.2 11.3 6.5 1.5-1.4c3.1-2.9 7-5.2 11.3-6.6l1.9-.6v-13h13.9v12.9l1.9.6c4.3 1.4 8.2 3.7 11.3 6.6l1.5 1.4 11.3-6.5 7 12.1-11.3 6.5.5 2c.5 1.9.7 4.1.7 6.5 0 1.9-.2 4-.8 6.6l-.4 1.9 11.1 6.3z" />
+                                    </svg>
+                            </a>
+                            <a class="control-icon-button" asp-area="" asp-controller="Manage" asp-action="Index"
+                                title="My settings" id="MySettings">
+                                <svg enable-background="new 0 0 100 100" viewBox="0 0 100 100"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="m50 57c13.2 0 24-10.8 24-24s-10.8-24-24-24-24 10.7-24 24 10.8 24 24 24zm0-42.5c10.2 0 18.5 8.3 18.5 18.5s-8.3 18.5-18.5 18.5-18.5-8.3-18.5-18.5 8.3-18.5 18.5-18.5z" />
+                                    <path
+                                        d="m97.9 86.2c-13.2-11.7-30.2-18.2-47.9-18.2s-34.7 6.5-47.9 18.2c-1.1 1-1.2 2.7-.2 3.9 1 1.1 2.7 1.2 3.9.2 12.1-10.8 27.9-16.8 44.2-16.8s32.1 6 44.3 16.8c.5.5 1.2.7 1.8.7.8 0 1.5-.3 2.1-.9 1-1.1.9-2.9-.3-3.9z" />
+                                    </svg>
+                            </a>
+                            <a class="control-icon-button" asp-area="" asp-controller="Account" asp- asp-action="Logout"
+                                title="Logout" id="Logout">
+                                <svg enable-background="new 0 0 500 500" height="500" viewBox="0 0 500 500" width="500"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="m50.5 434.125h209c11.5 0 20.5-6.75 20.5-15.375v-46.25c0-7.5-6-14-14-14s-14 6-14 14v29.568h-195.5v-303.761h196v29.693c0 7.5 6 14 14 14s13.5-6.5 13.5-14v-46.375c0-8.625-9-15.75-20.5-15.75h-209c-11.5 0-21 12.071-21 20.801v326.648c0 8.365 9.5 20.801 21 20.801z"/><path d="m431.5 237h-287c-7.5 0-14 6-14 14s6 14 14 14h286.5l-50.5 50.5c-5.5 5.5-5.5 14 0 19.5 5.5 5 14.5 5 19.5-.5l84-83.5-84-84c-2.5-2.5-6-4-10-4-3.5 0-7 1.5-9.5 4-5.5 5.5-5.5 14 0 19.5z"/>
+                                    </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <ul class="sidebar-menu">
+                        <li>
+                            <a asp-area="" asp-controller="UserStores" asp-action="ListStores" class="js-scroll-trigger"
+                                id="Stores">
+                            <svg enable-background="new 0 0 500 500" height="25" viewBox="0 0 500 500" width="25"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m475.297 239.812h-14.822v185.583h-253.953v-177.183h-132.411v177.184h-33.597v-185.584h-14.822v185.583h-24.704v74.11h499.012v-74.11h-24.703zm-386.364 23.2h102.767v161.396h-102.767zm396.245 221.672h-469.368v-44.466h469.368z" />
+                                <path
+                                    d="m.988 78v28h24.704v17.642h14.822v-17.642h419.961v17.642h14.822v-17.642h24.703v-28l-250-77.506zm484.19 13.178h-469.368l234.684-70.178z" />
+                                <path
+                                    d="m499.337 123.706h-18.379-41.658-18.379-41.658-18.378-41.658-18.379-41.658-18.378-41.659-18.378-41.658-18.379-41.659-18.379-60.037v72.184c0 17.408 17.562 31.571 39.146 31.571h.123c12.011 0 22.771-4.39 29.957-11.279 7.188 6.889 17.946 11.279 29.958 11.279h.122c12.012 0 22.771-4.39 29.958-11.279 7.187 6.889 17.946 11.279 29.958 11.279h.122c12.011 0 22.771-4.39 29.957-11.279 7.188 6.889 17.946 11.279 29.958 11.279h.123c12.011 0 22.771-4.39 29.958-11.279 7.187 6.889 17.946 11.279 29.957 11.279h.122c12.012 0 22.771-4.39 29.958-11.279 7.188 6.889 17.946 11.279 29.957 11.279h.122c12.011 0 22.771-4.39 29.958-11.279 7.187 6.889 17.946 11.279 29.957 11.279h.122c12.012 0 22.771-4.39 29.957-11.279 7.188 6.889 17.947 11.279 29.958 11.279h.122c12.012 0 21.604-4.597 29.957-11.279s9.189-20.292 9.189-20.292v-57.362m-60.039 0h41.658v57.362c0 9.236-9.316 16.749-20.768 16.749h-.122c-11.453 0-20.769-7.514-20.769-16.749v-57.362zm-60.037 0h41.658v57.362c0 9.236-9.316 16.749-20.768 16.749h-.122c-11.453 0-20.769-7.514-20.769-16.749v-57.362zm-60.036 0h41.658v57.362c0 9.236-9.317 16.749-20.769 16.749h-.122c-11.452 0-20.768-7.514-20.768-16.749v-57.362zm-60.038 0h41.658v57.362c0 9.236-9.316 16.749-20.769 16.749h-.122c-11.452 0-20.768-7.514-20.768-16.749v-57.362zm-60.037 0h41.658v57.362c0 9.236-9.316 16.749-20.768 16.749h-.123c-11.453 0-20.768-7.514-20.768-16.749v-57.362zm-60.036 0h41.658v57.362c0 9.236-9.317 16.749-20.768 16.749h-.122c-11.453 0-20.768-7.514-20.768-16.749zm-60.037 0h41.658v57.362c0 9.236-9.316 16.749-20.768 16.749h-.122c-11.453 0-20.768-7.514-20.768-16.749zm-60.037 0h41.658v57.362c0 9.236-9.317 16.749-20.768 16.749h-.122c-11.452 0-20.768-7.514-20.768-16.749z" />
+                                <path
+                                    d="m231.225 381.917h212.451v-133.705h-212.451zm14.822-118.905h182.806v104.083h-182.806z" />
+                                </svg>
+
+                            Stores</a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Apps" asp-action="ListApps" class="js-scroll-trigger"
+                                                            id="Apps">
+                            <svg height="25" width="25" enable-background="new 0 0 100 100" viewBox="0 0 100 100"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m9.1 42.4h26.6c3.6 0 6.5-2.9 6.5-6.5v-26.6c0-3.6-2.9-6.5-6.5-6.5h-26.6c-3.6 0-6.6 2.9-6.6 6.5v26.5c0 3.6 3 6.6 6.6 6.6zm-1.1-33.1c0-.6.5-1 1.1-1h26.6c.6 0 1 .5 1 1v26.6c0 .4-.4 1-1 1h-26.6c-.6 0-1.1-.5-1.1-1.1z" />
+                                <path
+                                    d="m64.1 42.4h26.5c3.5 0 6.5-2.8 6.6-6.3v-26.7c0-3.6-2.9-6.5-6.5-6.5h-26.6c-3.6 0-6.5 2.9-6.5 6.5v26.5c-.1 3.5 2.9 6.5 6.5 6.5zm-1.1-33.1c0-.6.5-1 1-1h26.6c.6 0 1 .5 1 1v26.5c-.1.5-.5 1-1.2 1h-26.3c-.6 0-1-.5-1-1.1v-26.4z" />
+                                <path
+                                    d="m35.9 57.7h-26.6c-3.6 0-6.5 2.9-6.5 6.5v26.5c0 3.6 2.9 6.5 6.5 6.5h26.5c3.5 0 6.5-2.8 6.6-6.3v-26.7c.1-3.6-2.9-6.5-6.5-6.5zm1.1 33c-.1.5-.5 1-1.2 1h-26.5c-.6 0-1-.5-1-1v-26.5c0-.6.5-1 1-1h26.6c.6 0 1.1.5 1.1 1z" />
+                                <path
+                                    d="m90.8 57.7h-26.6c-3.6 0-6.5 2.9-6.5 6.5v26.5c0 3.6 2.9 6.5 6.5 6.5h26.6c3.4 0 6.4-2.8 6.5-6.3v-26.7c0-3.6-2.9-6.5-6.5-6.5zm1 33c-.1.5-.6 1-1 1h-26.6c-.6 0-1-.5-1-1v-26.5c0-.6.5-1 1-1h26.6c.6 0 1 .5 1 1z" />
+                                </svg>
+
+                            Apps</a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Wallets" asp-action="ListWallets" class="js-scroll-trigger"
+                                id="Wallets">
+                            <svg enable-background="new 0 0 100 100" viewBox="0 0 100 100"
+                                xmlns="http://www.w3.org/2000/svg" width="25" height="25">
+                                <path
+                                    d="m92.5 31.7h-11.3v-17.9c0-1.2-.6-2.3-1.5-3s-2.2-.9-3.3-.6l-71.2 20.8c-.9.2-1.4 1-1.4 1.9v27.9 25.3c0 2.1 1.7 3.8 3.8 3.8h85c2.1 0 3.8-1.7 3.8-3.8v-50.6c-.1-2.1-1.8-3.8-3.9-3.8zm-16.8 0h-53.4l53.4-15.6zm-66.4 52.7v-47.2h81.5v13.3h-25.1c-6.5 0-11.8 5.3-11.8 11.8s5.3 11.8 11.8 11.8h25.1v10.3zm81.5-28.3v12.5h-25.1c-3.4 0-6.3-2.8-6.3-6.3s2.8-6.3 6.3-6.3h25.1z" />
+                                </svg>
+
+                            Wallets</a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Invoice" asp-action="ListInvoices" class="js-scroll-trigger"
+                                                            id="Invoices">
+                            <svg enable-background="new 0 0 500 500" height="25" viewBox="0 0 500 500" width="25"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m184.99 136.14h186.201c6.594 0 12.309-5.275 12.309-12.308s-5.275-12.308-12.309-12.308h-186.201c-6.594 0-12.308 5.275-12.308 12.308s5.714 12.308 12.308 12.308z" />
+                                <path
+                                    d="m371.191 233.726h-186.201c-6.594 0-12.308 5.275-12.308 12.308 0 6.594 5.275 11.868 12.308 11.868h186.201c6.594 0 12.309-5.274 12.309-11.868-.439-7.033-5.715-12.308-12.309-12.308z" />
+                                <path
+                                    d="m371.191 355.049h-186.201c-6.594 0-12.308 5.275-12.308 12.309s5.275 12.308 12.308 12.308h186.201c6.594 0 12.309-5.274 12.309-12.308s-5.715-12.309-12.309-12.309z" />
+                                <ellipse cx="123.395" cy="124.204" rx="19.781" ry="19.781" />
+                                <ellipse cx="123.255" cy="245.583" rx="19.78" ry="19.78" />
+                                <ellipse cx="123.115" cy="366.963" rx="19.781" ry="19.781" />
+                                <path
+                                    d="m386 494h-272c-34.462 0-62.5-28.037-62.5-62.5v-363c0-34.462 28.038-62.5 62.5-62.5h272c34.463 0 62.5 28.038 62.5 62.5v363c0 34.463-28.037 62.5-62.5 62.5zm-272-463c-20.678 0-37.5 16.822-37.5 37.5v363c0 20.678 16.822 37.5 37.5 37.5h272c20.678 0 37.5-16.822 37.5-37.5v-363c0-20.678-16.822-37.5-37.5-37.5z" />
+                                </svg>
+
+                            Invoices</a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="PaymentRequest" asp-action="GetPaymentRequests"
+                                class="js-scroll-trigger" id="PaymentRequests">
+                            <svg enable-background="new 0 0 500 500" height="25" viewBox="0 0 500 500" width="25"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m490.5 326.5c-8.5-25.5-35-40.5-61-33.5l-117 30c.5-2.5.5-5 .5-8 0-25.5-20.5-46.5-46.5-46.5h-95.5c-5.5-15.5-20-26.5-37.5-26.5h-86.5c-22 0-39.5 18-39.5 40v110c0 22 18 39.5 39.5 39.5h87c10.5 0 21-4.5 28.5-12l.5-.5 12 6c23 12 48.5 18 74 18 15 0 30.5-2 45.5-6.5l31-9 130.5-37.5c13-3.5 24-12 30.5-24s8-26 4-39.5zm-347.5 74c-2.5 2.5-5.5 3.5-8.5 3.5h-87.5c-7 0-12-5.5-12-12v-110c0-7 5.5-12 12-12h86.5c7 0 12 5.5 12 12.5v110.5c.5 2.5-.5 5.5-2.5 7.5zm319-47.5c-3 5.5-8 9-13.5 11l-36 10.5v-.5l-125.5 36.5c-33.5 9.5-68.5 6-99-9.5l-14.5-7.5c0-.5 0-1 0-1.5v-95.5h93c10.5 0 19 8.5 19 19 0 15.5-12.5 27.5-27.5 27.5h-28.5c-7.5 0-14 6-14 14s6 14 14 14h28.5c14.5 0 27.5-5.5 37-14.5l141.5-36.5c12-3 24 3.5 28 15 1.5 6 .5 12.5-2.5 18z" />
+                                <path
+                                    d="m440.95 121.081c-.358-.027-.718-.054-1.078-.083.211.166.422.331.628.502.148-.141.304-.277.45-.419z" />
+                                <path
+                                    d="m440.95 121.081c15.05-6.581 21.511-21.732 21.511-33.081 0-13-5-25.5-14.5-35-9-9.5-21.5-14.5-35-14.5h-16v-14c0-8-6-14-14-14s-14 6.5-14 14v14h-15.961c-7.5 0-14 5.5-14 13.5s6.5 14 14 14h4.285l.064 89.667c0 7.088 5.597 12.833 12.5 12.833s12.5-5.746 12.5-12.833l-.169-89.667h30.781c6 0 12 2.5 16 6.5 4 4.5 6.5 10 6.5 16 0 15.5-11.627 22.5-24.818 22.5-18.5 0-23.809 27.833 0 28.202l6 .5h-4.643c12.5 0 22.5 8.298 22.5 20.798s-10 22.5-22.5 22.5h-22c-.5 0-.5 0-1 0s-.5 0-1 0h-35.461c-7.5 0-14 6-14 14s6 14 14 14h16.461v13.5c0 7.5 6 14 14 14s14-6 14-14v-13.5h15.5c27.5 0 50-22.5 50-50 0-17.93-9-32-22-39.5" />
+                                </svg>
+
+                            Payment Requests</a>
+                        </li>
+                        @if (User.IsInRole(Roles.ServerAdmin))
+                        {
+                        <li>
+                            <a asp-area="" asp-controller="Server" asp-action="ListUsers" class=" js-scroll-trigger"
+                                id="ServerSettings">
+                            <svg enable-background="new 0 0 500 500" height="25" viewBox="0 0 500 500" width="25"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m29.055 91.334v55.166 107.5 107.5 28.5.5c0 2-.636 5.35.364 8.85 0 1 .5 2 1 3.5 12.999 49.5 102.581 82.65 219.581 82.65 99.5 0 206.15-25.5 220.65-83l1.287-5v-36.5-107.5-107-49.5c-15.499-49.5-101.937-82.5-221.937-82.5h-6.5c-20 .5-41 1.5-62.5 4-20 3-37 5.5-55 10.5-14 4-30 9-44.5 16.5-16 7.5-41.445 27.334-52.445 45.834zm415.945 140.666c-49.769 42.193-128.65 51.447-194.649 51.447-66 0-145.582-9.254-195.351-51.447v-79c49.996 41.747 129.351 50.958 195.351 50.958 65.999 0 144.653-9.209 194.649-50.958zm-390 28.5c49.996 41.747 129.351 50.947 195.351 50.947 65.999 0 144.653-9.199 194.649-50.947v79c-49.77 42.193-128.65 51.447-194.649 51.447-66 0-145.582-9.254-195.351-51.447zm6-165.5c7-11.5 20-19 33-25 13-6.5 27.5-11 39.5-14.5 16.5-4.5 32.5-7 51.5-9.5 19.5-2.5 43.667-3.333 63.167-3.833 120.5 0 186.833 32.333 195.333 61.833l.5 1.5 1 1.5v17.5c-49.769 42.193-128.65 51.458-194.649 51.458-66 0-145.582-9.264-195.351-51.458v-18.5c1-1 1.5-2.5 2-4zm383.5 301.5c-9.5 34.5-94.5 61.5-194.5 61.5-111.5 0-186.5-32-194.5-62.5 0 0 0-.5-.5-1v-2c0-.5 0-1.5 0-2v-22.5c49.996 41.747 129.351 50.947 195.351 50.947 65.999 0 144.653-9.199 194.649-50.947v26.5z" />
+                                </svg>
+                            Server settings</a></li>
+                        }
+                    </ul>
+
+
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                    <div class="environment">@env.ToString()</div>
+
+                    }
+
+
+
+                </sidebar>
+
+
+
+
+
+
+
+                <workspace>
+
+                </workspace>
+
+
+                <possiblyPointlessShortcuts>
+                    <div class="iconography">
+                        <a class="navbar-brand js-scroll-trigger" href="~/">
+                            <svg onclick="window.location=\'/\'" version="1.1" id="_Logo_1"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                                y="0px" width="150" height="75" viewBox="0 0 200 100"
+                                enable-background="new 0 0 200 100" xml:space="preserve">
+                                <g>
+                                    <path fill="#CEDC21" d="M9.206,91.433c-2.684,0-4.859-2.177-4.859-4.861V13.431c0-2.685,2.176-4.861,4.859-4.861
+        s4.86,2.177,4.86,4.861v73.141C14.066,89.256,11.89,91.433,9.206,91.433" />
+                                    <path fill="#51B13E" d="M9.209,91.433c-1.818,0-3.561-1.025-4.394-2.777c-1.151-2.424-0.118-5.322,2.308-6.476L36.43,68.274
+        L6.323,46.093c-2.16-1.593-2.621-4.635-1.029-6.796s4.636-2.622,6.795-1.03l36.647,26.999c1.377,1.016,2.12,2.678,1.956,4.381
+        c-0.164,1.7-1.209,3.19-2.755,3.925L11.289,90.964C10.618,91.281,9.907,91.433,9.209,91.433" />
+                                    <path fill="#CEDC21"
+                                        d="M9.211,62.684c-1.493,0-2.965-0.685-3.917-1.979c-1.592-2.159-1.131-5.204,1.03-6.795L36.43,31.73
+        L7.123,17.821c-2.426-1.151-3.459-4.05-2.309-6.475c1.152-2.426,4.051-3.459,6.475-2.309l36.648,17.394
+        c1.546,0.733,2.591,2.225,2.755,3.926c0.164,1.702-0.579,3.364-1.956,4.379l-36.647,27C11.22,62.375,10.211,62.684,9.211,62.684" />
+                                    <polygon fill="#1E7A44" points="14.066,39.725 14.066,60.278 28.01,50.006 	" />
+                                    <path fill="#CEDC21"
+                                        d="M14.066,13.431c0-2.685-2.177-4.861-4.86-4.861s-4.859,2.177-4.859,4.861v61.165h9.72V13.431z" />
+                                    <path fill="var(--black-text)" d="M78.355,49.412c3.114,0.884,4.84,3.704,4.84,7.238c0,5.513-3.368,8.082-7.955,8.082H64.761V35.271h9.259
+        c4.504,0,7.997,2.146,7.997,7.743C82.017,45.835,80.838,48.444,78.355,49.412 M74.062,48.696c3.324,0,6.018-1.179,6.018-5.724
+        c0-4.586-2.776-5.808-6.145-5.808h-7.197v11.531H74.062z M75.114,62.795c3.366,0,6.06-1.768,6.06-6.145
+        c0-4.713-3.072-6.144-6.901-6.144h-7.534v12.288H75.114z" />
+                                    <polygon fill="var(--black-text)" points="102.893,35.271 102.893,37.081 94.771,37.081 94.771,64.732 92.792,64.732 92.792,37.081 
+        84.669,37.081 84.669,35.271 	" />
+                                    <path fill="var(--black-text)"
+                                        d="M116.738,34.85c5.01,0,9.554,2.524,10.987,8.543h-1.895c-1.348-4.923-5.303-6.732-9.134-6.732
+        c-6.944,0-10.605,5.681-10.605,13.341c0,8.08,3.661,13.256,10.646,13.256c4.125,0,7.828-1.85,9.26-7.279h1.895
+        c-1.264,6.271-6.229,9.174-11.154,9.174c-7.87,0-12.583-5.808-12.583-15.15C104.155,41.037,109.124,34.85,116.738,34.85" />
+                                    <path fill="var(--black-text)"
+                                        d="M142.709,35.271c5.091,0,8.795,3.326,8.795,9.764c0,6.06-3.704,9.722-8.795,9.722h-7.746v9.976h-1.935
+        V35.271H142.709z M142.709,52.82c3.745,0,6.816-2.397,6.816-7.827c0-5.429-2.947-7.869-6.816-7.869h-7.746V52.82H142.709z" />
+                                    <path fill="var(--black-text)" d="M151.841,64.732v-0.255l11.741-29.29h0.885l11.615,29.29v0.255h-2.062l-3.322-8.501H157.27l-3.324,8.501
+        H151.841z M164.005,38.68l-6.059,15.697h12.078L164.005,38.68z" />
+                                    <polygon fill="var(--black-text)"
+                                        points="193.551,35.271 195.655,35.271 195.655,35.564 186.479,52.484 186.479,64.732 184.459,64.732 
+        184.459,52.484 175.243,35.523 175.243,35.271 177.39,35.271 181.387,42.763 185.43,50.549 185.47,50.549 189.551,42.763 	" />
+                                </g>
+                            </svg>
+                            @if (env.NetworkType != NBitcoin.NetworkType.Mainnet)
+                            {
+                            <span class="badge badge-warning" style="font-size:10px;">@env.NetworkType.ToString()</span>
+                            }
+                        </a>
+                        @if (env.OnionUrl != null)
+                        {
+                        <span>
+                            <a href="@env.OnionUrl" target="_blank">
+                                <img src="~/img/icons/onion.svg" width="26" height="32" />
+                            </a>
+                        </span>
+                        }
+                    </div>
+
+                    <div class="social-link">
+                        <a href="" class="social-link-item" target="_blank">
+                            <svg height="30" width="189.91964013" viewBox="0 0 1300 205.35001"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <clipPath id="a">
+                                    <path d="m0 1642.8v-1642.8h10400v1642.8z" />
+                                </clipPath>
+                                <g clip-path="url(#a)" transform="matrix(.125 0 0 -.125 0 205.35)">
+                                    <g fill="#211f1e" fill-rule="evenodd">
+                                        <path
+                                            d="m3848.62 794.105c0 25.012-4.18 45.364-12.53 61.024-8.33 15.621-19.81 27.894-34.41 36.734-14.6 8.883-32.6 14.891-53.97 18-21.39 3.129-45.12 4.696-71.2 4.696-56.32 0-116.28-10.95-179.91-32.844-14.61 27.117-25.55 52.68-32.84 76.664-7.3 23.98-10.97 52.661-10.97 86.051 45.9 15.63 91.78 27.1 137.68 34.4 45.88 7.31 88.67 10.96 128.28 10.96 108.48 0 193.22-26.07 254.24-78.23 61.01-52.158 91.52-135.576 91.52-250.31v-469.34c-36.51-11.469-80.84-22.43-132.99-32.859-52.13-10.43-111.07-15.653-176.78-15.653-53.19 0-101.96 4.704-146.29 14.09-44.32 9.383-82.4 25.043-114.18 46.942-31.83 21.879-56.33 50.05-73.56 84.468-17.19 34.434-25.8 76.661-25.8 126.731 0 50.051 10.69 92.031 32.07 125.93 21.38 33.898 49.03 61.027 82.91 81.351 33.91 20.348 71.71 34.942 113.44 43.813 41.72 8.867 83.43 13.297 125.15 13.297 30.25 0 63.62-1.575 100.14-4.684zm0-161.156c-12.53 2.09-26.08 3.93-40.7 5.481-14.6 1.558-27.61 2.34-39.1 2.34-51.11 0-91.53-9.11-121.26-27.372-29.72-18.25-44.58-47.718-44.58-88.386 0-27.133 5.74-47.973 17.21-62.59 11.47-14.59 25.3-25.281 41.46-32.051 16.17-6.789 33.36-10.961 51.62-12.531 18.27-1.551 34.17-2.36 47.71-2.36 15.66 0 31.31 1.321 46.94 3.93 15.66 2.61 29.21 4.942 40.7 7.039zm364 269.102h-101.7l-7.84 31.293 292.58 373.916h35.98v-236.24h189.3c3.11-15.65 5.21-29.73 6.27-42.24 1.02-12.53 1.54-25.55 1.54-39.124 0-14.593-.52-28.672-1.54-42.234-1.06-13.567-3.16-28.688-6.27-45.371h-189.3v-317.602c0-32.32 2.62-58.39 7.84-78.219 5.19-19.789 12.76-35.449 22.66-46.929 9.93-11.469 22.17-19.289 36.77-23.461 14.6-4.192 31.83-6.27 51.62-6.27 15.66 0 31.03 1.309 46.17 3.918 15.11 2.602 28.41 4.953 39.88 7.032 7.32-19.79 12.51-40.399 15.65-61.79 3.14-21.378 4.69-40.429 4.69-57.109 0-11.473-.25-21.109-.78-28.941-.52-7.809-1.29-15.399-2.35-22.68-47.97-11.488-97.5-17.199-148.61-17.199-94.92 0-167.42 22.148-217.47 66.461-50.06 44.34-75.09 116.578-75.09 216.699zm586.96 0h-101.68l-7.84 31.293 292.57 373.916h35.98v-236.24h189.3c3.12-15.65 5.22-29.73 6.27-42.24 1.02-12.53 1.55-25.55 1.55-39.124 0-14.593-.53-28.672-1.55-42.234-1.05-13.567-3.15-28.688-6.27-45.371h-189.3v-317.602c0-32.32 2.63-58.39 7.83-78.219 5.22-19.789 12.78-35.449 22.68-46.929 9.92-11.469 22.15-19.289 36.77-23.461 14.59-4.192 31.82-6.27 51.62-6.27 15.65 0 31.02 1.309 46.16 3.918 15.12 2.602 28.42 4.953 39.89 7.032 7.31-19.79 12.51-40.399 15.63-61.79 3.15-21.378 4.71-40.429 4.71-57.109 0-11.473-.26-21.109-.79-28.941-.51-7.809-1.29-15.399-2.34-22.68-47.98-11.488-97.5-17.199-148.63-17.199-94.9 0-167.4 22.148-217.46 66.461-50.06 44.34-75.1 116.578-75.1 216.699zm1027.67-148.645c-2.08 50.086-15.91 90.492-41.46 121.262-25.55 30.766-61.27 46.168-107.17 46.168-52.15 0-91.78-14.609-118.9-43.809-27.11-29.207-43.27-70.414-48.48-123.621zm-317.59-154.867c4.18-62.578 26.08-107.949 65.71-136.117 39.63-28.16 91.78-42.242 156.46-42.242 35.46 0 71.68 3.402 108.72 10.191 37.03 6.77 72.22 16.418 105.61 28.93 11.47-20.86 21.37-45.891 29.72-75.102 8.34-29.179 13.03-60.488 14.08-93.859-81.36-31.289-173.15-46.942-275.37-46.942-75.08 0-139.47 10.434-193.21 31.301-53.7 20.852-97.51 49.813-131.4 86.821-33.9 37.019-58.94 81.089-75.1 132.21-16.16 51.102-24.23 106.891-24.23 167.372 0 59.464 8.33 115.265 25.02 167.41 16.67 52.168 41.45 97.523 74.31 136.105 32.85 38.613 73.52 69.113 122.03 91.533 48.5 22.43 105.08 33.64 169.74 33.64 56.32 0 106.39-9.9 150.19-29.73 43.81-19.81 81.09-46.93 111.86-81.365 30.77-34.394 53.99-75.347 69.63-122.8 15.65-47.454 23.47-98.313 23.47-152.528 0-19.82-.78-39.39-2.35-58.676-1.56-19.281-3.41-34.679-5.47-46.152zm612.08 472.481c15.64 3.11 30.5 5.47 44.58 7.03 14.1 1.58 29.46 2.36 46.16 2.36 15.65 0 31.04-1.06 46.14-3.13 15.14-2.08 30-4.7 44.58-7.83 3.15-5.23 6.02-12.77 8.62-22.68 2.61-9.91 4.95-20.34 7.04-31.3s3.9-21.884 5.47-32.857c1.57-10.957 2.86-20.054 3.92-27.383 22.94 32.34 51.12 61.29 84.48 86.83 33.38 25.56 75.1 38.35 125.15 38.35 10.45 0 22.44-.52 35.99-1.58 13.55-1.04 23.46-2.6 29.72-4.7 2.09-10.41 3.66-22.41 4.69-35.97 1.07-13.55 1.58-27.64 1.58-42.246 0-17.73-.8-37.023-2.35-57.883-1.57-20.855-4.44-40.668-8.62-59.445-11.47 2.094-24.24 3.129-38.31 3.129-14.08 0-22.7 0-25.81 0-17.75 0-37.55-1.832-59.47-5.473-21.89-3.664-42.75-13.301-62.57-28.957-19.83-15.637-36.24-39.109-49.29-70.406-13.03-31.274-19.57-75.082-19.57-131.418v-384.859c-18.75-3.114-37.52-5.204-56.31-6.243-18.76-1.05-37.01-1.558-54.75-1.558s-35.72.508-53.98 1.558c-18.25 1.039-37.28 3.129-57.09 6.243zm592.26 0c14.59 3.11 29.2 5.47 43.79 7.03 14.61 1.58 30.77 2.36 48.51 2.36 17.73 0 33.37-.78 46.93-2.36 13.56-1.56 27.64-3.92 42.24-7.03 3.12-5.22 6.01-12.79 8.61-22.7 2.6-9.9 4.96-20.34 7.04-31.28 2.09-10.95 3.9-21.638 5.47-32.067 1.59-10.43 2.88-19.301 3.92-26.594 8.32 15.625 19.29 31.277 32.86 46.931 13.55 15.63 29.71 29.7 48.48 42.23 18.77 12.52 39.89 22.69 63.37 30.51 23.46 7.83 49.81 11.74 79.01 11.74 126.19 0 207.02-47.99 242.49-143.942 20.85 38.597 50.32 72.222 88.38 100.922 38.08 28.68 86.32 43.02 144.74 43.02 91.77 0 159.3-25.31 202.58-75.9 43.3-50.562 64.94-129.577 64.94-237.011v-514.707c-37.54-6.262-74.59-9.371-111.08-9.371-36.51 0-73.54 3.109-111.08 9.371v456.84c0 56.324-7.05 99.593-21.14 129.832-14.06 30.254-42.48 45.379-85.24 45.379-17.75 0-35.2-2.618-52.4-7.817-17.23-5.207-32.87-14.851-46.94-28.937-14.08-14.082-25.55-33.914-34.43-59.465-8.87-25.527-13.3-58.664-13.3-99.336v-436.496c-37.55-6.262-74.58-9.371-111.08-9.371s-73.54 3.109-111.09 9.371v456.84c0 56.324-7.03 99.593-21.12 129.832-14.08 30.254-42.49 45.379-85.25 45.379-17.71 0-35.46-2.618-53.2-7.817-17.71-5.207-33.63-15.379-47.71-30.511-14.09-15.11-25.3-36.231-33.63-63.364-8.35-27.105-12.53-62.578-12.53-106.375v-423.984c-37.55-6.262-74.55-9.371-111.07-9.371-36.51 0-73.52 3.109-111.07 9.371zm1625.8-658.649c58.41 0 100.39 21.629 125.93 64.93 25.56 43.269 38.34 105.597 38.34 186.945 0 81.359-12.78 143.672-38.34 186.953-25.54 43.301-67.52 64.938-125.93 64.938-57.36 0-98.82-21.637-124.37-64.938-25.57-43.281-38.35-105.594-38.35-186.953 0-81.348 12.78-143.676 38.35-186.945 25.55-43.301 67.01-64.93 124.37-64.93zm0-168.973c-65.71 0-122.82 10.704-171.31 32.082-48.5 21.372-88.66 51.102-120.47 89.18-31.81 38.07-55.8 82.649-71.95 133.762-16.18 51.109-24.26 106.367-24.26 165.824 0 59.453 8.08 115.262 24.26 167.402 16.15 52.145 40.14 97.258 71.95 135.321 31.81 38.081 71.97 68.041 120.47 89.971 48.49 21.89 105.6 32.85 171.31 32.85s123.06-10.96 172.09-32.85c49.01-21.93 89.68-51.89 122.04-89.971 32.33-38.063 56.31-83.176 71.97-135.321 15.64-52.14 23.45-107.949 23.45-167.402 0-59.457-7.81-114.715-23.45-165.824-15.66-51.113-39.64-95.692-71.97-133.762-32.36-38.078-73.03-67.808-122.04-89.18-49.03-21.378-106.38-32.082-172.09-32.082zm674.77 370.782c-58.42 16.699-104.05 41.468-136.89 74.32-32.86 32.844-49.29 82.141-49.29 147.855 0 79.266 28.43 141.301 85.28 186.155 56.83 44.85 134.29 67.28 232.32 67.28 40.68 0 80.82-3.65 120.46-10.96 39.64-7.3 79.79-18.24 120.46-32.85-2.09-27.1-7.3-55.265-15.66-84.48-8.32-29.195-18.23-54.746-29.7-76.676-25.04 10.446-52.67 19.571-82.93 27.403-30.23 7.804-62.05 11.722-95.42 11.722-35.47 0-63.09-5.472-82.93-16.426-19.81-10.957-29.72-28.425-29.72-52.394 0-22.953 7.04-39.125 21.12-48.516 14.08-9.379 34.17-18.265 60.23-26.593l89.18-26.614c29.21-8.328 55.54-18.492 79.01-30.496 23.46-11.996 43.55-26.859 60.23-44.578 16.69-17.727 29.72-39.641 39.1-65.711 9.4-26.082 14.1-57.883 14.1-95.422 0-38.609-8.09-74.59-24.26-107.961-16.16-33.379-39.64-62.316-70.4-86.816-30.77-24.531-68.06-43.82-111.87-57.891-43.79-14.09-93.34-21.133-148.62-21.133-25.04 0-47.96.793-68.82 2.352-20.87 1.582-40.94 4.18-60.24 7.82-19.29 3.66-38.33 8.078-57.1 13.301-18.78 5.207-39.12 11.988-61.02 20.34 2.1 28.168 7.05 56.59 14.86 85.258 7.82 28.672 18 56.59 30.51 83.711 34.42-13.571 67.02-23.731 97.79-30.508 30.77-6.793 62.84-10.192 96.2-10.192 14.62 0 30.52 1.321 47.71 3.93 17.22 2.61 33.13 7.301 47.73 14.078 14.61 6.782 26.87 15.653 36.77 26.594 9.91 10.949 14.84 25.289 14.84 43.039 0 25.008-7.55 43.008-22.67 53.961-15.13 10.938-36.25 20.617-63.35 28.949zm541.12 287.871h-101.67l-7.85 31.293 292.56 373.916h35.98v-236.24h189.31c3.13-15.65 5.21-29.73 6.27-42.24 1.03-12.53 1.56-25.55 1.56-39.124 0-14.593-.53-28.672-1.56-42.234-1.06-13.567-3.14-28.688-6.27-45.371h-189.31v-317.602c0-32.32 2.63-58.39 7.83-78.219 5.23-19.789 12.78-35.449 22.68-46.929 9.93-11.469 22.18-19.289 36.77-23.461 14.59-4.192 31.83-6.27 51.63-6.27 15.65 0 31.02 1.309 46.16 3.918 15.11 2.602 28.41 4.953 39.88 7.032 7.31-19.79 12.53-40.399 15.64-61.79 3.15-21.378 4.7-40.429 4.7-57.109 0-11.473-.26-21.109-.78-28.941-.52-7.809-1.29-15.399-2.35-22.68-47.96-11.488-97.5-17.199-148.61-17.199-94.92 0-167.41 22.148-217.48 66.461-50.05 44.34-75.09 116.578-75.09 216.699zm-7375.01 416.629c45.21 6.28 88.7 9.45 130.5 9.45 44.07 0 87.58-3.17 130.51-9.45l279.65-580.43 288.12 580.43c35.03 6.28 73.99 9.45 116.94 9.45 42.94 0 84.16-3.17 123.72-9.45l57.62-1065.84c-42.92-6.301-83.6-9.442-122.01-9.442-38.44 0-76.27 3.141-113.55 9.442l-30.52 770.62-247.45-532.62c-15.83-2.102-32.2-3.961-49.16-5.508-16.95-1.582-33.88-2.363-50.84-2.363-14.7 0-29.37.519-44.05 1.57-14.69 1.051-29.94 3.16-45.77 6.301l-230.49 543.65-23.73-781.65c-36.15-6.301-71.18-9.442-105.09-9.442-36.16 0-73.46 3.141-111.85 9.442z" />
+                                        <path
+                                            d="m1304.1 1486.03 8.65-174.35c141.34-156.15 197.13-377.289 126.77-585.125-105.03-310.254-451.352-473.344-773.54-364.274-322.183 109.059-498.226 448.992-393.199 759.239 70.594 208.53 250.196 350.58 458.207 388.19l112.387 132.79c-350.633 9.49-681.434-208.15-799.793-557.78-145.422-429.579 84.934-895.708 514.516-1041.138 429.582-145.422 895.712 84.938 1041.142 514.52 118.16 349.066-11.79 722.268-295.14 927.928" />
+                                        <path
+                                            d="m1102.73 971.586-5.95 243.724-4.77 140.25-3.23 121.51s.67 58.58-1.37 72.35c-.43 2.9-1.34 5.26-2.43 7.31l-.41.87-.47.75c-2.24 3.86-5.78 7.01-10.35 8.56-4.67 1.58-9.51 1.19-13.71-.62l-.26-.11-1.45-.74c-1.99-.97-4.02-2.22-6-4.14-9.99-9.7-45.04-56.65-45.04-56.65l-76.372-94.55-88.984-108.51-152.778-190s-70.109-87.5-54.617-195.203 95.563-160.172 157.684-181.199c62.117-21.032 157.593-27.989 235.327 48.156 77.73 76.144 75.18 188.242 75.18 188.242" />
+                                    </g>
+                                    <path
+                                        d="m10250 254.281c-82.9 0-150 67.117-150 149.989 0 82.851 67.1 149.968 150 149.968 82.8 0 150-67.117 150-149.968 0-82.872-67.2-149.989-150-149.989m0 273.18c-68 0-123.2-55.242-123.2-123.191 0-67.961 55.2-123.211 123.2-123.211 67.9 0 123.2 55.25 123.2 123.211 0 67.949-55.3 123.191-123.2 123.191m-25.8-67.629v-47.031h27.1c14.8 0 23.1 8.699 23.1 23.769 0 9.711-3.3 16.571-10 20.25-3.4 1.84-8.1 3.012-19.6 3.012zm88.6-141.273h-25.5c-2 0-3.8 1.011-4.7 2.839l-32.5 61.102h-25.9v-58.59c0-3-2.3-5.351-5.4-5.351h-22.4c-3 0-5.3 2.351-5.3 5.351v160.699c0 3.02 2.3 5.36 5.3 5.36h49.2c17.6 0 25.3-1.52 31.8-4.028 18.9-7.031 30.7-25.601 30.7-48.359 0-20.602-10.2-38-26.5-46.043.5-.84 1-1.668 1.5-2.668l34.3-62.449c.9-1.672.9-3.684-.1-5.184-.9-1.668-2.7-2.679-4.5-2.679"
+                                        fill="#bdbbbc" />
+                                </g>
+                            </svg>
+                        </a>
+
+
+                        <a href="" class="social-link-item" target="_blank">
+
+                            <svg enable-background="new 0 0 498 127" viewBox="0 0 498 127" height="30"
+                                width="117.637795275" xmlns="http://www.w3.org/2000/svg">
+                                <g fill="none">
+                                    <path
+                                        d="m159.5 99.5 6.2-14.4c6.7 5 15.6 7.601 24.4 7.601 6.5 0 10.6-2.5 10.6-6.3-.1-10.601-38.9-2.301-39.2-28.9-.1-13.5 11.9-23.9 28.9-23.9 10.1 0 20.2 2.5 27.4 8.2l-5.8 14.699c-6.6-4.2-14.8-7.2-22.6-7.2-5.3 0-8.8 2.5-8.8 5.7.1 10.4 39.2 4.7 39.6 30.1 0 13.801-11.7 23.5-28.5 23.5-12.3 0-23.6-2.9-32.2-9.1m237.9-19.6c-3.1 5.4-8.9 9.1-15.6 9.1-9.9 0-17.9-8-17.9-17.9 0-9.899 8-17.899 17.899-17.899 6.7 0 12.5 3.7 15.601 9.1l17.1-9.5c-6.4-11.4-18.7-19.2-32.7-19.2-20.7 0-37.5 16.8-37.5 37.5s16.8 37.5 37.5 37.5c14.101 0 26.3-7.699 32.7-19.199zm-168.6-77.4h21.4v104.7h-21.4zm194.1 0v104.7h21.4v-31.4l25.4 31.4h27.4l-32.3-37.3 29.9-34.8h-26.2l-24.2 28.9v-61.5zm-109.1 77.6c-3.1 5.101-9.5 8.9-16.7 8.9-9.9 0-17.9-8-17.9-17.9 0-9.899 8-17.899 17.899-17.899 7.2 0 13.601 4 16.7 9.2v17.699zm0-45v8.5c-3.5-5.9-12.2-10-21.3-10-18.8 0-33.6 16.6-33.6 37.4s14.8 37.6 33.6 37.6c9.1 0 17.8-4.1 21.3-10v8.5h21.4v-72z"
+                                        fill="#fff" />
+                                    <path
+                                        d="m27.2 80c0 7.3-5.9 13.2-13.2 13.2s-13.2-5.9-13.2-13.2 5.9-13.2 13.2-13.2h13.2zm6.6 0c0-7.3 5.9-13.2 13.2-13.2s13.2 5.9 13.2 13.2v33c0 7.3-5.9 13.2-13.2 13.2s-13.2-5.9-13.2-13.2z"
+                                        fill="#e01e5a" />
+                                    <path
+                                        d="m47 27c-7.3 0-13.2-5.9-13.2-13.2s5.9-13.2 13.2-13.2 13.2 5.9 13.2 13.2v13.2zm0 6.7c7.3 0 13.2 5.9 13.2 13.2s-5.9 13.2-13.2 13.2h-33.1c-7.3 0-13.2-5.9-13.2-13.2s5.9-13.2 13.2-13.2z"
+                                        fill="#36c5f0" />
+                                    <path
+                                        d="m99.9 46.9c0-7.3 5.9-13.2 13.2-13.2s13.2 5.9 13.2 13.2-5.9 13.2-13.2 13.2h-13.2zm-6.6 0c0 7.3-5.9 13.2-13.2 13.2s-13.2-5.9-13.2-13.2v-33.1c0-7.3 5.9-13.2 13.2-13.2s13.2 5.9 13.2 13.2z"
+                                        fill="#2eb67d" />
+                                    <path
+                                        d="m80.1 99.8c7.3 0 13.2 5.9 13.2 13.2s-5.9 13.2-13.2 13.2-13.2-5.9-13.2-13.2v-13.2zm0-6.6c-7.3 0-13.2-5.9-13.2-13.2s5.9-13.2 13.2-13.2h33.1c7.3 0 13.2 5.9 13.2 13.2s-5.9 13.2-13.2 13.2z"
+                                        fill="#ecb22e" />
+                            </svg>
+
+                        </a>
+
+                        <a href="" class="social-link-item" target="_blank">
+                            <svg enable-background="new 0 0 300 244.189" height="24.4189" viewBox="0 0 300 244.189"
+                                width="30" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m633.9 812.042c112.459 0 173.959-93.168 173.959-173.96 0-2.646-.054-5.281-.172-7.903 11.938-8.63 22.313-19.4 30.498-31.66-10.955 4.869-22.744 8.147-35.111 9.626 12.623-7.569 22.314-19.543 26.886-33.817-11.813 7.003-24.896 12.093-38.823 14.841-11.158-11.884-27.041-19.316-44.63-19.316-33.764 0-61.144 27.381-61.144 61.132 0 4.798.536 9.465 1.585 13.94-50.815-2.557-95.874-26.886-126.03-63.88-5.25 9.035-8.278 19.531-8.278 30.73 0 21.212 10.794 39.938 27.208 50.893-10.031-.31-19.454-3.063-27.69-7.646-.009.257-.009.507-.009.78 0 29.61 21.075 54.332 49.051 59.935-5.138 1.4-10.543 2.151-16.122 2.151-3.934 0-7.766-.387-11.491-1.103 7.784 24.293 30.355 41.971 57.115 42.465-20.926 16.402-47.287 26.171-75.937 26.171-4.929 0-9.798-.28-14.584-.846 27.059 17.344 59.189 27.464 93.722 27.464"
+                                    transform="translate(-539.18 -568.86)" /></svg>
+                        </a>
+
+
+                        <a href="" class="social-link-item" target="_blank">
+                            <svg enable-background="new 0 0 500 500" height="30" viewBox="0 0 500 500" width="30"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="m250.815 9.146c-136.852 0-247.321 110.47-247.321 247.321 0 108.821 70.899 201.153 169.827 234.13 13.19 1.647 16.488-4.947 16.488-11.542v-42.869c-69.25 14.84-84.089-32.976-84.089-32.976-11.542-28.029-28.03-36.274-28.03-36.274-23.083-14.839 1.648-14.839 1.648-14.839 24.732 1.649 37.923 24.731 37.923 24.731 21.435 37.924 57.708 26.382 72.548 19.786 1.648-16.489 8.244-26.381 16.487-32.976-54.41-6.595-112.118-28.029-112.118-122.012 0-26.381 9.893-49.464 24.732-65.952-3.298-6.595-11.542-31.327 1.648-65.952 0 0 21.435-6.596 67.601 24.732 19.786-4.947 41.22-8.244 62.655-8.244s42.868 3.297 62.655 8.244c47.815-31.328 67.601-24.732 67.601-24.732 13.189 34.625 4.946 59.357 1.649 65.952 16.487 16.488 24.731 39.571 24.731 65.952 0 95.63-57.708 115.417-112.118 122.012 8.242 8.244 16.487 23.084 16.487 46.166v67.602c0 6.596 4.946 14.838 16.489 11.54 98.927-32.976 168.177-125.308 168.177-234.129 1.652-135.201-108.819-245.671-245.67-245.671z"
+                                    fill="#181616" /></svg>
+                        </a>
+
+                    </div>
+                </possiblyPointlessShortcuts>
+
+
+            </dashboard>
+
+
+            }
