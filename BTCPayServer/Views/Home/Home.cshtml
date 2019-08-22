@@ -80,7 +80,7 @@
                     business.
                 </p>
                 <div class="sponsors-showcase">
-                    <span class="small-uppercase">our sponsors</span>
+                    <span class="small-uppercase">our supporters</span>
                     <div class="sponsor-icon-flex">
                         <div class="sponsor-icon"></div>
                         <div class="sponsor-icon"></div>
@@ -133,14 +133,12 @@
                             </form>
 
                             <a class="fp-button-sec" asp-controller="Account" asp-action="ForgotPassword">
-                                Forgot
-                                your password?
+                                Forgot your password?
                             </a>
 
                             @if (themeManager.ShowRegister)
                             {
-
-                                <a class="fp-button-sec" id="Register">Register</a>
+                                <a class="fp-button-sec" id="Register" href="#">Register</a>
                             }
                         </div>
 
@@ -182,7 +180,7 @@
                                 </div>
                             </form>
 
-                            <a class="fp-button-sec" id="SignIn">Sign in</a>
+                            <a class="fp-button-sec" id="SignIn" href="#">Sign in</a>
                             @section Scripts {
                                 @await Html.PartialAsync("_ValidationScriptsPartial")
                             }
