@@ -4,6 +4,7 @@
     --body-back: #f4f5f5;
     --body-back-2: #e5e5e5;
     --button-dark: #202c39;
+    --button-dark-secondary: #303942;
     --button-dark-text: #cedc21;
     --lime: #68cf53;
     --lime-text: #3f9b2c;
@@ -13,12 +14,17 @@
     --shadow-dark: rgba(8, 0, 50, 0.3);
     --shadow-light: rgba(8, 0, 50, 0.15);
     --crimson: #dc143c;
+    --amber: rgb(255, 187, 0);
 }
 
 *,
 ::before,
 ::after {
     box-sizing: border-box;
+}
+
+*{
+    transition: 0.2s ease;
 }
 
 section {
@@ -79,7 +85,13 @@ p {
     letter-spacing: 0.1em;
     color: #000000;
 }
+.environment {
 
+    font-size: 12px;
+    font-weight: 200;
+    letter-spacing: 1px;
+
+}
 .field-validation-error,
 .error {
     color: var(--crimson);
@@ -433,6 +445,15 @@ workspace {
     overflow-y: scroll;
 
     overflow-x: hidden;
+    display: flex;
+
+flex-wrap: wrap;
+
+flex-flow: column;
+
+justify-content: flex-start;
+
+align-content: normal;
 }
 
 possiblyPointlessShortcuts {
@@ -490,6 +511,7 @@ possiblyPointlessShortcuts {
     list-style: none;
     padding: 0;
     margin: 4rem auto auto auto;
+    width: 100%;
 }
 
 .sidebar-menu li a {
@@ -511,8 +533,8 @@ possiblyPointlessShortcuts {
 
 .sidebar-menu li a:hover {
     background: var(--gauze);
-    /* margin: 0 !important; */
     padding-left: 1rem !important;
+    /* padding-right: 2rem !important; */
 }
 
 .sidebar-menu li svg path {
@@ -617,10 +639,11 @@ dashboard.Invoices #Invoices svg path,
 dashboard.PaymentRequests #PaymentRequests,
 dashboard.PaymentRequests #PaymentRequests svg path,
 dashboard.ServerSettings #ServerSettings,
-dashboard.ServerSettings #ServerSettings svg path {
+dashboard.ServerSettings #ServerSettings svg path,
+.focus-override, .focus-override svg path {
     /* border: 2px solid var(--button-dark); */
     border-left: 5px solid var(--button-dark);
-    border-radius: 0px 15px 15px 0px;
+    border-radius: 0px 15px 15px 0px !important;
     color: var(--button-dark);
     fill: var(--button-dark);
     font-weight: 400;
@@ -695,11 +718,103 @@ sidebarDeep .nav {
 
 
 
+/* DASHBOARD COMPONENTS */
 
+.dashboard-modal {
 
+    width: calc(50% - 4rem);
+    max-width: 90vw;
+    min-width: 200px;
+    padding: 2rem;
+    border-radius: 15px;
+    background: var(--body-white);
 
+}
 
+.status-text {
 
+    padding: 0;
+    margin: 0 0 1rem 0;
+    color: var(--button-dark);
+    text-transform: uppercase;
+    font-weight: 400;
+    font-family: Montserrat;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 2.25rem;
+    letter-spacing: 0.1em;
+
+}
+
+.status-detail, .status-detail p {
+
+    margin: 1rem 0;
+    color: var(--button-dark);
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 200;
+    font-size: 13px;
+    line-height: 1.1rem;
+    letter-spacing: 1px;
+
+}
+
+.modal-indicator {
+
+    display: block;
+    height: 10px;
+    width: 10px;
+    border-radius: 10px;
+    margin: 1.5rem;
+}
+
+.indicator-red{
+    background: var(--crimson);
+}
+.indicator-amber{
+    background: var(--amber);
+}
+.indicator-green{
+    background: var(--lime);
+}
+.tile-ske {
+
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: auto 1fr;
+    border-radius: 10px;
+    margin: 1.5rem auto auto auto;
+    /* box-shadow: 0px 4px 8px -2px var(--shadow-dark); */
+    border: 1px solid var(--shadow-light);
+
+}
+
+.tile-ske:hover, .dashboard-modal:hover{
+    box-shadow: 0px 4px 20px -2px var(--shadow-light);
+}
+
+.tile-ske h4 {
+    margin: calc(1.5rem - calc(10px * .5)) 0;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+
+.tile-ske ul {
+
+    margin: 0 auto 1.5rem auto;
+    padding: 0;
+    list-style: none;
+
+}
+
+.tile-ske ul li{
+
+    color: var(--button-dark-secondary);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 1px;
+
+}
 
 
 

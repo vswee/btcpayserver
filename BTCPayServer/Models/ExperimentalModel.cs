@@ -5,6 +5,18 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
+// STORES VMOD
+
+using NBitcoin;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+//
+
+
+
 
 namespace BTCPayServer.Models
 {
@@ -33,4 +45,6 @@ namespace BTCPayServer.Models
         public bool RememberMe { get; set; }
 
     }
+
 }
+// }
