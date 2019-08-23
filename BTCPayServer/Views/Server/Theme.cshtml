@@ -1,6 +1,9 @@
 ﻿@model BTCPayServer.Services.ThemeSettings
 @{
     ViewData.SetActivePageAndTitle(ServerNavPages.Theme);
+    Layout = "_DashboardLayout";
+    ViewData["Current"] = "ServerSettings";
+
 }
 
 
@@ -38,6 +41,5 @@
     </div>
 </div>
 
-@section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
-}
+

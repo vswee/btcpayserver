@@ -20,7 +20,9 @@ function scrollTo(e, t) {
   document.querySelectorAll("a").forEach(function (e) {
     try {
         "#" == e.getAttribute("href").substr(0, 1) && "#_" != e.getAttribute("href").substr(0, 2) && e.addEventListener("click", function (t) {
-            return t.preventDefault(), scrollTo(e.getAttribute("href").replace("#", ""), 0), document.querySelector(e.getAttribute("href")).querySelectorAll("div").forEach(function(t){
+            return t.preventDefault(), scrollTo(e.getAttribute("href").replace("#", ""), 0), document.querySelector(e.getAttribute("href")).querySelectorAll("*").forEach(function(t){
+                let p = document.querySelector(e.getAttribute("href"));
+                if(p.style.display == "none"){p.style.display = "";}
               t.classList.add("build-in-up");
             });
         }) && console.log(t);

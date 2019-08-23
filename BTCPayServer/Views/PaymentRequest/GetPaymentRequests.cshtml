@@ -1,9 +1,11 @@
 @using BTCPayServer.Services.PaymentRequests
 @model BTCPayServer.Models.PaymentRequestViewModels.ListPaymentRequestsViewModel
 @{
-    Layout = "_Layout";
+    Layout = "_DashboardLayout";
+    ViewData["Current"] = "PaymentRequests";
+    <!-- Layout = "_Layout"; -->
 }
-<section>
+<!-- <section> -->
     <div class="container">
         @if (!string.IsNullOrEmpty(Model.StatusMessage))
         {
@@ -84,4 +86,4 @@
             </nav>
         </div>
     </div>
-</section>
+<!-- </section> -->

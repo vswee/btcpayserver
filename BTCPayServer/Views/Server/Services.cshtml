@@ -1,6 +1,9 @@
 ﻿@model BTCPayServer.Models.ServerViewModels.ServicesViewModel
 @{
     ViewData.SetActivePageAndTitle(ServerNavPages.Services);
+    Layout = "_DashboardLayout";
+    ViewData["Current"] = "ServerSettings";
+
 }
 
 
@@ -171,6 +174,4 @@
     </div>
 </div>
 
-@section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
-}

@@ -1,9 +1,11 @@
 ﻿@using BTCPayServer.Services.Apps
 @model ListAppsViewModel
 @{
+    Layout = "_DashboardLayout";
     ViewData["Title"] = "Apps";
+    ViewData["Current"] = "Apps";
 }
-<section>
+<!-- <section> -->
     <div class="container">
         @if (TempData.ContainsKey("TempDataProperty-StatusMessage"))
         {
@@ -15,8 +17,6 @@
         }
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2 class="section-heading">@ViewData["Title"]</h2>
-                <hr class="primary">
                 <p>Create and manage apps.</p>
             </div>
         </div>
@@ -67,4 +67,4 @@
             </table>
         </div>
     </div>
-</section>
+<!-- </section> -->

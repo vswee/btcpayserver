@@ -1,6 +1,8 @@
 ﻿@model UsersViewModel
 @{
     ViewData.SetActivePageAndTitle(ServerNavPages.Users);
+    Layout = "_DashboardLayout";
+    ViewData["Current"] = "ServerSettings";
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />

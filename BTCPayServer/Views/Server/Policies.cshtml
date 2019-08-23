@@ -1,6 +1,9 @@
 ﻿@model BTCPayServer.Services.PoliciesSettings
 @{
     ViewData.SetActivePageAndTitle(ServerNavPages.Policies);
+    Layout = "_DashboardLayout";
+    ViewData["Current"] = "ServerSettings";
+
 }
 
 
@@ -90,7 +93,6 @@
     <button type="submit" class="btn btn-primary" name="command" value="Save">Save</button>
 </form>
 
-@section Scripts {
     <style>
             .remove-domain-btn{
                 font-size: 1.5rem;
@@ -100,4 +102,4 @@
                        background-color: #CCCCCC;
              }
     </style>
-}
+

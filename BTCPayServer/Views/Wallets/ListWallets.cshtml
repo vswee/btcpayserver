@@ -1,9 +1,11 @@
 ﻿@model BTCPayServer.Models.WalletViewModels.ListWalletsViewModel
 @{
+    Layout = "_DashboardLayout";
     ViewData["Title"] = "Wallets";
+    ViewData["Current"] = "Wallets";
 }
 
-<section>
+<!-- <section> -->
     <div class="container">
         @if (TempData.ContainsKey("TempDataProperty-StatusMessage"))
         {
@@ -16,8 +18,6 @@
 
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2 class="section-heading">@ViewData["Title"]</h2>
-                <hr class="primary">
                 <p>Create and manage wallets.</p>
             </div>
         </div>
@@ -55,4 +55,4 @@
             </table>
         </div>
     </div>
-</section>
+<!-- </section> -->

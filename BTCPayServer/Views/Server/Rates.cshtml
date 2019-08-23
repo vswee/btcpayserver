@@ -1,6 +1,8 @@
 ﻿@model BTCPayServer.Models.ServerViewModels.RatesViewModel
 @{
     ViewData.SetActivePageAndTitle(ServerNavPages.Rates);
+    Layout = "_DashboardLayout";
+    ViewData["Current"] = "ServerSettings";
 }
 
 
@@ -56,6 +58,8 @@
     </div>
 </div>
 
-@section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-}
+ <!-- section Scripts {
+   await Html.PartialAsync("_ValidationScriptsPartial")
+} removed At's-->
+
+<bundle name="wwwroot/bundles/jqueryvalidate-bundle.min.js" />

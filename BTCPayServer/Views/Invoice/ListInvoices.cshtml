@@ -1,12 +1,14 @@
 ﻿@model InvoicesModel
 @{
+    Layout = "_DashboardLayout";
     ViewData["Title"] = "Invoices";
+    ViewData["Current"] = "Invoices";
 }
 @section HeadScripts {
     <script src="~/modal/btcpay.js"></script>
 }
 @Html.HiddenFor(a => a.Count)
-<section>
+<!-- <section> -->
     <div class="container">
         @if (!string.IsNullOrEmpty(Model.StatusMessage))
         {
@@ -19,10 +21,8 @@
 
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2 class="section-heading">@ViewData["Title"]</h2>
-                <hr class="primary">
                 <p>Create, search or pay an invoice. (<a href="#help" data-toggle="collapse">Help</a>)</p>
-                <div id="help" class="collapse text-left">
+                <div id="help" class="collapse text-left" style="display:none;">
                     <p>
                         You can search for invoice Id, deposit address, price, order id, store id, any buyer information and any product information.<br />
                         Be sure to split your search parameters with comma, for example: <code>startdate:2019-04-25 13:00:00, status:paid</code><br />
@@ -66,7 +66,7 @@
                         <div class="input-group">
                             <input asp-for="TimezoneOffset" type="hidden" />
                             <input asp-for="SearchTerm" class="form-control" style="width:300px;" />
-                            <div class="input-group-append">
+                            <!-- <div class="input-group-append">
                                 <button type="submit" class="btn btn-primary" title="Search invoice">
                                     <span class="fa fa-search"></span> Search
                                 </button>
@@ -88,7 +88,7 @@
                                     <div role="separator" class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="/invoices">Unfiltered</a>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <span asp-validation-for="SearchTerm" class="text-danger"></span>
                     </form>
@@ -433,4 +433,4 @@
             color: #fff;
         }
     </style>
-</section>
+<!-- </section> -->
