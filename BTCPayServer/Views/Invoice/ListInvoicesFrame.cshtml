@@ -71,13 +71,6 @@
                             <td style="text-align:right">@invoice.AmountCurrency</td>
                           
                         </tr>
-                        <tr id="invoice_@invoice.InvoiceId" style="display:none;">
-                            <td colspan="99">
-                                <div>
-                                    <partial name="InvoicePaymentsPartial" model="invoice.Details" />
-                                </div>
-                            </td>
-                        </tr>
                     }
                 </tbody>
             </table>
