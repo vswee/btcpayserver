@@ -36,6 +36,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BTCPayServer.Data;
 using Microsoft.EntityFrameworkCore;
 
+using BTCPayServer.Filters;
+
 namespace BTCPayServer.Controllers
 {
     [Authorize(Policy = BTCPayServer.Security.Policies.CanModifyServerSettings.Key)]
@@ -149,6 +151,26 @@ namespace BTCPayServer.Controllers
             }
             return null;
         }
+
+        [Route("frame/server/users")]
+        [XFrameOptions(XFrameOptionsAttribute.XFrameOptions.AllowFrom, "http://localhost:14142")]
+        public IActionResult ListUsersFrame(int skip = 0, int count = 50)
+        {
+            var users = new UsersFrameViewModel();
+            users.StatusMessage = StatusMessage;
+            users.Users = _UserManager.Users.Skip(skip).Take(count)
+                .Select(u => new UsersFrameViewModel.UserViewModel
+                {
+                    Name = u.UserName,
+                    Email = u.Email,
+                    Id = u.Id
+                }).ToList();
+            users.Skip = skip;
+            users.Count = count;
+            users.Total = _UserManager.Users.Count();
+            return View(users);
+        }
+
 
         [Route("server/users")]
         public IActionResult ListUsers(int skip = 0, int count = 50)

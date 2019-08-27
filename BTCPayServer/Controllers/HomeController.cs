@@ -81,9 +81,9 @@ namespace BTCPayServer.Controllers
             return await GoToApp(_cachedServerSettings.RootAppId, _cachedServerSettings.RootAppType) ?? View("Home"); 
         }
 
-        public async Task<IActionResult> HomeNew() {
-            return View("HomeNew");
-        }
+        // public async Task<IActionResult> HomeNew() {
+        //     return View("HomeNew");
+        // }
 
         [Route("translate")]
         public IActionResult BitpayTranslator()

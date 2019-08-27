@@ -1,6 +1,6 @@
 ﻿@model StoreViewModel
 @{
-    Layout = "../Shared/_NavLayout.cshtml";
+    Layout = "../Shared/_DashboardLayout.cshtml";
     ViewData.SetActivePageAndTitle(StoreNavPages.Index, "Profile");
 }
 
@@ -251,6 +251,5 @@
     </div>
 </div>
 
-@section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
-}
+

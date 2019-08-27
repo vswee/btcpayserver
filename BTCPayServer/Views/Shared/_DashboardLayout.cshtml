@@ -36,6 +36,7 @@
     <!-- <bundle name="wwwroot/bundles/main-bundle.min.js" /> -->
     @RenderSection("HeadScripts", required: false)
     @RenderSection("HeaderContent", false)
+    
 </head>
 
 <body id="page-top">
@@ -322,7 +323,7 @@
         </possiblyPointlessShortcuts>
     </dashboard>
 
-
+@RenderSection("Scripts", false)
     <bundle name="wwwroot/bundles/main-bundle-post-body.min.js" />
 
 </body>

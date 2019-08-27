@@ -64,19 +64,16 @@ h1 {
 }
 
 body {
-    font-family: "Montserrat";
+    font-family: "Montserrat", "Helvetica Neue", "Arial", sans-serif;
     background: var(--body-back);
     margin: 0;
-
     padding: 0;
-
     min-height: 100vh;
-
     width: 100vw;
 }
 
 p {
-    font-family: "Montserrat";
+    font-family: "Montserrat", "Helvetica Neue", "Arial", sans-serif;
     font-style: normal;
     font-weight: 100;
     font-size: 18px;
@@ -150,7 +147,7 @@ p {
     line-height: 18px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    font-family: Montserrat;
+    font-family: "Montserrat", "Helvetica Neue", "Arial", sans-serif;
 }
 
 .main-head-link {
@@ -258,7 +255,7 @@ p {
 .modern-login-register form input {
     border-width: 0px 0px 2px 0px;
     border-color: #000;
-    font-family: Montserrat;
+    font-family: "Montserrat", "Helvetica Neue", "Arial", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -276,7 +273,7 @@ p {
 }
 
 .form-lab {
-    font-family: Montserrat;
+    font-family: "Montserrat", "Helvetica Neue", "Arial", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -294,7 +291,7 @@ p {
     border-radius: 10px;
     border-width: 0px;
     padding: 16px 32px;
-    font-family: Montserrat;
+    font-family: "Montserrat", "Helvetica Neue", "Arial", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -449,7 +446,7 @@ workspace {
 
 flex-wrap: wrap;
 
-flex-flow: column;
+flex-direction: row;
 
 justify-content: flex-start;
 
@@ -565,9 +562,6 @@ possiblyPointlessShortcuts {
     cursor: pointer;
 }
 
-.control-icon-button:hover svg path {
-    /* fill: var(--black-text); */
-}
 
 .control-icon-button:hover {
     background: var(--button-dark-text);
@@ -579,7 +573,7 @@ workspace table {
 }
 
 #help p {
-    font-family: Montserrat;
+    font-family: "Montserrat", "Helvetica Neue", "Arial", sans-serif;
     font-size: 12px;
     letter-spacing: 1px;
     font-weight: 400;
@@ -676,8 +670,7 @@ sidebarDeep .nav {
     border-left: calc(0.25rem) solid var(--lime) !important;
 }
 
-.nav-link:hover{
-}
+
 
 
 .nav-link:not(.active):hover{
@@ -721,14 +714,14 @@ sidebarDeep .nav {
 /* DASHBOARD COMPONENTS */
 
 .dashboard-modal {
-
-    width: calc(50% - 4rem);
+    width: calc(50% - 8rem);
     max-width: 90vw;
     min-width: 200px;
     padding: 2rem;
     border-radius: 15px;
     background: var(--body-white);
-
+    margin: 2rem 2rem auto 2rem;
+    border: 1px solid transparent;
 }
 
 .status-text {
@@ -738,7 +731,7 @@ sidebarDeep .nav {
     color: var(--button-dark);
     text-transform: uppercase;
     font-weight: 400;
-    font-family: Montserrat;
+    font-family: "Montserrat", "Helvetica Neue", "Arial", sans-serif;
     font-style: normal;
     font-size: 20px;
     line-height: 2.25rem;
@@ -750,7 +743,7 @@ sidebarDeep .nav {
 
     margin: 1rem 0;
     color: var(--button-dark);
-    font-family: Montserrat;
+    font-family: "Montserrat", "Helvetica Neue", "Arial", sans-serif;
     font-style: normal;
     font-weight: 200;
     font-size: 13px;
@@ -790,7 +783,8 @@ sidebarDeep .nav {
 }
 
 .tile-ske:hover, .dashboard-modal:hover{
-    box-shadow: 0px 4px 20px -2px var(--shadow-light);
+    /* box-shadow: 0px 4px 20px -2px var(--shadow-light); */
+    border: 1px solid var(--shadow-light);
 }
 
 .tile-ske h4 {
@@ -813,6 +807,33 @@ sidebarDeep .nav {
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 1px;
+
+}
+
+.text-badge {
+
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding: 2px 4px;
+    border: 1px solid var(--shadow-dark);
+    border-radius: 5px;
+    color: var(--button-dark-secondary);
+    background: var(--gauze);
+
+}
+
+
+.modal-payload iframe {
+
+    border: 0;
+    height: 100%;
+    width: 100%;
+    background: url(https://include.flat18.co.uk/img/spin-01.svg);
+    background-position: 50% 50%;
+    background-size: 100px;
+    background-repeat: no-repeat;
 
 }
 

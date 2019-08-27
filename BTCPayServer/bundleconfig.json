@@ -8,7 +8,13 @@
             "wwwroot/main/**/*.css",
             "wwwroot/vendor/animatecss/animate.css",
             "wwwroot/vendor/flatpickr/flatpickr.css",
-            "wwwroot/main-new/**/*.css"
+            "wwwroot/main-new/primary/*.css"
+        ]
+    },
+    {
+        "outputFileName": "wwwroot/bundles/frame-bundle.min.css",
+        "inputFiles": [
+            "wwwroot/main-new/frame/btcpay-frame.css"
         ]
     },
     {
@@ -29,7 +35,13 @@
     {
         "outputFileName": "wwwroot/bundles/main-bundle-post-body.min.js",
         "inputFiles": [
-            "wwwroot/main-new/**/*.js"
+            "wwwroot/main-new/primary/*.js"
+        ]
+    },
+    {
+        "outputFileName": "wwwroot/bundles/frame-bundle-post-body.min.js",
+        "inputFiles": [
+            "wwwroot/main-new/frame/btcpay-frame.js"
         ]
     },
     {

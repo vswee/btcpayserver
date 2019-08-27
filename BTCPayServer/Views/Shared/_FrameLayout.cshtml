@@ -1,0 +1,39 @@
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+@inject BTCPayServer.Services.BTCPayServerEnvironment env
+@inject BTCPayServer.HostedServices.NBXplorerDashboard dashboard
+@inject BTCPayServer.HostedServices.CssThemeManager themeManager
+
+@{
+  ViewBag.ShowMenu = ViewBag.ShowMenu ?? true;
+}
+
+@addTagHelper *, BundlerMinifier.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>@ViewData["Title"]</title>
+
+    @* CSS *@
+    <bundle name="wwwroot/bundles/frame-bundle.min.css" />
+
+    @* JS *@
+    @RenderSection("HeadScripts", required: false)
+    @RenderSection("HeaderContent", false)
+</head>
+
+<body>
+  
+          @RenderBody()
+        
+    <bundle name="wwwroot/bundles/frame-bundle-post-body.min.js" />
+
+</body>
+</html>

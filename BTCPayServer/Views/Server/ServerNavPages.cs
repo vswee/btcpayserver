@@ -9,4 +9,9 @@ namespace BTCPayServer.Views.Server
     {
         Index, Users, Rates, Emails, Policies, Theme, Services, Maintenance, Logs, Files
     }
+
+        public enum FramePages
+    {
+        Users
+    }
 }

@@ -1,0 +1,85 @@
+@model InvoicesFrameModel
+@{
+    Layout = "_FrameLayout";
+    ViewData["Title"] = "Invoices";
+    ViewData["Current"] = "Invoices";
+}
+@section HeadScripts {
+    <script src="~/modal/btcpay.js"></script>
+}
+@Html.HiddenFor(a => a.Count)
+<!-- <section> -->
+        @if (!string.IsNullOrEmpty(Model.StatusMessage))
+        {
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <partial name="_StatusMessage" for="StatusMessage" />
+                </div>
+            </div>
+        }
+
+<span class="page-link">@(Model.Skip + 1) to @(Model.Skip + Model.FrameInvoices.Count) of @Model.Total</span>
+
+            <table class="table table-sm table-responsive-md modular-display-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>InvoiceId</th>
+                        <th>Status</th>
+                        <th style="text-align:right">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var invoice in Model.FrameInvoices)
+                    {
+                        <tr>
+                            <td class="field-cut">
+                                <span class="switchTimeFormat" data-switch="@invoice.Date.ToTimeAgo()">
+                                    @invoice.Date.ToBrowserDate()
+                                </span>
+                            </td>
+                            <td class="field-cut">@invoice.InvoiceId</td>
+                            <td>
+                                @if (invoice.CanMarkStatus)
+                                {
+                                    <div id="pavpill_@invoice.InvoiceId">
+                                        <span class="dropdown-toggle dropdown-toggle-split pavpill pavpil-@invoice.Status.ToString().ToLower() stat-@invoice.StatusString"
+                                              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            @invoice.StatusString
+                                        </span>
+                                        <!-- <div class="dropdown-menu pull-right">
+                                            @if (invoice.CanMarkInvalid)
+                                            {
+                                                <button class="dropdown-item small cursorPointer" onclick="changeInvoiceState(this, '@invoice.InvoiceId', 'invalid')">
+                                                    Mark as invalid <span class="fa fa-times"></span>
+                                                </button>
+                                            }
+                                            @if (invoice.CanMarkComplete)
+                                            {
+                                                <button class="dropdown-item small cursorPointer" onclick="changeInvoiceState(this, '@invoice.InvoiceId', 'complete')">
+                                                    Mark as complete <span class="fa fa-check-circle"></span>
+                                                </button>
+                                            }
+                                        </div> -->
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="pavpill pavpil-@invoice.Status.ToString().ToLower()">@invoice.StatusString</span>
+                                }
+                            </td>
+                            <td style="text-align:right">@invoice.AmountCurrency</td>
+                          
+                        </tr>
+                        <tr id="invoice_@invoice.InvoiceId" style="display:none;">
+                            <td colspan="99">
+                                <div>
+                                    <partial name="InvoicePaymentsPartial" model="invoice.Details" />
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+          
