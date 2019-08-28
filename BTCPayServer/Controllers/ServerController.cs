@@ -153,7 +153,7 @@ namespace BTCPayServer.Controllers
         }
 
         [Route("frame/server/users")]
-        [XFrameOptions(XFrameOptionsAttribute.XFrameOptions.AllowFrom, "http://localhost:14142")]
+        [XFrameOptions(XFrameOptionsAttribute.XFrameOptions.AllowAll)]
         public IActionResult ListUsersFrame(int skip = 0, int count = 50)
         {
             var users = new UsersFrameViewModel();

@@ -24,7 +24,7 @@
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>InvoiceId</th>
+                        <th>Invoice Id</th>
                         <th>Status</th>
                         <th style="text-align:right">Amount</th>
                     </tr>
@@ -38,7 +38,7 @@
                                     @invoice.Date.ToBrowserDate()
                                 </span>
                             </td>
-                            <td class="field-cut">@invoice.InvoiceId</td>
+                            <td onclick="copyToClipboard(event, this)" class="field-cut">@invoice.InvoiceId</td>
                             <td>
                                 @if (invoice.CanMarkStatus)
                                 {

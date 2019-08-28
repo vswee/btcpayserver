@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using BTCPayServer.Services.Stores;
+using BTCPayServer.Models;
+using BTCPayServer.Models.StoreViewModels;
+using NBitcoin;
 
-namespace BTCPayServer.Models
+
+namespace BTCPayServer
 {
     public class ExperimentalViewModel
     {
+
+        // public string StoreFilterDashboard { get; set; }
+
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -29,6 +38,10 @@ namespace BTCPayServer.Models
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+
+
+
+    
 
     }
 

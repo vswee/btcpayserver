@@ -26,7 +26,9 @@ function scrollTo(e, t) {
               t.classList.add("build-in-up");
             });
         }) && console.log(t);
-    } catch (e) { console.log(e); }
+    } catch (e) { 
+      // console.log(e); 
+    }
   });
   
   
@@ -47,3 +49,19 @@ function scrollTo(e, t) {
   }catch(e){
       //
   }
+
+
+  document.querySelectorAll('iframe').forEach(function(t){
+    t.addEventListener("load", function() {
+      var h = t.contentDocument.body.scrollHeight;
+      console.log('working on: ' + h);
+      t.style.height = h+20 + 'px';
+    })
+  })
+
+    // window.addEventListener('message', function(e) {
+    //   // message passed can be accessed in "data" attribute of the event object
+    //   var scroll_height = e.data;
+    //   console.log(e.data);
+    //   // document.getElementById('iframe-container').style.height = scroll_height + 'px'; 
+    // } , false);

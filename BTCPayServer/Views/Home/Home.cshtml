@@ -347,8 +347,73 @@
             }
         </sidebar>
 
+        <workspaceControls>
+            <!-- TO BE BOUND BBY IF -->
+            <div class="hover-dropdown filter-stores-element">
+                <svg enable-background="new 0 0 500 500" height="20" viewBox="0 0 500 500" width="20" xmlns="http://www.w3.org/2000/svg"><g stroke-linecap="round" stroke-miterlimit="10" stroke-width="40"><path d="m86.539 85.16h324.104"/><path d="m272.797 250.065h-186.258"/><path d="m152.235 415.324h-65.696"/></g></svg>
+                <span class="button-name">&nbsp;Filter by Store</span>
+            <ul>
 
+                <li>Store 01</li>
+                
+                    <!-- foreach (var store in Model.Stores) -->
+                    <!-- { -->
+                        <!-- <li><a href="/?searchTerm=store.Id">store.Name</a></li> -->
+                    <!-- } -->
+
+                <!-- IF HAS PERMISSIONS SO TO DO -->
+                <li class="add-store"><a href="/stores/create"><svg enable-background="new 0 0 500 500" height="16" viewBox="0 0 500 500" width="16" xmlns="http://www.w3.org/2000/svg"><g fill="#fff" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-width="40"><path d="m87.948 250h324.104"/><path d="m250 412.052v-324.104"/></g></svg>&nbsp;Add store</a></li>
+            </ul>
+            </div>
+        </workspaceControls>
         <workspace>
+
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+
+
+            <div class="dashboard-modal overview-frame">
+                <div class="modal-content">
+                    <h4 class="status-text">Server Users</h4>
+                    <div class="status-detail">
+                        <p>
+                            User Accounts on your BTCPay Server instance.
+                        </p>
+                    </div>
+                    <div class="modal-payload">
+                        <iframe src="frame/server/users"></iframe>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="dashboard-modal overview-frame">
+                <div class="modal-content">
+                    <h4 class="status-text">Invoices Overview</h4>
+                    <div class="status-detail">
+                        <p>
+                            Recent Invoices.
+                        </p>
+                    </div>
+                    <div class="modal-payload">
+                        <iframe src="frame/invoices"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             <div class="dashboard-modal node-statuses">
                 <div class="modal-content">
                     <h4 class="status-text">Your nodes are syncing</h4>
@@ -444,42 +509,13 @@
                 </div>
 
             </div>
-
-            @if (SignInManager.IsSignedIn(User))
-            {
-
-            <div class="dashboard-modal node-statuses">
-                <div class="modal-content">
-                    <h4 class="status-text">Server Users</h4>
-                    <div class="status-detail">
-                        <p>
-                            User Accounts on your BTCPay Server instance.
-                        </p>
-                    </div>
-                    <div class="modal-payload">
-                        <iframe src="frame/server/users"></iframe>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="dashboard-modal node-statuses">
-                <div class="modal-content">
-                    <h4 class="status-text">Invoices Overview</h4>
-                    <div class="status-detail">
-                        <p>
-                            Recent Invoices.
-                        </p>
-                    </div>
-                    <div class="modal-payload">
-                        <iframe src="frame/invoices"></iframe>
-                    </div>
-                </div>
-            </div>
-
-            }
-        </workspace>
+            
+            
+            
+            
+            
+            
+            </workspace>
 
 
         <possiblyPointlessShortcuts>

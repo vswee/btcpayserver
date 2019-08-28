@@ -678,7 +678,8 @@ namespace BTCPayServer.Controllers
 
 
         [Route("frame/invoices")]
-        [XFrameOptions(XFrameOptionsAttribute.XFrameOptions.AllowFrom, "http://localhost:14142")]
+
+        [XFrameOptions(XFrameOptionsAttribute.XFrameOptions.AllowAll)]
 
         [Authorize(AuthenticationSchemes = Policies.CookieAuthentication)]
         [BitpayAPIConstraint(false)]

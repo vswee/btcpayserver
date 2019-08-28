@@ -23,7 +23,7 @@
     box-sizing: border-box;
 }
 
-*{
+* {
     transition: 0.2s ease;
 }
 
@@ -83,11 +83,9 @@ p {
     color: #000000;
 }
 .environment {
-
     font-size: 12px;
     font-weight: 200;
     letter-spacing: 1px;
-
 }
 .field-validation-error,
 .error {
@@ -395,7 +393,7 @@ masterland {
 dashboard {
     display: grid;
     grid-template-columns: auto auto 1fr;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: auto 1fr auto;
     height: 100vh;
     width: 100vw;
     position: absolute;
@@ -407,7 +405,7 @@ dashboard {
 
 sidebar {
     grid-column: 1/2;
-    grid-row: 1/2;
+    grid-row: 1/3;
     background: var(--body-back-2);
     min-width: calc(350px - 2rem);
     max-width: calc(550px - 2rem);
@@ -424,7 +422,7 @@ sidebar._True {
 
 sidebarDeep {
     grid-column: 2/3;
-    grid-row: 1/2;
+    grid-row: 1/3;
     background: var(--body-white);
     max-width: calc(550px - 2rem);
     display: grid;
@@ -435,33 +433,132 @@ sidebarDeep {
 
 workspace {
     grid-column: 3/4;
-    grid-row: 1/2;
+    grid-row: 2/3;
     background: var(--body-back);
     padding: 2rem;
-
     overflow-y: scroll;
-
     overflow-x: hidden;
     display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: left;
+    align-content: flex-start;
+}
 
-flex-wrap: wrap;
-
-flex-direction: row;
-
-justify-content: flex-start;
-
-align-content: normal;
+workspaceControls {
+    grid-column: 3/4;
+    grid-row: 1/2;
+    background: var(--body-back);
 }
 
 possiblyPointlessShortcuts {
     grid-column: 1/4;
-    grid-row: 2/3;
+    grid-row: 3/4;
     background: var(--button-dark);
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: auto auto;
     grid-column-gap: 4rem;
     padding: 1rem 2rem;
+}
+
+.filter-stores-element svg {
+    /* height: 20px; */
+    fill: var(--black-text);
+    stroke: var(--black-text);
+    display: inline-block;
+}
+
+.filter-stores-element .button-name {
+    font-size: 15px;
+    fill: var(--black-text);
+    line-height: 19px;
+    font-weight: 200;
+}
+
+.filter-stores-element {
+    background: var(--button-dark);
+    color: var(--black-text);
+}
+
+.hover-dropdown {
+    display: inline-grid;
+    margin: 1rem;
+    border-radius: 7px;
+    padding: 10px 15px;
+    cursor: pointer;
+    height: 40px;
+    grid-template-columns: 20px auto auto;
+    column-gap: 0.5rem;
+}
+
+.hover-dropdown ul {
+    display: none;
+    list-style: none;
+    padding: 0;
+}
+
+@keyframes buildInDown {
+    0% {
+        opacity: 0;
+        transform: translate(0px, -15px) rotateX(30deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0px, 0px) rotateX(0deg);
+    }
+}
+
+.hover-dropdown ul li {
+    padding: 5px 10px;
+    margin: 0;
+    font-size: 15px;
+    font-weight: 200;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.hover-dropdown ul li:hover {
+    background: var(--button-dark-secondary);
+    opacity: 1;
+}
+
+.hover-dropdown ul li a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.hover-dropdown ul li.add-store a {
+    text-decoration: none;
+    color: var(--button-dark-text);
+}
+
+.add-store a {
+    display: grid;
+    grid-template-columns: 16px auto;
+    grid-auto-flow: column;
+    /* border: 1px solid; */
+    padding: 2px 4px;
+    border-radius: 5px;
+}
+
+.hover-dropdown ul li a svg path {
+    fill: var(--button-dark-text);
+    stroke: var(--button-dark-text);
+    display: inline-block;
+}
+
+.hover-dropdown:hover ul {
+    display: block;
+    position: relative;
+    background: var(--button-dark);
+    color: var(--black-text);
+    grid-column: 2/3;
+    grid-row: 2/3;
+    margin-top: 9px;
+    border-radius: 0 0 5px 5px;
+    transform-origin: 50% 0%;
+    animation: buildInDown 0.1s linear forwards 1;
 }
 
 .flex-column {
@@ -562,7 +659,6 @@ possiblyPointlessShortcuts {
     cursor: pointer;
 }
 
-
 .control-icon-button:hover {
     background: var(--button-dark-text);
 }
@@ -634,7 +730,8 @@ dashboard.PaymentRequests #PaymentRequests,
 dashboard.PaymentRequests #PaymentRequests svg path,
 dashboard.ServerSettings #ServerSettings,
 dashboard.ServerSettings #ServerSettings svg path,
-.focus-override, .focus-override svg path {
+.focus-override,
+.focus-override svg path {
     /* border: 2px solid var(--button-dark); */
     border-left: 5px solid var(--button-dark);
     border-radius: 0px 15px 15px 0px !important;
@@ -644,7 +741,7 @@ dashboard.ServerSettings #ServerSettings svg path,
     stroke-width: 5px;
     stroke-linecap: round;
     stroke: var(--button-dark);
-    padding-left: 2rem;
+    padding-left: 2rem !important;
     margin-bottom: 1rem;
     margin-top: 1rem;
 }
@@ -655,7 +752,7 @@ dashboard.ServerSettings #ServerSettings svg path,
 }
 
 sidebarDeep .nav-link {
-    padding: .75rem 1.5rem .75rem 1.25rem;
+    padding: 0.75rem 1.5rem 0.75rem 1.25rem;
     border-left: calc(0.25rem) solid transparent;
 }
 
@@ -666,66 +763,49 @@ sidebarDeep .nav {
 .nav-link.active {
     background: var(--button-dark) !important;
     color: var(--lime) !important;
-    padding: .75rem 1.5rem .75rem 1.25rem !important;
+    padding: 0.75rem 1.5rem 0.75rem 1.25rem !important;
     border-left: calc(0.25rem) solid var(--lime) !important;
 }
 
-
-
-
-.nav-link:not(.active):hover{
+.nav-link:not(.active):hover {
     border-left: calc(0.25rem) solid var(--lime-text);
-    padding: .75rem 1.5rem .75rem 1.25rem;
+    padding: 0.75rem 1.5rem 0.75rem 1.25rem;
     background: var(--gauze-light);
     color: var(--lime-text) !important;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 /* TENTATIVE */
 
 .w-100 {
-
     position: fixed;
     bottom: 107px;
     margin: auto auto 0 auto;
     display: flex;
     flex-flow: wrap;
     column-gap: 1rem;
-
 }
-
-
-
-
-
-
 
 /* DASHBOARD COMPONENTS */
 
 .dashboard-modal {
-    width: calc(50% - 8rem);
     max-width: 90vw;
     min-width: 200px;
     padding: 2rem;
     border-radius: 15px;
     background: var(--body-white);
-    margin: 2rem 2rem auto 2rem;
+    margin: 2rem auto auto 2rem;
     border: 1px solid transparent;
 }
 
-.status-text {
+.node-statuses {
+    width: calc(50% - 8rem);
+}
 
+.overview-frame {
+    width: calc(50% - 4rem);
+}
+
+.status-text {
     padding: 0;
     margin: 0 0 1rem 0;
     color: var(--button-dark);
@@ -736,11 +816,10 @@ sidebarDeep .nav {
     font-size: 20px;
     line-height: 2.25rem;
     letter-spacing: 0.1em;
-
 }
 
-.status-detail, .status-detail p {
-
+.status-detail,
+.status-detail p {
     margin: 1rem 0;
     color: var(--button-dark);
     font-family: "Montserrat", "Helvetica Neue", "Arial", sans-serif;
@@ -749,11 +828,9 @@ sidebarDeep .nav {
     font-size: 13px;
     line-height: 1.1rem;
     letter-spacing: 1px;
-
 }
 
 .modal-indicator {
-
     display: block;
     height: 10px;
     width: 10px;
@@ -761,17 +838,16 @@ sidebarDeep .nav {
     margin: 1.5rem;
 }
 
-.indicator-red{
+.indicator-red {
     background: var(--crimson);
 }
-.indicator-amber{
+.indicator-amber {
     background: var(--amber);
 }
-.indicator-green{
+.indicator-green {
     background: var(--lime);
 }
 .tile-ske {
-
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: auto 1fr;
@@ -779,39 +855,34 @@ sidebarDeep .nav {
     margin: 1.5rem auto auto auto;
     /* box-shadow: 0px 4px 8px -2px var(--shadow-dark); */
     border: 1px solid var(--shadow-light);
-
 }
 
-.tile-ske:hover, .dashboard-modal:hover{
-    /* box-shadow: 0px 4px 20px -2px var(--shadow-light); */
-    border: 1px solid var(--shadow-light);
+/* .tile-ske:hover, */
+.dashboard-modal:hover {
+    box-shadow: 0px 6px 20px -2px var(--shadow-light);
+    /* border: 1px solid var(--shadow-light); */
 }
 
 .tile-ske h4 {
-    margin: calc(1.5rem - calc(10px * .5)) 0;
+    margin: calc(1.5rem - calc(10px * 0.5)) 0;
     font-weight: 600;
     letter-spacing: 0.1em;
 }
 
 .tile-ske ul {
-
     margin: 0 auto 1.5rem auto;
     padding: 0;
     list-style: none;
-
 }
 
-.tile-ske ul li{
-
+.tile-ske ul li {
     color: var(--button-dark-secondary);
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 1px;
-
 }
 
 .text-badge {
-
     display: inline-block;
     font-size: 10px;
     font-weight: 400;
@@ -821,23 +892,19 @@ sidebarDeep .nav {
     border-radius: 5px;
     color: var(--button-dark-secondary);
     background: var(--gauze);
-
 }
 
-
 .modal-payload iframe {
-
     border: 0;
     height: 100%;
+    min-height: 50px;
+    max-height: 30vh;
     width: 100%;
     background: url(https://include.flat18.co.uk/img/spin-01.svg);
     background-position: 50% 50%;
     background-size: 100px;
     background-repeat: no-repeat;
-
 }
-
-
 
 /* latin */
 @font-face {
@@ -845,10 +912,14 @@ sidebarDeep .nav {
     font-style: normal;
     font-weight: 100;
     src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.eot");
-    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.eot?#iefix") format("embedded-opentype"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.woff2") format("woff2"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.woff") format("woff"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.ttf") format("truetype");
+    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.eot?#iefix")
+            format("embedded-opentype"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.woff2")
+            format("woff2"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.woff")
+            format("woff"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.ttf")
+            format("truetype");
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
         U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
@@ -859,10 +930,14 @@ sidebarDeep .nav {
     font-style: normal;
     font-weight: 400;
     src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.eot");
-    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.eot?#iefix") format("embedded-opentype"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.woff2") format("woff2"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.woff") format("woff"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.ttf") format("truetype");
+    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.eot?#iefix")
+            format("embedded-opentype"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.woff2")
+            format("woff2"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.woff")
+            format("woff"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.ttf")
+            format("truetype");
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
         U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
@@ -873,10 +948,14 @@ sidebarDeep .nav {
     font-style: normal;
     font-weight: 700;
     src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.eot");
-    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.eot?#iefix") format("embedded-opentype"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.woff2") format("woff2"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.woff") format("woff"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.ttf") format("truetype");
+    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.eot?#iefix")
+            format("embedded-opentype"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.woff2")
+            format("woff2"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.woff")
+            format("woff"),
+        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.ttf")
+            format("truetype");
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
         U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
