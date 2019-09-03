@@ -35,6 +35,7 @@
     @RenderSection("HeaderContent", false)
 </head>
 
+
 <body id="page-top">
     @{
         if (ViewBag.AlwaysShrinkNavBar == null)
@@ -43,6 +44,7 @@
         }
         var additionalStyle = ViewBag.AlwaysShrinkNavBar ? "navbar-shrink always-shrinked" : "";
     }
+
 
     @RenderBody()
 

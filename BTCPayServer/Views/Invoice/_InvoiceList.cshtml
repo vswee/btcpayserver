@@ -1,35 +1,4 @@
-@model InvoicesFrameModel
-@{
-    Layout = "_FrameLayout";
-    ViewData["Title"] = "Invoices";
-    ViewData["Current"] = "Invoices";
-}
-@section HeadScripts {
-    <script src="~/modal/btcpay.js"></script>
-}
-@Html.HiddenFor(a => a.Count)
-<!-- <section> -->
-        @if (!string.IsNullOrEmpty(Model.StatusMessage))
-        {
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <partial name="_StatusMessage" for="StatusMessage" />
-                </div>
-            </div>
-        }
 
-<span class="page-link">@(Model.Skip + 1) to @(Model.Skip + Model.FrameInvoices.Count) of @Model.Total</span>
-
-            <table class="table table-sm table-responsive-md modular-display-table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Invoice Id</th>
-                        <th>Status</th>
-                        <th style="text-align:right">Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
                     @foreach (var invoice in Model.FrameInvoices)
                     {
                         <tr>
@@ -58,7 +27,8 @@
                           
                         </tr>
                     }
-                </tbody>
-            </table>
+        
+
+ 
 
           
