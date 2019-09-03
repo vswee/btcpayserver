@@ -424,9 +424,11 @@ Layout = "_LayoutNew";
                                 </p>
                             </div>
                             <div class="modal-payload">
-                                <!-- <iframe src="frame/server/users"></iframe> -->
-                                @Html.PartialAsync("/Views/Server/ListUsersFrame.cshtml", new BTCPayServer.Models.ServerViewModels.UsersFrameViewModel())
-                                
+                            @{
+                                await Html.RenderPartialAsync("/Views/Server/ListUsersFrame.cshtml", new BTCPayServer.Models.ServerViewModels.UsersFrameViewModel());
+                            } 
+
+
                             </div>
                         </div>
                     </div>
@@ -574,7 +576,7 @@ Layout = "_LayoutNew";
                         <a class="navbar-brand js-scroll-trigger" href="~/">
                             <svg onclick="window.location=\'/\'" version="1.1" id="_Logo_1"
                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-                                y="0px" width="150" height="75" viewBox="0 0 200 100"
+                                y="0px" width="50" height="25" viewBox="0 0 200 100"
                                 enable-background="new 0 0 200 100" xml:space="preserve">
                                 <g>
                                     <path fill="#CEDC21" d="M9.206,91.433c-2.684,0-4.859-2.177-4.859-4.861V13.431c0-2.685,2.176-4.861,4.859-4.861

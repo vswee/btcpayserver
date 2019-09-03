@@ -406,7 +406,7 @@ dashboard {
 sidebar {
     grid-column: 1/2;
     grid-row: 1/3;
-    background: var(--body-back-2);
+    background: var(--body-back);
     min-width: calc(350px - 2rem);
     max-width: calc(550px - 2rem);
     width: calc(22vw - 2rem);
@@ -414,6 +414,8 @@ sidebar {
     grid-auto-flow: row;
     grid-template-rows: auto 1fr auto;
     padding: 2rem;
+    z-index: 3;
+    box-shadow: 8px 20px 30px -10px var(--shadow-dark);
 }
 
 sidebar._True {
@@ -434,7 +436,7 @@ sidebarDeep {
 workspace {
     grid-column: 3/4;
     grid-row: 2/3;
-    background: var(--body-back);
+    background: var(--body-back-2);
     padding: 2rem;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -448,7 +450,7 @@ workspace {
 workspaceControls {
     grid-column: 3/4;
     grid-row: 1/2;
-    background: var(--body-back);
+    background: var(--body-back-2);
 }
 
 possiblyPointlessShortcuts {
@@ -459,7 +461,7 @@ possiblyPointlessShortcuts {
     grid-auto-flow: column;
     grid-template-columns: auto auto;
     grid-column-gap: 4rem;
-    padding: 1rem 2rem;
+    padding: 5px 2rem;
 }
 
 .filter-stores-element svg {
@@ -640,7 +642,7 @@ possiblyPointlessShortcuts {
 }
 
 .social-link-item svg {
-    height: 30px;
+    height: 16px;
 }
 
 .social-link {
@@ -792,7 +794,7 @@ sidebarDeep .nav {
     min-width: 200px;
     padding: 2rem;
     border-radius: 15px;
-    background: var(--body-white);
+    background: var(--body-back);
     margin: 2rem auto auto 2rem;
     border: 1px solid transparent;
 }
