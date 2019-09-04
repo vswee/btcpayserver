@@ -71,14 +71,21 @@ namespace BTCPayServer.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ViewResult viewResult = null;
+
             var matchedDomainMapping = _cachedServerSettings.DomainToAppMapping.FirstOrDefault(item =>
                 item.Domain.Equals(Request.Host.Host, StringComparison.InvariantCultureIgnoreCase));
             if (matchedDomainMapping != null)
             {
-                return await GoToApp(matchedDomainMapping.AppId, matchedDomainMapping.AppType) ?? View("Home"); 
+                viewResult = await GoToApp(matchedDomainMapping.AppId, matchedDomainMapping.AppType); 
             }
 
-            return await GoToApp(_cachedServerSettings.RootAppId, _cachedServerSettings.RootAppType) ?? View("Home"); 
+            viewResult = await GoToApp(_cachedServerSettings.RootAppId, _cachedServerSettings.RootAppType);
+            
+            if (viewResult == null)
+                viewResult = View("Home");
+
+            return viewResult;
         }
 
         // public async Task<IActionResult> HomeNew() {
