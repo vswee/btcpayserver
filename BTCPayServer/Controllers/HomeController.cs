@@ -15,19 +15,22 @@ using BTCPayServer.Services.Apps;
 using BTCPayServer.Models.NewStuff;
 using System.Collections.Generic;
 using BTCPayServer.Models.ServerViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace BTCPayServer.Controllers
 {
     public class HomeController : Controller
     {
         private readonly CssThemeManager _cachedServerSettings;
+        private UserManager<ApplicationUser> _UserManager;
 
         public IHttpClientFactory HttpClientFactory { get; }
 
-        public HomeController(IHttpClientFactory httpClientFactory, CssThemeManager cachedServerSettings)
+        public HomeController(IHttpClientFactory httpClientFactory, CssThemeManager cachedServerSettings, UserManager<ApplicationUser> userManager)
         {
             HttpClientFactory = httpClientFactory;
             _cachedServerSettings = cachedServerSettings;
+            _UserManager = userManager;
         }
 
         private async Task<ViewResult> GoToApp(string appId, AppType? appType)
@@ -89,8 +92,7 @@ namespace BTCPayServer.Controllers
             {
                 if (User.Identity.IsAuthenticated)
                 {
-                    // TODO: Get this stuff from database/common method
-                    var userPartialModel = getItFromSomewhere();
+                    var userPartialModel = getUsersFromDatabase();
                     var model = new NewDashboardModel
                     {
                         UsersPartialModel = userPartialModel
@@ -106,19 +108,24 @@ namespace BTCPayServer.Controllers
             return viewResult;
         }
 
-        private UsersViewModel getItFromSomewhere()
+        private UsersViewModel getUsersFromDatabase()
         {
-            var foo = new UsersViewModel
-            {
-                Users = new List<UsersViewModel.UserViewModel> {
-                                new UsersViewModel.UserViewModel {
-                                    Id = "Something",
-                                    Name = "Something",
-                                    Email = "something@something.com"
-                                }
-                            }
-            };
-            return foo;
+            var skip = 0;
+            var count = 50;
+
+            var users = new UsersViewModel();
+            users.Users = _UserManager.Users.Skip(skip).Take(count)
+                .Select(u => new UsersViewModel.UserViewModel
+                {
+                    Name = u.UserName,
+                    Email = u.Email,
+                    Id = u.Id
+                }).ToList();
+            users.Skip = skip;
+            users.Count = count;
+            users.Total = _UserManager.Users.Count();
+
+            return users;
         }
 
         // public async Task<IActionResult> HomeNew() {
