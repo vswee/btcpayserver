@@ -12,6 +12,9 @@ using Newtonsoft.Json;
 using BTCPayServer.Services;
 using BTCPayServer.HostedServices;
 using BTCPayServer.Services.Apps;
+using BTCPayServer.Models.NewStuff;
+using System.Collections.Generic;
+using BTCPayServer.Models.ServerViewModels;
 
 namespace BTCPayServer.Controllers
 {
@@ -34,36 +37,36 @@ namespace BTCPayServer.Controllers
                 switch (appType.Value)
                 {
                     case AppType.Crowdfund:
-                    {
-                        var serviceProvider = HttpContext.RequestServices;
-                        var controller = (AppsPublicController)serviceProvider.GetService(typeof(AppsPublicController));
-                        controller.Url = Url;
-                        controller.ControllerContext = ControllerContext;
-                        var res = await controller.ViewCrowdfund(appId, null) as ViewResult;
-                        if (res != null)
                         {
-                            res.ViewName = "/Views/AppsPublic/ViewCrowdfund.cshtml";
-                            return res; // return 
-                        }
+                            var serviceProvider = HttpContext.RequestServices;
+                            var controller = (AppsPublicController)serviceProvider.GetService(typeof(AppsPublicController));
+                            controller.Url = Url;
+                            controller.ControllerContext = ControllerContext;
+                            var res = await controller.ViewCrowdfund(appId, null) as ViewResult;
+                            if (res != null)
+                            {
+                                res.ViewName = "/Views/AppsPublic/ViewCrowdfund.cshtml";
+                                return res; // return 
+                            }
 
-                        break;
-                    }
+                            break;
+                        }
 
                     case AppType.PointOfSale:
-                    {
-                        var serviceProvider = HttpContext.RequestServices;
-                        var controller = (AppsPublicController)serviceProvider.GetService(typeof(AppsPublicController));
-                        controller.Url = Url;
-                        controller.ControllerContext = ControllerContext;
-                        var res = await controller.ViewPointOfSale(appId) as ViewResult;
-                        if (res != null)
                         {
-                            res.ViewName = "/Views/AppsPublic/ViewPointOfSale.cshtml";
-                            return res; // return 
-                        }
+                            var serviceProvider = HttpContext.RequestServices;
+                            var controller = (AppsPublicController)serviceProvider.GetService(typeof(AppsPublicController));
+                            controller.Url = Url;
+                            controller.ControllerContext = ControllerContext;
+                            var res = await controller.ViewPointOfSale(appId) as ViewResult;
+                            if (res != null)
+                            {
+                                res.ViewName = "/Views/AppsPublic/ViewPointOfSale.cshtml";
+                                return res; // return 
+                            }
 
-                        break;
-                    }
+                            break;
+                        }
                 }
             }
             return null;
@@ -77,15 +80,45 @@ namespace BTCPayServer.Controllers
                 item.Domain.Equals(Request.Host.Host, StringComparison.InvariantCultureIgnoreCase));
             if (matchedDomainMapping != null)
             {
-                viewResult = await GoToApp(matchedDomainMapping.AppId, matchedDomainMapping.AppType); 
+                viewResult = await GoToApp(matchedDomainMapping.AppId, matchedDomainMapping.AppType);
             }
 
             viewResult = await GoToApp(_cachedServerSettings.RootAppId, _cachedServerSettings.RootAppType);
-            
+
             if (viewResult == null)
-                viewResult = View("Home");
+            {
+                if (User.Identity.IsAuthenticated)
+                {
+                    // TODO: Get this stuff from database/common method
+                    var userPartialModel = getItFromSomewhere();
+                    var model = new NewDashboardModel
+                    {
+                        UsersPartialModel = userPartialModel
+                    };
+                    viewResult = View("HomeAuth", model);
+                }
+                else
+                {
+                    viewResult = View("Home");
+                }
+            }
 
             return viewResult;
+        }
+
+        private UsersViewModel getItFromSomewhere()
+        {
+            var foo = new UsersViewModel
+            {
+                Users = new List<UsersViewModel.UserViewModel> {
+                                new UsersViewModel.UserViewModel {
+                                    Id = "Something",
+                                    Name = "Something",
+                                    Email = "something@something.com"
+                                }
+                            }
+            };
+            return foo;
         }
 
         // public async Task<IActionResult> HomeNew() {

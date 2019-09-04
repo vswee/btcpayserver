@@ -1,4 +1,9 @@
-﻿<div class="col align-self-center">Total Users: @Model.Total</div>
+﻿@model UsersViewModel
+@{ 
+    Layout = null;
+}
+
+<div class="col align-self-center">Total Users: @Model.Total</div>
 
 <span class="page-link">@(Model.Skip + 1) to @(Model.Skip + Model.Users.Count) of @Model.Total</span>
 

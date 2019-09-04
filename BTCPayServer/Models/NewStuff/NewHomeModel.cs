@@ -9,11 +9,10 @@ using BTCPayServer.Models.StoreViewModels;
 using NBitcoin;
 
 
-namespace BTCPayServer
+namespace BTCPayServer.Models.NewStuff
 {
-    public class ExperimentalViewModel
+    public class NewHomeModel
     {
-
         // public string StoreFilterDashboard { get; set; }
 
 
