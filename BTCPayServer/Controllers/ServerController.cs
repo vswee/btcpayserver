@@ -156,37 +156,19 @@ namespace BTCPayServer.Controllers
         [XFrameOptions(XFrameOptionsAttribute.XFrameOptions.AllowAll)]
         public IActionResult ListUsersFrame(int skip = 0, int count = 50)
         {
-            var users = new UsersFrameViewModel();
+            var users = _UserManager.getUsersFromDatabase(skip, count);
             users.StatusMessage = StatusMessage;
-            users.Users = _UserManager.Users.Skip(skip).Take(count)
-                .Select(u => new UsersFrameViewModel.UserViewModel
-                {
-                    Name = u.UserName,
-                    Email = u.Email,
-                    Id = u.Id
-                }).ToList();
-            users.Skip = skip;
-            users.Count = count;
-            users.Total = _UserManager.Users.Count();
             return View(users);
         }
+
+        
 
 
         [Route("server/users")]
         public IActionResult ListUsers(int skip = 0, int count = 50)
         {
-            var users = new UsersViewModel();
+            var users = _UserManager.getUsersFromDatabase(skip, count);
             users.StatusMessage = StatusMessage;
-            users.Users = _UserManager.Users.Skip(skip).Take(count)
-                .Select(u => new UsersViewModel.UserViewModel
-                {
-                    Name = u.UserName,
-                    Email = u.Email,
-                    Id = u.Id
-                }).ToList();
-            users.Skip = skip;
-            users.Count = count;
-            users.Total = _UserManager.Users.Count();
             return View(users);
         }
 

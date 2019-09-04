@@ -22,15 +22,13 @@ namespace BTCPayServer.Controllers
     public class HomeController : Controller
     {
         private readonly CssThemeManager _cachedServerSettings;
-        private UserManager<ApplicationUser> _UserManager;
 
         public IHttpClientFactory HttpClientFactory { get; }
 
-        public HomeController(IHttpClientFactory httpClientFactory, CssThemeManager cachedServerSettings, UserManager<ApplicationUser> userManager)
+        public HomeController(IHttpClientFactory httpClientFactory, CssThemeManager cachedServerSettings)
         {
             HttpClientFactory = httpClientFactory;
             _cachedServerSettings = cachedServerSettings;
-            _UserManager = userManager;
         }
 
         private async Task<ViewResult> GoToApp(string appId, AppType? appType)
@@ -77,7 +75,7 @@ namespace BTCPayServer.Controllers
 
         public async Task<IActionResult> Index()
         {
-            ViewResult viewResult = null;
+            IActionResult viewResult = null;
 
             var matchedDomainMapping = _cachedServerSettings.DomainToAppMapping.FirstOrDefault(item =>
                 item.Domain.Equals(Request.Host.Host, StringComparison.InvariantCultureIgnoreCase));
@@ -92,12 +90,7 @@ namespace BTCPayServer.Controllers
             {
                 if (User.Identity.IsAuthenticated)
                 {
-                    var userPartialModel = getUsersFromDatabase();
-                    var model = new NewDashboardModel
-                    {
-                        UsersPartialModel = userPartialModel
-                    };
-                    viewResult = View("HomeAuth", model);
+                    viewResult = Redirect("/Account");
                 }
                 else
                 {
@@ -106,26 +99,6 @@ namespace BTCPayServer.Controllers
             }
 
             return viewResult;
-        }
-
-        private UsersViewModel getUsersFromDatabase()
-        {
-            var skip = 0;
-            var count = 50;
-
-            var users = new UsersViewModel();
-            users.Users = _UserManager.Users.Skip(skip).Take(count)
-                .Select(u => new UsersViewModel.UserViewModel
-                {
-                    Name = u.UserName,
-                    Email = u.Email,
-                    Id = u.Id
-                }).ToList();
-            users.Skip = skip;
-            users.Count = count;
-            users.Total = _UserManager.Users.Count();
-
-            return users;
         }
 
         // public async Task<IActionResult> HomeNew() {
