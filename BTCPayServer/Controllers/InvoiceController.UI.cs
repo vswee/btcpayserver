@@ -676,50 +676,5 @@ namespace BTCPayServer.Controllers
             }
         }
 
-
-        [Route("frame/invoices")]
-
-        [XFrameOptions(XFrameOptionsAttribute.XFrameOptions.AllowAll)]
-
-        [Authorize(AuthenticationSchemes = Policies.CookieAuthentication)]
-        [BitpayAPIConstraint(false)]
-        public async Task<IActionResult> ListInvoicesFrame(string searchTerm = null, int skip = 0, int count = 50, int timezoneOffset = 0)
-        {
-            var model = new InvoicesFrameModel
-            {
-                SearchTerm = searchTerm,
-                Skip = skip,
-                Count = count,
-                StatusMessage = StatusMessage,
-                TimezoneOffset = timezoneOffset
-            };
-            InvoiceQuery invoiceQuery = GetInvoiceQuery(searchTerm, timezoneOffset);
-            var counting = _InvoiceRepository.GetInvoicesTotal(invoiceQuery);
-            invoiceQuery.Count = count;
-            invoiceQuery.Skip = skip;
-            var list = await _InvoiceRepository.GetInvoices(invoiceQuery);
-
-            foreach (var invoice in list)
-            {
-                var state = invoice.GetInvoiceState();
-                model.FrameInvoices.Add(new ListFrameInvoices()
-                {
-                    Status = invoice.Status,
-                    StatusString = state.ToString(),
-                    ShowCheckout = invoice.Status == InvoiceStatus.New,
-                    Date = invoice.InvoiceTime,
-                    InvoiceId = invoice.Id,
-                    OrderId = invoice.OrderId ?? string.Empty,
-                    RedirectUrl = invoice.RedirectURL ?? string.Empty,
-                    AmountCurrency = _CurrencyNameTable.DisplayFormatCurrency(invoice.ProductInformation.Price, invoice.ProductInformation.Currency),
-                    CanMarkInvalid = state.CanMarkInvalid(),
-                    CanMarkComplete = state.CanMarkComplete(),
-                    Details = InvoicePopulatePayments(invoice)
-                });
-            }
-            model.Total = await counting;
-            return View(model);
-        }
-
     }
 }

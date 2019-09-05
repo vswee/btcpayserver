@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BTCPayServer.Services.Invoices;
 using Microsoft.EntityFrameworkCore;
+using BTCPayServer.Models.StoreViewModels;
 
 namespace BTCPayServer.Services.Stores
 {
@@ -53,6 +54,11 @@ namespace BTCPayServer.Services.Stores
                         return us.Store;
                     }).FirstOrDefault();
             }
+        }
+
+        internal StoresViewModel fetchStoresAsync(string v)
+        {
+            throw new NotImplementedException();
         }
 
         public class StoreUser

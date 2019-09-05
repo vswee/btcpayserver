@@ -152,18 +152,6 @@ namespace BTCPayServer.Controllers
             return null;
         }
 
-        [Route("frame/server/users")]
-        [XFrameOptions(XFrameOptionsAttribute.XFrameOptions.AllowAll)]
-        public IActionResult ListUsersFrame(int skip = 0, int count = 50)
-        {
-            var users = _UserManager.getUsersFromDatabase(skip, count);
-            users.StatusMessage = StatusMessage;
-            return View(users);
-        }
-
-        
-
-
         [Route("server/users")]
         public IActionResult ListUsers(int skip = 0, int count = 50)
         {

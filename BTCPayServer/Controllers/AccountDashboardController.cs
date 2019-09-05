@@ -25,6 +25,12 @@ using NicolasDorier.RateLimits;
 using BTCPayServer.Models.ServerViewModels;
 using BTCPayServer.Models.NewStuff;
 
+
+using BTCPayServer.Models.InvoicingModels;
+using BTCPayServer.Services.Invoices;
+
+using BTCPayServer.Models.StoreViewModels;
+
 namespace BTCPayServer.Controllers
 {
     [Authorize(AuthenticationSchemes = Policies.CookieAuthentication)]
@@ -32,9 +38,14 @@ namespace BTCPayServer.Controllers
     public class AccountDashboardController : Controller
     {
         private UserManager<ApplicationUser> _UserManager;
-        public AccountDashboardController(UserManager<ApplicationUser> userManager)
+        private StoreRepository _Repo;
+        public AccountDashboardController(
+        UserManager<ApplicationUser> userManager,
+        StoreRepository repos
+        )
         {
             _UserManager = userManager;
+            _Repo = repos;
         }
 
         [Route("/Account/")]
@@ -42,17 +53,40 @@ namespace BTCPayServer.Controllers
         {
             var model = new NewDashboardModel
             {
-                UsersPartialModel = _UserManager.getUsersFromDatabase(0, 50)
+                UsersPartialModel = _UserManager.getUsersFromDatabase(0, 50),
+                StoresPartialModel = _Repo.fetchStoresAsync(GetUserId())
             };
 
             return View("/Views/NewStuff/AccountIndex.cshtml", model);
         }
 
+        private async Task<StoresViewModel> fetchStoresAsync(StoreRepository repo, string v)
+        {
+            StoresViewModel result = new StoresViewModel();
+            var stores = await repo.GetStoresByUserId(v);
+            for (int i = 0; i < stores.Length; i++)
+            {
+                var store = stores[i];
+                result.Stores.Add(new StoresViewModel.StoreViewModel()
+                {
+                    Id = store.Id,
+                    Name = store.StoreName,
+                    WebSite = store.StoreWebsite,
+                    IsOwner = store.HasClaim(Policies.CanModifyStoreSettings.Key)
+                });
+            }
+            return result;
+        }
 
+        private string GetUserId()
+        {
+            return _UserManager.GetUserId(User);
+        }
 
     }
 
-    public static class UserManagerExt {
+    public static class UserManagerExt
+    {
 
         public static UsersViewModel getUsersFromDatabase(this UserManager<ApplicationUser> userManager, int skip, int count)
         {
@@ -71,4 +105,32 @@ namespace BTCPayServer.Controllers
             return users;
         }
     }
+
+
+    //public static class StoresExt{
+
+    //public static async Task<StoresViewModel> fetchStoresAsync(_Repo, string id)
+    //{
+    //    StoresViewModel result = new StoresViewModel();
+    //    var stores = await _Repo.GetStoresByUserId(id);
+    //    for (int i = 0; i < stores.Length; i++)
+    //    {
+    //        var store = stores[i];
+    //        result.Stores.Add(new StoresViewModel.StoreViewModel()
+    //        {
+    //            Id = store.Id,
+    //            Name = store.StoreName,
+    //            WebSite = store.StoreWebsite,
+    //            IsOwner = store.HasClaim(Policies.CanModifyStoreSettings.Key)
+    //        });
+    //    }
+    //    return result;
+    //}
+
+
+    //}
+
+
+
+
 }
