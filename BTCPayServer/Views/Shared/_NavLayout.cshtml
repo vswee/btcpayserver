@@ -1,36 +1,73 @@
 ﻿@{
-Layout = "/Views/Shared/_Layout.cshtml";
-ViewBag.ShowMenu = ViewBag.ShowMenu ?? true;
+    Layout = "/Views/Shared/_Layout.cshtml";
+    ViewBag.ShowMenu = ViewBag.ShowMenu ?? true;
 }
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+@inject BTCPayServer.Services.BTCPayServerEnvironment env
+@inject BTCPayServer.HostedServices.NBXplorerDashboard dashboard
+@inject BTCPayServer.HostedServices.CssThemeManager themeManager
 
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h4 class="section-heading">@ViewData["MainTitle"]: @ViewData["Title"]</h4>
-                <hr class="primary ml-0">
-            </div>
-        </div>
+<div class="row">
+    <!-- Sidebar -->
+    <div class="col-4">
+        <div class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+            <!-- Sidebar - Brand -->
+            <a class="navbar-brand js-scroll-trigger" href="~/">
+                <img src="~/img/logo.png" height="45">
+                @if (env.NetworkType != NBitcoin.NetworkType.Mainnet)
+                {
+                    <span class="badge badge-warning" style="font-size:10px;">@env.NetworkType.ToString()</span>
+                }
+            </a>
+            @if (env.OnionUrl != null)
+            {
+                <span>
+                    <a href="@env.OnionUrl" target="_blank">
+                        <img src="~/img/icons/onion.svg" width="26" height="32" />
+                    </a>
+                </span>
+            }
+            <!-- Divider -->
+            <hr class="sidebar-divider my-3">
+            <!-- Sidebar user panel (optional) -->
+            @ViewData["MainTitle"]
+            <!-- Divider -->
+            <hr class="sidebar-divider my-3">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4 class="section-heading"> @ViewData["Title"]</h4>
+                        <hr class="primary ml-0">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        @if (ViewBag.ShowMenu)
+                        {
+                            @await Html.PartialAsync("_Nav")
+                        }
+                    </div>
 
-        <div>
-            <div class="row">
-                <div class="col-md-3">
-                    @if (ViewBag.ShowMenu)
-                    {
-                    @await Html.PartialAsync("_Nav")
-                    }
                 </div>
-                <div class="col-md-9">
-                    @RenderBody()
-                </div>
+
             </div>
+
         </div>
     </div>
-</section>
+    <!-- End of Sidebar -->
+
+    <div class="col-md-8 align-self-center mx-auto">
+        @RenderBody()
+    </div>
+</div>
+
 @section HeadScripts {
-@RenderSection("HeadScripts", required: false)
+    @RenderSection("HeadScripts", required: false)
 }
 
 @section Scripts {
-@RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 }

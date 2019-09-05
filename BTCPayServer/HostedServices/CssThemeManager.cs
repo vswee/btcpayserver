@@ -31,6 +31,11 @@ namespace BTCPayServer.HostedServices
                 _creativeStartUri = "/vendor/bootstrap4-creativestart/creative.css?v=" + DateTime.Now.Ticks;
             else
                 _creativeStartUri = data.CreativeStartCssUri;
+
+            if (String.IsNullOrWhiteSpace(data.SBAdmin2CssUri))
+                _sbadmin2Uri = "/vendor/sb-admin-2/css/sb-admin-2.css?v=" + DateTime.Now.Ticks;
+            else
+                _sbadmin2Uri = data.SBAdmin2CssUri;
         }
 
         private string _bootstrapUri;
@@ -43,6 +48,12 @@ namespace BTCPayServer.HostedServices
         public string CreativeStartUri
         {
             get { return _creativeStartUri; }
+        }
+
+        private string _sbadmin2Uri;
+          public string SBAdmin2Uri
+        {
+            get { return _sbadmin2Uri; }
         }
 
 
@@ -85,6 +96,10 @@ namespace BTCPayServer.HostedServices
                     policies.Clear();
                 }
                 if (manager.BootstrapUri != null && Uri.TryCreate(manager.BootstrapUri, UriKind.Absolute, out uri))
+                {
+                    policies.Clear();
+                }
+                if (manager.SBAdmin2Uri != null && Uri.TryCreate(manager.SBAdmin2Uri, UriKind.Absolute, out uri))
                 {
                     policies.Clear();
                 }

@@ -25,6 +25,7 @@
     @* CSS *@
     <link href="@this.Context.Request.GetRelativePathOrAbsolute(themeManager.BootstrapUri)" rel="stylesheet" />
     <link href="@this.Context.Request.GetRelativePathOrAbsolute(themeManager.CreativeStartUri)" rel="stylesheet" />
+    <link href="@this.Context.Request.GetRelativePathOrAbsolute(themeManager.SBAdmin2Uri)" rel="stylesheet" />
 
     <bundle name="wwwroot/bundles/main-bundle.min.css" />
 
@@ -37,87 +38,123 @@
 
 <body id="page-top">
 
-    @{
-        if (ViewBag.AlwaysShrinkNavBar == null)
-        {
-            ViewBag.AlwaysShrinkNavBar = true;
-        }
-        var additionalStyle = ViewBag.AlwaysShrinkNavBar ? "navbar-shrink always-shrinked" : "";
-    }
+    <div class="row">
+        <div class="col-4"></div>
 
-    <!-- Navigation -->
-    <nav class='navbar navbar-expand-lg navbar-dark fixed-top @additionalStyle' id="mainNav">
-        <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="~/">
-                <img src="~/img/logo.png" height="45">
-                @if (env.NetworkType != NBitcoin.NetworkType.Mainnet)
-                {
-                    <span class="badge badge-warning" style="font-size:10px;">@env.NetworkType.ToString()</span>
-                }
-            </a>
-            @if (env.OnionUrl != null)
-            {
-                <span>
-                    <a href="@env.OnionUrl" target="_blank">
-                        <img src="~/img/icons/onion.svg" width="26" height="32" />
-                    </a>
-                </span>
-            }
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    @if (SignInManager.IsSignedIn(User))
+        <div class="col-6">
+            <div class="row">
+                <!-- Navigation -->
+                @{
+                    if (ViewBag.AlwaysShrinkNavBar == null)
                     {
-                        if (User.IsInRole(Roles.ServerAdmin))
-                        {
-                            <li class="nav-item"><a asp-area="" asp-controller="Server" asp-action="ListUsers" class="nav-link js-scroll-trigger" id="ServerSettings">Server settings</a></li>
-                        }
-                        <li class="nav-item"><a asp-area="" asp-controller="UserStores" asp-action="ListStores" class="nav-link js-scroll-trigger" id="Stores">Stores</a></li>
-                        <li class="nav-item"><a asp-area="" asp-controller="Apps" asp-action="ListApps" class="nav-link js-scroll-trigger" id="Apps">Apps</a></li>
-                        <li class="nav-item"><a asp-area="" asp-controller="Wallets" asp-action="ListWallets" class="nav-link js-scroll-trigger" id="Wallets">Wallets</a></li>
-                        <li class="nav-item"><a asp-area="" asp-controller="Invoice" asp-action="ListInvoices" class="nav-link js-scroll-trigger" id="Invoices">Invoices</a></li>
-                        <li class="nav-item"><a asp-area="" asp-controller="PaymentRequest" asp-action="GetPaymentRequests" class="nav-link js-scroll-trigger" id="PaymentRequests">Payment Requests</a></li>
-                        <li class="nav-item">
-                            <a asp-area="" asp-controller="Manage" asp-action="Index" title="My settings" class="nav-link js-scroll-trigger" id="MySettings"><i class="fa fa-user"></i></a>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-area="" asp-controller="Account" asp- asp-action="Logout" title="Logout" class="nav-link js-scroll-trigger" id="Logout"><i class="fa fa-sign-out"></i></a>
-                        </li>}
-                    else if (env.IsSecure)
-                    {
-                        if (themeManager.ShowRegister)
-                        {
-                            <li class="nav-item"><a asp-area="" asp-controller="Account" asp-action="Register" class="nav-link js-scroll-trigger" id="Register">Register</a></li>
-                        }
-                        <li class="nav-item"><a asp-area="" asp-controller="Account" asp-action="Login" class="nav-link js-scroll-trigger" id="Login">Log in</a></li>
+                        ViewBag.AlwaysShrinkNavBar = true;
                     }
+                    var additionalStyle = ViewBag.AlwaysShrinkNavBar ? "navbar-shrink always-shrinked" : "";
+                }
+                <nav class='navbar navbar-expand-sm navbar-dark fixed-top @additionalStyle' id="mainNav">
+                    <div class="container">
 
-                </ul>
+                        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarResponsive">
+                            <ul class="navbar-nav ml-auto">
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                    if (User.IsInRole(Roles.ServerAdmin))
+                                    {
+                                        <li class="nav-item"><a asp-area="" asp-controller="Server" asp-action="ListUsers" class="nav-link js-scroll-trigger" id="ServerSettings">Server settings</a></li>
+                                    }
+                                    <li class="nav-item"><a asp-area="" asp-controller="UserStores" asp-action="ListStores" class="nav-link js-scroll-trigger" id="Stores">Stores</a></li>
+                                    <li class="nav-item"><a asp-area="" asp-controller="Apps" asp-action="ListApps" class="nav-link js-scroll-trigger" id="Apps">Apps</a></li>
+                                    <li class="nav-item"><a asp-area="" asp-controller="Wallets" asp-action="ListWallets" class="nav-link js-scroll-trigger" id="Wallets">Wallets</a></li>
+                                    <li class="nav-item"><a asp-area="" asp-controller="Invoice" asp-action="ListInvoices" class="nav-link js-scroll-trigger" id="Invoices">Invoices</a></li>
+                                    <li class="nav-item"><a asp-area="" asp-controller="PaymentRequest" asp-action="GetPaymentRequests" class="nav-link js-scroll-trigger" id="PaymentRequests">Payment Requests</a></li>
+                                    <li class="nav-item">
+                                        <a asp-area="" asp-controller="Manage" asp-action="Index" title="My settings" class="nav-link js-scroll-trigger" id="MySettings"><i class="fa fa-user"></i></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-area="" asp-controller="Account" asp- asp-action="Logout" title="Logout" class="nav-link js-scroll-trigger" id="Logout"><i class="fa fa-sign-out"></i></a>
+                                    </li>}
+                                else if (env.IsSecure)
+                                {
+                                    if (themeManager.ShowRegister)
+                                    {
+                                        <li class="nav-item"><a asp-area="" asp-controller="Account" asp-action="Register" class="nav-link js-scroll-trigger" id="Register">Register</a></li>
+                                    }
+                                    <li class="nav-item"><a asp-area="" asp-controller="Account" asp-action="Login" class="nav-link js-scroll-trigger" id="Login">Log in</a></li>
+                                }
+
+                            </ul>
+                        </div>
+
+
+                        <div id="badUrl" class="alert alert-danger alert-dismissible" style="display:none; position:absolute; top:75px;" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <span>BTCPay is expecting you to access this website from <b>@(env.ExpectedProtocol)://@(env.ExpectedHost)/</b>. If you use a reverse proxy, please set the <b>X-Forwarded-Proto</b> header to <b id="browserScheme">@(env.ExpectedProtocol)</b> (<a href="https://docs.btcpayserver.org/faq-and-common-issues/faq-deployment#btcpay-is-expecting-you-to-access-this-website-from" target="_blank">More information</a>)</span>
+                        </div>
+                        @if (!env.IsSecure)
+                        {
+                            <div class="alert alert-danger alert-dismissible" style="position:absolute; top:75px;" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <span>
+                                    Your access to BTCPay Server is over an unsecured network. If you are using the docker deployment method with NGINX and HTTPS is not available, you probably did not configure your DNS settings correctly. <br />
+                                    We disabled the register and login link so you don't leak your credentials.
+                                </span>
+                            </div>
+                        }
+                    </div>
+                </nav>
             </div>
-            <div id="badUrl" class="alert alert-danger alert-dismissible" style="display:none; position:absolute; top:75px;" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <span>BTCPay is expecting you to access this website from <b>@(env.ExpectedProtocol)://@(env.ExpectedHost)/</b>. If you use a reverse proxy, please set the <b>X-Forwarded-Proto</b> header to <b id="browserScheme">@(env.ExpectedProtocol)</b> (<a href="https://docs.btcpayserver.org/faq-and-common-issues/faq-deployment#btcpay-is-expecting-you-to-access-this-website-from" target="_blank">More information</a>)</span>
-            </div>
-            @if (!env.IsSecure)
-            {
-                <div class="alert alert-danger alert-dismissible" style="position:absolute; top:75px;" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <span>Your access to BTCPay Server is over an unsecured network. If you are using the docker deployment method with NGINX and HTTPS is not available, you probably did not configure your DNS settings correctly. <br /> 
-                          We disabled the register and login link so you don't leak your credentials.</span>
-                </div>
-            }
+
+        
         </div>
-    </nav>
 
+    </div>
 
     @RenderBody()
 
     @if (User.Identity.IsAuthenticated)
     {
-        <footer class="siteFooter bg-dark text-white">
-            <div class="container text-right">@env.ToString()</div>
+        <footer class="container col siteFooter bg-dark text-white">
+            <div class="row mt-3">               
+                <div class="col-9">
+                    <div class="row">
+                        <div class="col-md-3 ml-auto text-center text-white">
+                            <h6>Join our community</h6>
+                        </div>
+                        <div class="col-md-2 ml-auto text-center text-white">
+                            <a href="https://chat.btcpayserver.org/" target="_blank">
+                                <img src="~/img/mattermost-wht.png" height="25" />
+                            </a>
+                            <p><a href="https://chat.btcpayserver.org/" target="_blank"></a></p>
+                        </div>
+                        <div class="col-md-2 ml-auto text-center">
+                            <a href="https://slack.btcpayserver.org/" target="_blank">
+                                <img src="~/img/slack-logo.png" height="25" />
+                            </a>
+                            <p><a href="http://slack.forkbitpay.ninja/" target="_blank"></a></p>
+                        </div>
+                        <div class="col-md-2 ml-auto text-center">
+                            <a href="https://twitter.com/BtcpayServer" target="_blank">
+                                <img src="~/img/twitter-wht.png" height="40" />
+                            </a>
+                            <p>
+                                <a href="https://twitter.com/BtcpayServer" target="_blank"></a>
+                            </p>
+                        </div>
+                        <div class="col-md-2 ml-auto text-center">
+                            <a href="https://github.com/btcpayserver/btcpayserver" target="_blank">
+                                <img src="~/img/github-wht.png" height="40" />
+                            </a>
+                            <p>
+                                <a href="https://github.com/btcpayserver/btcpayserver" target="_blank"></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right">@env.ToString()</div>
         </footer>
     }
 

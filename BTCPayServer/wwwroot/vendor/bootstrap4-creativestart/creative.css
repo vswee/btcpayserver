@@ -82,7 +82,7 @@ body {
 
 #mainNav {
     border-color: rgba(34, 34, 34, 0.05);
-    background-color: #0F3723;
+    background-color: #202c39;
     font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
     -webkit-transition: all 0.2s;
     -moz-transition: all 0.2s;
@@ -92,12 +92,12 @@ body {
     #mainNav .navbar-brand {
         font-weight: 700;
         text-transform: uppercase;
-        color: #0F3B21;
+        color: #202c39;
         font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
     }
 
         #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
-            color: #0F3B21;
+            color: #202c39;
         }
 
     #mainNav .navbar-toggle {
@@ -157,7 +157,7 @@ body {
 
         #mainNav.navbar-shrink {
             border-color: rgba(34, 34, 34, 0.05);
-            background-color: #0F3723;
+            background-color: #202c39;
         }
 
             #mainNav.navbar-shrink .navbar-brand {
@@ -216,7 +216,7 @@ header.masthead {
 @media (min-width: 768px) {
     header.masthead {
         height: 70%;
-        min-height: 600px;
+        min-height: 735px;
     }
 
         header.masthead .header-content {

@@ -1,51 +1,75 @@
 ﻿@model LoginViewModel
 @inject SignInManager<ApplicationUser> SignInManager
 @inject BTCPayServer.HostedServices.CssThemeManager themeManager
+@inject BTCPayServer.Services.BTCPayServerEnvironment env
+
 
 @{
     ViewData["Title"] = "Log in";
 }
 
 <section>
-    <div>
-        <div class="modal-dialog modal-login">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Sign In</h4>
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-4 align-self-center text-dark">
+                <div class="text-left header-content-inner text-white">
+                    <h2 style="text-transform: uppercase; color: black !important">Welcome to your BTCPay Server</h2>
+                    <hr align="left">
+                    <p class="text-left justify-content-lg-center" style="color: black !important">BTCPay Server is a free and open source server for merchants wanting to accept Bitcoin for their business and process Bitcoin transactions seamlessly, enabling global and near-instant peer-to-peer payments. </p>
                 </div>
-                <div class="modal-body">
-                    <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <label for="Email" class="input-group-text"><span class="input-group-addon fa fa-user"></span></label>
-                                </div>
 
-                                <input asp-for="Email" class="form-control" placeholder="Email" required="required" />
-                            </div>
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <label for="Password" class="input-group-text"><span class="input-group-addon fa fa-lock"></span></label>
-                                </div>
-                                <input asp-for="Password" class="form-control" placeholder="Password" required="required" />
-                            </div>
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block btn-lg" id="LoginButton">Sign in</button>
-                        </div>
-                        <p class="hint-text"><a asp-action="ForgotPassword">Forgot your password?</a></p>
-                    </form>
-                </div>
-                @if (themeManager.ShowRegister)
-                {
-                <div class="modal-footer"><span>Don't have an account?&nbsp;<a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Create one</a></span></div>
-                }
             </div>
+            <div class="col-6">
+                <div class="col modal-dialog modal-login">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Log In</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <label for="Email" class="input-group-text"><span class="input-group-addon fa fa-user"></span></label>
+                                        </div>
+
+                                        <input asp-for="Email" class="form-control" placeholder="Email" required="required" />
+                                    </div>
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <label for="Password" class="input-group-text"><span class="input-group-addon fa fa-lock"></span></label>
+                                        </div>
+                                        <input asp-for="Password" class="form-control" placeholder="Password" required="required" />
+                                    </div>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-dark btn-block btn-lg" id="LoginButton">Log in</button>
+                                </div>
+                                <p class="hint-text"><a asp-action="ForgotPassword">Forgot your password?</a></p>
+                            </form>
+                        </div>
+                        @if (themeManager.ShowRegister)
+                        {
+                            <div class="modal-footer"><span>Don't have an account?&nbsp;<a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Create one</a></span></div>
+                        }
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 align-self-center">
+                <h5 class="" style="text-transform: uppercase;">Our Supporters</h5>
+            </div>
+        </div>
+        <div class="row">
+            <img class="col-s-1 mx-3" src="~/img/supporter.png" height="45"><img class="col-s-1 mx-3" src="~/img/supporter.png" height="45"><img class="col-s-1 mx-3" src="~/img/supporter.png" height="45"><img class="col-s-1 mx-3" src="~/img/supporter.png" height="45"><img class="col-s-1 mx-3" src="~/img/supporter.png" height="45">
         </div>
     </div>
 </section>
