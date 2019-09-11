@@ -1,18 +1,10 @@
+@model NewDashboardModel
 @{
     Layout = "_LayoutNew";
 }
 
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
-@inject RoleManager<IdentityRole> RoleManager
 @inject BTCPayServer.Services.BTCPayServerEnvironment env
 @inject BTCPayServer.HostedServices.NBXplorerDashboard dashboard
-@inject BTCPayServer.HostedServices.CssThemeManager themeManager
-@inject BTCPayServer.HostedServices.NBXplorerDashboard dashboard
-
-
-@model NewDashboardModel
-<!-- RegisterViewModel -->
 
 <dashboard>
     <sidebar>
@@ -32,7 +24,6 @@
                 </a>
             </div>
         </div>
-
         <ul class="sidebar-menu">
             <li>
                 <a href="/" class="focus-override">
@@ -86,12 +77,8 @@
                 </li>
             }
         </ul>
-
-
-
         <div class="environment">@env.ToString()</div>
     </sidebar>
-
     <workspaceControls>
         <!-- TO BE BOUND BBY IF -->
         <div class="hover-dropdown filter-stores-element">
@@ -105,10 +92,7 @@
             </svg>
             <span class="button-name">&nbsp;Filter by Store</span>
             <ul>
-
-
                 <li>Store 01</li>
-
                 <!-- IF HAS PERMISSIONS SO TO DO -->
                 <li class="add-store">
                     <a href="/stores/create">
@@ -119,16 +103,14 @@
                                 <path d="m87.948 250h324.104" />
                                 <path d="m250 412.052v-324.104" />
                             </g>
-                        </svg>&nbsp;Add store
+                        </svg>
+                        &nbsp;Add store
                     </a>
                 </li>
             </ul>
         </div>
     </workspaceControls>
     <workspace>
-
-
-
         <div class="dashboard-modal overview-frame">
             <div class="modal-content">
                 <h4 class="status-text">Server Users</h4>
@@ -142,9 +124,6 @@
                 </div>
             </div>
         </div>
-
-
-
         <div class="dashboard-modal overview-frame">
             <div class="modal-content">
                 <h4 class="status-text">Invoices Overview</h4>
@@ -154,16 +133,10 @@
                     </p>
                 </div>
                 <div class="modal-payload ps-fra">
-
-                    <!-- <iframe src="frame/invoices"></iframe> -->
-
-                    @Html.Partial("/Views/Invoice/ListInvoicesFrame.cshtml", new BTCPayServer.Models.InvoicingModels.InvoicesFrameModel())
-
+                    <partial name="/Views/Invoice/ListInvoicesFrame.cshtml" model="new BTCPayServer.Models.InvoicingModels.InvoicesFrameModel()" />
                 </div>
             </div>
         </div>
-
-
         <div class="dashboard-modal node-statuses">
             <div class="modal-content">
                 <h4 class="status-text">Your nodes are syncing</h4>
@@ -193,9 +166,7 @@
                                 <i class="modal-indicator indicator-green"></i>
                             }
                             <!-- </div> -->
-
                             <div class="tile-right">
-
                                 <h4>@line.Network.CryptoCode</h4>
                                 @if (line.Status == null)
                                 {
@@ -265,8 +236,6 @@
             </div>
         </div>
     </workspace>
-
-
     <possiblyPointlessShortcuts>
         <div class="iconography">
             <a class="navbar-brand js-scroll-trigger" href="~/">
@@ -285,20 +254,16 @@
                 </span>
             }
         </div>
-
         <div class="social-link">
             <a href="" class="social-link-item" target="_blank">
                 <img src="~/main-new/img/footer/mattermost.svg" />
             </a>
-
             <a href="" class="social-link-item" target="_blank">
                 <img src="~/main-new/img/footer/twitter.svg" />
             </a>
             <a href="" class="social-link-item" target="_blank">
                 <img src="~/main-new/img/footer/github.svg" style="height: 18px" />
             </a>
-
         </div>
     </possiblyPointlessShortcuts>
 </dashboard>
-
