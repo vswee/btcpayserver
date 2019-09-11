@@ -23,11 +23,17 @@
     <None Remove="wwwroot\vendor\jquery-nice-select\**" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="wwwroot\main-new\img\sidebar\server.svg" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Currencies.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="bundleconfig.json" />
     <EmbeddedResource Include="Currencies.txt" />
+    <EmbeddedResource Include="wwwroot\main-new\img\sidebar\server.svg">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BTCPayServer.Lightning.All" Version="1.1.1" />

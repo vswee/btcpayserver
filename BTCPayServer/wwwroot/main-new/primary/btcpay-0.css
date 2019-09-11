@@ -581,7 +581,8 @@ possiblyPointlessShortcuts {
     grid-auto-flow: column;
 }
 
-.control-icon-button svg {
+.control-icon-button svg,
+.control-icon-button img {
     width: calc(0.5rem + 30px);
     height: calc(0.5rem + 30px);
     padding: 0.5rem;
