@@ -637,11 +637,8 @@ possiblyPointlessShortcuts {
     fill: var(--button-dark);
 }
 
-.social-link-item svg * {
-    fill: var(--black-text) !important;
-}
-
-.social-link-item svg {
+.social-link-item img {
+    color: white;
     height: 16px;
 }
 

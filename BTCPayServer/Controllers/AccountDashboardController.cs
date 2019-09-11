@@ -54,7 +54,7 @@ namespace BTCPayServer.Controllers
             var model = new NewDashboardModel
             {
                 UsersPartialModel = _UserManager.getUsersFromDatabase(0, 50),
-                StoresPartialModel = _Repo.fetchStoresAsync(GetUserId())
+                //StoresPartialModel = _Repo.fetchStoresAsync(GetUserId())
             };
 
             return View("/Views/NewStuff/AccountIndex.cshtml", model);

@@ -19,7 +19,7 @@
         <div class="header-content-inner">
             <div class="iconography">
                 <a class="navbar-brand js-scroll-trigger" href="~/">
-                    <partial name="Svgs/Logo" />
+                    <img src="~/main-new/img/logo.svg" />
                     @if (env.NetworkType != NBitcoin.NetworkType.Mainnet)
                     {
                         <span class="badge badge-warning"
@@ -56,124 +56,95 @@
 
         @if (env.IsSecure)
         {
-            <div class="modern-login-register">
-                <div class="shape-hold triangle_"
-                     style="transform: rotate(-14deg)translate(-18px,-46px)scale3d(2,2,2);">
-                    <svg style="animation-duration:120s;animation-direction:reverse;" class="s-sh-a"
-                         enable-background="new 0 0 50 50" height="50" viewBox="0 0 50 50" width="50"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="m25 6.514-25 36.972h50z" fill="#1e7a44" />
-                    </svg>
+        <div class="modern-login-register">
+            <partial name="/wwwroot/main-new/img/triangle1.cshtml" />
+            <partial name="/wwwroot/main-new/img/square1.cshtml" />
+
+            <div class="modern-login-register-inner">
+                <div class="build-in-up" id="loginForm_">
+                    <form asp-route-returnurl="@ViewData[" ReturnUrl"]" method="post">
+                        <span class="form-name">Sign in</span>
+                        <div class="f-el">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <span class="form-lab">email</span>
+                            <input asp-for="Email" class="form-input" placeholder="" required="required" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="f-el">
+                            <span class="form-lab">password</span>
+                            <input asp-for="Password" class="form-input" placeholder="" required="required"
+                                   type="password" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="f-el">
+                            <button type="submit" class="fp-button" id="LoginButton"
+                                    asp-controller="Account" asp-action="Login">
+                                login
+                            </button>
+                        </div>
+                    </form>
+
+                    <a class="fp-button-sec" asp-controller="Account" asp-action="ForgotPassword">
+                        Forgot
+                        your password?
+                    </a>
+
+                    @if (themeManager.ShowRegister)
+                    {
+
+                        <a class="fp-button-sec" id="Register">Register</a>
+                    }
                 </div>
 
-                <div class="shape-hold square_"
-                     style="transform: rotate(-32deg)translate(83px,-50px)scale3d(1,1,1);">
-                    <svg style="animation-duration:40s;animation-direction:reverse;" class="s-sh-a"
-                         enable-background="new 0 0 50 50" height="50" viewBox="0 0 50 50" width="50"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="m0 0h50v50h-50z" fill="#cedc21" />
-                    </svg>
-                </div>
-                <div class="modern-login-register-inner">
-                    <div class="build-in-up" id="loginForm_">
-                        <form asp-route-returnurl="@ViewData[" ReturnUrl"]" method="post">
-                            <span class="form-name">Sign in</span>
-                            <div class="f-el">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <span class="form-lab">email</span>
-                                <input asp-for="Email" class="form-input" placeholder="" required="required" />
-                                <span asp-validation-for="Email" class="text-danger"></span>
-                            </div>
-                            <div class="f-el">
-                                <span class="form-lab">password</span>
-                                <input asp-for="Password" class="form-input" placeholder="" required="required"
-                                       type="password" />
-                                <span asp-validation-for="Password" class="text-danger"></span>
-                            </div>
-                            <div class="f-el">
-                                <button type="submit" class="fp-button" id="LoginButton"
-                                        asp-controller="Account" asp-action="Login">
-                                    login
-                                </button>
-                            </div>
-                        </form>
+                <div class="build-in-up" id="registerForm_" style="display:none;">
+                    <form asp-route-returnurl="@ViewData[" ReturnUrl"]" method="post">
+                        <span class="form-name">Register</span>
+                        <div class="f-el">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <span class="form-lab">email</span>
+                            <input asp-for="Email" class="form-input" placeholder="" required="required" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="f-el">
+                            <span class="form-lab">password</span>
+                            <input asp-for="Password" class="form-input" placeholder="" required="required"
+                                   type="password" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="f-el">
+                            <span class="form-lab">confirm password</span>
+                            <input asp-for="ConfirmPassword" class="form-input" placeholder=""
+                                   required="required" type="password" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
 
-                        <a class="fp-button-sec" asp-controller="Account" asp-action="ForgotPassword">
-                            Forgot
-                            your password?
-                        </a>
-
-                        @if (themeManager.ShowRegister)
+                        @if (ViewData["AllowIsAdmin"] is true)
                         {
-
-                            <a class="fp-button-sec" id="Register">Register</a>
+                            <div class="f-el">
+                                <span class="form-lab">Administrator Acount?</span>
+                                <input asp-for="IsAdmin" type="checkbox" class="form-check-inline" />
+                                <span asp-validation-for="IsAdmin" class="text-danger"></span>
+                            </div>
                         }
-                    </div>
+                        <div class="f-el">
+                            <button type="submit" class="fp-button" id="RegisterButton">
+                                create
+                                account
+                            </button>
+                        </div>
+                    </form>
 
-                    <div class="build-in-up" id="registerForm_" style="display:none;">
-                        <form asp-route-returnurl="@ViewData[" ReturnUrl"]" method="post">
-                            <span class="form-name">Register</span>
-                            <div class="f-el">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <span class="form-lab">email</span>
-                                <input asp-for="Email" class="form-input" placeholder="" required="required" />
-                                <span asp-validation-for="Email" class="text-danger"></span>
-                            </div>
-                            <div class="f-el">
-                                <span class="form-lab">password</span>
-                                <input asp-for="Password" class="form-input" placeholder="" required="required"
-                                       type="password" />
-                                <span asp-validation-for="Password" class="text-danger"></span>
-                            </div>
-                            <div class="f-el">
-                                <span class="form-lab">confirm password</span>
-                                <input asp-for="ConfirmPassword" class="form-input" placeholder=""
-                                       required="required" type="password" />
-                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                            </div>
-
-                            @if (ViewData["AllowIsAdmin"] is true)
-                            {
-                                <div class="f-el">
-                                    <span class="form-lab">Administrator Acount?</span>
-                                    <input asp-for="IsAdmin" type="checkbox" class="form-check-inline" />
-                                    <span asp-validation-for="IsAdmin" class="text-danger"></span>
-                                </div>
-                            }
-                            <div class="f-el">
-                                <button type="submit" class="fp-button" id="RegisterButton">
-                                    create
-                                    account
-                                </button>
-                            </div>
-                        </form>
-
-                        <a class="fp-button-sec" id="SignIn">Sign in</a>
-                        @section Scripts {
-                            @await Html.PartialAsync("_ValidationScriptsPartial")
-                        }
-
-                    </div>
+                    <a class="fp-button-sec" id="SignIn">Sign in</a>
+                    @section Scripts {
+                        @await Html.PartialAsync("_ValidationScriptsPartial")
+                    }
 
                 </div>
-                <div class="shape-hold triangle_"
-                     style="transform: rotate(52deg)translate(-13px,-40px)scale3d(1.4,1.4,1.4);z-index:2;float: right;position: relative;">
-                    <svg style="animation-duration:50s;animation-direction:normal;" class="s-sh-a"
-                         enable-background="new 0 0 50 50" height="50" viewBox="0 0 50 50" width="50"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="m25 6.514-25 36.972h50z" fill="#cedc21" />
-                    </svg>
-                </div>
 
-                <div class="shape-hold square_ "
-                     style="transform: rotate(11deg)translate(68px,-108px)scale3d(0.8,.8,.8);z-index: 3;float: right;position: relative;">
-                    <svg style="animation-duration:110s;animation-direction:normal;" class="s-sh-a"
-                         enable-background="new 0 0 50 50" height="50" viewBox="0 0 50 50" width="50"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="m0 0h50v50h-50z" fill="#51B13E" />
-                    </svg>
-                </div>
             </div>
+            <partial name="/wwwroot/main-new/img/triangle2.cshtml" />
+            <partial name="/wwwroot/main-new/img/square2.cshtml" />
+        </div>
         }
     </div>
 
