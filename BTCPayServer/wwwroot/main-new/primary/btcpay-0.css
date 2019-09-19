@@ -50,9 +50,9 @@ a {
     color: var(--lime-text);
 }
 
-a:hover {
-    color: var(--lime-text-focus);
-}
+    a:hover {
+        color: var(--lime-text-focus);
+    }
 
 h1 {
     text-transform: uppercase;
@@ -82,11 +82,13 @@ p {
     letter-spacing: 0.1em;
     color: #000000;
 }
+
 .environment {
     font-size: 12px;
     font-weight: 200;
     letter-spacing: 1px;
 }
+
 .field-validation-error,
 .error {
     color: var(--crimson);
@@ -120,19 +122,24 @@ p {
     flex-wrap: wrap;
 }
 
-.sponsors-showcase {
+.supporters-showcase {
     margin-top: 5rem;
 }
 
-.sponsor-icon {
+.supporter-icon {
     width: 69px;
     height: 69px;
     left: 84px;
     border-radius: 300px;
-    background: var(--button-dark);
+    background: var(--button-dark-secondary);
 }
 
-.sponsor-icon-flex {
+    .supporter-icon a img {
+        margin: auto;
+        padding: 9px;
+    }
+
+.supporters-icon-flex {
     display: flex;
     flex-flow: row;
     justify-content: space-between;
@@ -178,9 +185,9 @@ p {
     border-color: var(--button-dark);
 }
 
-.sec_:hover {
-    border-color: var(--lime);
-}
+    .sec_:hover {
+        border-color: var(--lime);
+    }
 
 .main-head-link:hover {
     color: var(--lime);
@@ -250,18 +257,18 @@ p {
     margin-bottom: 1.5em;
 }
 
-.modern-login-register form input {
-    border-width: 0px 0px 2px 0px;
-    border-color: #000;
-    font-family: "Montserrat", "Helvetica Neue", "Arial", sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 22px;
-    letter-spacing: 0.04em;
-    color: #000;
-    padding: 1em 0;
-}
+    .modern-login-register form input {
+        border-width: 0px 0px 2px 0px;
+        border-color: #000;
+        font-family: "Montserrat", "Helvetica Neue", "Arial", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 22px;
+        letter-spacing: 0.04em;
+        color: #000;
+        padding: 1em 0;
+    }
 
 .form-name {
     text-transform: uppercase;
@@ -299,14 +306,14 @@ p {
     text-decoration: none;
 }
 
-.fp-button:hover,
-.btn:hover {
-    text-decoration: none;
-    color: var(--black-text);
-    background: var(--button-dark);
-    box-shadow: 0px 5px 15px var(--shadow-dark);
-    /* transform: translateY(-4px); */
-}
+    .fp-button:hover,
+    .btn:hover {
+        text-decoration: none;
+        color: var(--black-text);
+        background: var(--button-dark);
+        box-shadow: 0px 5px 15px var(--shadow-dark);
+        /* transform: translateY(-4px); */
+    }
 
 .f-el {
     margin-top: 3em;
@@ -334,9 +341,9 @@ masterland {
     max-width: 90vw;
 }
 
-.dark-parent * {
-    color: var(--body-back);
-}
+    .dark-parent * {
+        color: var(--body-back);
+    }
 
 .build-in-up {
     opacity: 0;
@@ -365,9 +372,7 @@ masterland {
     position: relative;
     top: 0;
     bottom: 0;
-
     left: 0;
-
     right: 0;
     margin: auto;
     max-width: 1300px;
@@ -418,9 +423,9 @@ sidebar {
     box-shadow: 8px 20px 30px -10px var(--shadow-dark);
 }
 
-sidebar._True {
-    max-width: 100px !important;
-}
+    sidebar._True {
+        max-width: 100px !important;
+    }
 
 sidebarDeep {
     grid-column: 2/3;
@@ -494,17 +499,18 @@ possiblyPointlessShortcuts {
     column-gap: 0.5rem;
 }
 
-.hover-dropdown ul {
-    display: none;
-    list-style: none;
-    padding: 0;
-}
+    .hover-dropdown ul {
+        display: none;
+        list-style: none;
+        padding: 0;
+    }
 
 @keyframes buildInDown {
     0% {
         opacity: 0;
         transform: translate(0px, -15px) rotateX(30deg);
     }
+
     100% {
         opacity: 1;
         transform: translate(0px, 0px) rotateX(0deg);
@@ -520,20 +526,20 @@ possiblyPointlessShortcuts {
     opacity: 0.7;
 }
 
-.hover-dropdown ul li:hover {
-    background: var(--button-dark-secondary);
-    opacity: 1;
-}
+    .hover-dropdown ul li:hover {
+        background: var(--button-dark-secondary);
+        opacity: 1;
+    }
 
-.hover-dropdown ul li a {
-    text-decoration: none;
-    color: inherit;
-}
+    .hover-dropdown ul li a {
+        text-decoration: none;
+        color: inherit;
+    }
 
-.hover-dropdown ul li.add-store a {
-    text-decoration: none;
-    color: var(--button-dark-text);
-}
+    .hover-dropdown ul li.add-store a {
+        text-decoration: none;
+        color: var(--button-dark-text);
+    }
 
 .add-store a {
     display: grid;
@@ -588,9 +594,9 @@ possiblyPointlessShortcuts {
     padding: 0.5rem;
 }
 
-.control-icon-button svg path {
-    fill: var(--button-dark);
-}
+    .control-icon-button svg path {
+        fill: var(--button-dark);
+    }
 
 .profile-pic {
     height: 120px;
@@ -611,32 +617,32 @@ possiblyPointlessShortcuts {
     width: 100%;
 }
 
-.sidebar-menu li a {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: 50px auto;
-    padding: 1rem;
-    border-radius: 15px;
-    cursor: pointer;
-}
+    .sidebar-menu li a {
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: 50px auto;
+        padding: 1rem;
+        border-radius: 15px;
+        cursor: pointer;
+    }
 
-.sidebar-menu li a,
-.sidebar-menu li a:hover {
-    text-decoration: none;
-    font-weight: 100;
-    color: var(--button-dark);
-    font-style: normal;
-}
+        .sidebar-menu li a,
+        .sidebar-menu li a:hover {
+            text-decoration: none;
+            font-weight: 100;
+            color: var(--button-dark);
+            font-style: normal;
+        }
 
-.sidebar-menu li a:hover {
-    background: var(--gauze);
-    padding-left: 1rem !important;
-    /* padding-right: 2rem !important; */
-}
+            .sidebar-menu li a:hover {
+                background: var(--gauze);
+                padding-left: 1rem !important;
+                /* padding-right: 2rem !important; */
+            }
 
-.sidebar-menu li svg path {
-    fill: var(--button-dark);
-}
+    .sidebar-menu li svg path {
+        fill: var(--button-dark);
+    }
 
 .social-link-item img {
     color: white;
@@ -659,9 +665,9 @@ possiblyPointlessShortcuts {
     cursor: pointer;
 }
 
-.control-icon-button:hover {
-    background: var(--button-dark-text);
-}
+    .control-icon-button:hover {
+        background: var(--button-dark-text);
+    }
 
 workspace table {
     width: 100%;
@@ -841,12 +847,15 @@ sidebarDeep .nav {
 .indicator-red {
     background: var(--crimson);
 }
+
 .indicator-amber {
     background: var(--amber);
 }
+
 .indicator-green {
     background: var(--lime);
 }
+
 .tile-ske {
     display: grid;
     grid-auto-flow: column;
@@ -875,12 +884,12 @@ sidebarDeep .nav {
     list-style: none;
 }
 
-.tile-ske ul li {
-    color: var(--button-dark-secondary);
-    font-size: 14px;
-    font-weight: 400;
-    letter-spacing: 1px;
-}
+    .tile-ske ul li {
+        color: var(--button-dark-secondary);
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 1px;
+    }
 
 .text-badge {
     display: inline-block;
@@ -965,6 +974,7 @@ th {
     color: var(--button-dark-tertiary);
     background: var(--gauze);
 }
+
 td {
     text-overflow: ellipsis;
     padding: 4px;
@@ -975,23 +985,23 @@ td {
     overflow: auto;
 }
 
-.field-cut:hover {
-    display: block;
-    word-wrap: anywhere;
-    position: absolute;
-    max-width: unset;
-    width: auto;
-    background: var(--button-dark);
-    color: var(--lime);
-    border-radius: 5px;
-    padding: 4px 5px;
-    box-shadow: 0px 2px 10px var(--shadow-dark);
-    cursor: zoom-in;
-}
+    .field-cut:hover {
+        display: block;
+        word-wrap: anywhere;
+        position: absolute;
+        max-width: unset;
+        width: auto;
+        background: var(--button-dark);
+        color: var(--lime);
+        border-radius: 5px;
+        padding: 4px 5px;
+        box-shadow: 0px 2px 10px var(--shadow-dark);
+        cursor: zoom-in;
+    }
 
-.field-cut:hover > * {
-    font-size: 0.9rem;
-}
+        .field-cut:hover > * {
+            font-size: 0.9rem;
+        }
 
 table, .table {
     width: 100%;
@@ -1017,9 +1027,11 @@ span.pavpill {
 .pavpil-expired {
     background: var(--amber);
 }
+
 .pavpil-new {
     background: var(--lime);
 }
+
 .pavpil-pending {
     background: var(--lime-text);
 }
@@ -1068,16 +1080,8 @@ span.pavpill {
     font-style: normal;
     font-weight: 100;
     src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.eot");
-    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.eot?#iefix")
-            format("embedded-opentype"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.woff2")
-            format("woff2"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.woff")
-            format("woff"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.ttf")
-            format("truetype");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
-        U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.eot?#iefix") format("embedded-opentype"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.woff2") format("woff2"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.woff") format("woff"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-extralight-webfont.ttf") format("truetype");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
 
 /* latin */
@@ -1086,16 +1090,8 @@ span.pavpill {
     font-style: normal;
     font-weight: 400;
     src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.eot");
-    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.eot?#iefix")
-            format("embedded-opentype"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.woff2")
-            format("woff2"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.woff")
-            format("woff"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.ttf")
-            format("truetype");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
-        U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.eot?#iefix") format("embedded-opentype"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.woff2") format("woff2"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.woff") format("woff"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-regular-webfont.ttf") format("truetype");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
 
 /* latin */
@@ -1104,14 +1100,6 @@ span.pavpill {
     font-style: normal;
     font-weight: 700;
     src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.eot");
-    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.eot?#iefix")
-            format("embedded-opentype"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.woff2")
-            format("woff2"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.woff")
-            format("woff"),
-        url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.ttf")
-            format("truetype");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
-        U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+    src: url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.eot?#iefix") format("embedded-opentype"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.woff2") format("woff2"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.woff") format("woff"), url("https://include.flat18.co.uk/fonts/montserrat/montserrat-bold-webfont.ttf") format("truetype");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
 }
