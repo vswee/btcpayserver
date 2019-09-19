@@ -94,16 +94,12 @@ namespace BTCPayServer.Controllers
                 }
                 else
                 {
-                    viewResult = View("Home");
+                    viewResult = View("/Views/NewStuff/Home.cshtml");
                 }
             }
 
             return viewResult;
         }
-
-        // public async Task<IActionResult> HomeNew() {
-        //     return View("HomeNew");
-        // }
 
         [Route("translate")]
         public IActionResult BitpayTranslator()

@@ -33,16 +33,13 @@ using BTCPayServer.Models.StoreViewModels;
 
 namespace BTCPayServer.Controllers
 {
+    // NOTE: Started separate controller as illustration of reducing number of injected dependencies
     [Authorize(AuthenticationSchemes = Policies.CookieAuthentication)]
-    [Route("[controller]/[action]")]
-    public class AccountDashboardController : Controller
+    public class NewStuffController : Controller
     {
         private UserManager<ApplicationUser> _UserManager;
         private StoreRepository _Repo;
-        public AccountDashboardController(
-        UserManager<ApplicationUser> userManager,
-        StoreRepository repos
-        )
+        public NewStuffController(UserManager<ApplicationUser> userManager, StoreRepository repos)
         {
             _UserManager = userManager;
             _Repo = repos;
@@ -87,7 +84,6 @@ namespace BTCPayServer.Controllers
 
     public static class UserManagerExt
     {
-
         public static UsersViewModel getUsersFromDatabase(this UserManager<ApplicationUser> userManager, int skip, int count)
         {
             var users = new UsersViewModel();
@@ -105,32 +101,4 @@ namespace BTCPayServer.Controllers
             return users;
         }
     }
-
-
-    //public static class StoresExt{
-
-    //public static async Task<StoresViewModel> fetchStoresAsync(_Repo, string id)
-    //{
-    //    StoresViewModel result = new StoresViewModel();
-    //    var stores = await _Repo.GetStoresByUserId(id);
-    //    for (int i = 0; i < stores.Length; i++)
-    //    {
-    //        var store = stores[i];
-    //        result.Stores.Add(new StoresViewModel.StoreViewModel()
-    //        {
-    //            Id = store.Id,
-    //            Name = store.StoreName,
-    //            WebSite = store.StoreWebsite,
-    //            IsOwner = store.HasClaim(Policies.CanModifyStoreSettings.Key)
-    //        });
-    //    }
-    //    return result;
-    //}
-
-
-    //}
-
-
-
-
 }
