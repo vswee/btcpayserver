@@ -12,7 +12,6 @@ using Newtonsoft.Json;
 using BTCPayServer.Services;
 using BTCPayServer.HostedServices;
 using BTCPayServer.Services.Apps;
-using BTCPayServer.Models.NewStuff;
 using System.Collections.Generic;
 using BTCPayServer.Models.ServerViewModels;
 using Microsoft.AspNetCore.Identity;

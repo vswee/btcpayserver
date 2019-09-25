@@ -35,7 +35,7 @@ using BTCPayServer.Services.Apps;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BTCPayServer.Data;
 using Microsoft.EntityFrameworkCore;
-
+using BTCPayServer.CommonExtenders;
 using BTCPayServer.Filters;
 
 namespace BTCPayServer.Controllers

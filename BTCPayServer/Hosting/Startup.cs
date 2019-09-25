@@ -49,8 +49,8 @@ namespace BTCPayServer.Hosting
             services.AddMemoryCache();
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();      
-            
+                .AddDefaultTokenProviders();
+
             ConfigureOpenIddict(services);
 
             services.AddBTCPayServer(Configuration);
@@ -83,7 +83,7 @@ namespace BTCPayServer.Hosting
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.AllowedForNewUsers = true;
-                options.Password.RequireUppercase = false;            
+                options.Password.RequireUppercase = false;
                 // Configure Identity to use the same JWT claims as OpenIddict instead
                 // of the legacy WS-Federation claims it uses by default (ClaimTypes),
                 // which saves you from doing the mapping in your authorization controller.
@@ -111,7 +111,7 @@ namespace BTCPayServer.Hosting
                         // Note that by design this is a fatal error condition that will cause the process to exit.
                         throw new ConfigException($"The https certificate file could not be found at {httpsCertificateFilePath}.");
                     }
-                    if(hasCertPath && useDefaultCertificate)
+                    if (hasCertPath && useDefaultCertificate)
                     {
                         throw new ConfigException($"Conflicting settings: if HttpsUseDefaultCertificate is true, HttpsCertificateFilePath should not be used");
                     }
@@ -135,7 +135,7 @@ namespace BTCPayServer.Hosting
 
         private void ConfigureOpenIddict(IServiceCollection services)
         {
-// Register the OpenIddict services.
+            // Register the OpenIddict services.
             services.AddOpenIddict()
                 .AddCore(options =>
                 {
@@ -147,7 +147,7 @@ namespace BTCPayServer.Hosting
                 })
                 .AddServer(options =>
                 {
-                    
+
                     //Disabled so that Tor works with OpenIddict too
                     options.DisableHttpsRequirement();
                     // Register the ASP.NET Core MVC binder used by OpenIddict.
@@ -216,7 +216,7 @@ namespace BTCPayServer.Hosting
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseCors();
 
             var forwardingOptions = new ForwardedHeadersOptions()
@@ -242,6 +242,10 @@ namespace BTCPayServer.Hosting
             app.UseStatusCodePages();
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "Nicolas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

@@ -8,10 +8,9 @@ using BTCPayServer.Models;
 using BTCPayServer.Models.StoreViewModels;
 using NBitcoin;
 
-
-namespace BTCPayServer.Models.NewStuff
+namespace BTCPayServer.Areas.Nicolas.Models.Home
 {
-    public class NewHomeModel
+    public class HomeIndexViewModel
     {
         // public string StoreFilterDashboard { get; set; }
 
