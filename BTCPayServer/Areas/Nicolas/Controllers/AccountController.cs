@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using BTCPayServer.CommonExtenders;
 using BTCPayServer.Data;
+using Microsoft.AspNetCore.Authentication;
 
 namespace BTCPayServer.Areas.Nicolas.Controllers
 {
@@ -64,5 +65,30 @@ namespace BTCPayServer.Areas.Nicolas.Controllers
             return _UserManager.GetUserId(User);
         }
 
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(string returnUrl = null)
+        {
+            if (User.Identity.IsAuthenticated && string.IsNullOrEmpty(returnUrl))
+                return RedirectToLocal();
+            // Clear the existing external cookie to ensure a clean login process
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+        private IActionResult RedirectToLocal(string returnUrl = null)
+        {
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+        }
     }
 }
