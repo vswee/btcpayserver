@@ -7,14 +7,7 @@
             "wwwroot/vendor/font-awesome/css/font-awesome.css",
             "wwwroot/main/**/*.css",
             "wwwroot/vendor/animatecss/animate.css",
-            "wwwroot/vendor/flatpickr/flatpickr.css",
-            "wwwroot/main-new/primary/*.css"
-        ]
-    },
-    {
-        "outputFileName": "wwwroot/bundles/frame-bundle.min.css",
-        "inputFiles": [
-            "wwwroot/main-new/frame/btcpay-frame.css"
+            "wwwroot/vendor/flatpickr/flatpickr.css"
         ]
     },
     {
@@ -32,6 +25,19 @@
             "wwwroot/main/**/*.js"
         ]
     },
+    // NEW BUNDLES
+    {
+        "outputFileName": "wwwroot/bundles/NEW-main-bundle.min.css",
+        "inputFiles": [
+            "wwwroot/vendor/bootstrap4-creativestart/Open-Sans.css",
+            "wwwroot/vendor/magnific-popup/magnific-popup.css",
+            "wwwroot/vendor/font-awesome/css/font-awesome.css",
+            "wwwroot/main/**/*.css",
+            "wwwroot/vendor/animatecss/animate.css",
+            "wwwroot/vendor/flatpickr/flatpickr.css",
+            "wwwroot/main-new/primary/*.css"
+        ]
+    },
     {
         "outputFileName": "wwwroot/bundles/main-bundle-post-body.min.js",
         "inputFiles": [
@@ -39,11 +45,19 @@
         ]
     },
     {
-        "outputFileName": "wwwroot/bundles/frame-bundle-post-body.min.js",
+        "outputFileName": "wwwroot/bundles/frame-bundle.min.js",
         "inputFiles": [
             "wwwroot/main-new/frame/btcpay-frame.js"
         ]
     },
+    {
+        "outputFileName": "wwwroot/bundles/frame-bundle.min.css",
+        "inputFiles": [
+            "wwwroot/main-new/frame/btcpay-frame.css"
+        ]
+    },
+
+
     {
         "outputFileName": "wwwroot/bundles/jqueryvalidate-bundle.min.js",
         "inputFiles": [
@@ -75,7 +89,7 @@
             "wwwroot/checkout/**/*.js"
         ]
     },
-    
+
     {
         "outputFileName": "wwwroot/bundles/lightning-node-info-bundle.min.js",
         "inputFiles": [
@@ -108,7 +122,7 @@
             "wwwroot/crowdfund/**/*.js"
         ]
     },
-    
+
     {
         "outputFileName": "wwwroot/bundles/crowdfund-bundle-2.min.js",
         "inputFiles": [
@@ -152,7 +166,7 @@
             "wwwroot/vendor/summernote/summernote-bs4.css"
         ]
     },
-    
+
     {
         "outputFileName": "wwwroot/bundles/crowdfund-bundle.min.css",
         "inputFiles": [

@@ -1,4 +1,4 @@
-@inject SignInManager<ApplicationUser> SignInManager
+﻿@inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject RoleManager<IdentityRole> RoleManager
 @inject BTCPayServer.Services.BTCPayServerEnvironment env
@@ -30,13 +30,13 @@
     <!-- <link href="@this.Context.Request.GetRelativePathOrAbsolute(themeManager.BootstrapUri)" rel="stylesheet" /> -->
     <!-- <link href="@this.Context.Request.GetRelativePathOrAbsolute(themeManager.CreativeStartUri)" rel="stylesheet" /> -->
 
-    <bundle name="wwwroot/bundles/main-bundle.min.css" />
+    <bundle name="wwwroot/bundles/NEW-main-bundle.min.css" />
 
     @* JS *@
     <!-- <bundle name="wwwroot/bundles/main-bundle.min.js" /> -->
     @RenderSection("HeadScripts", required: false)
     @RenderSection("HeaderContent", false)
-</head>
+</head>   
 
 <body id="page-top">
 

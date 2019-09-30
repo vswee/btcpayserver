@@ -37,7 +37,7 @@ namespace BTCPayServer.Controllers
         {
             var invoice = (await _InvoiceRepository.GetInvoices(new InvoiceQuery()
             {
-                InvoiceId = invoiceId,
+                InvoiceId = new[] {invoiceId},
                 UserId = GetUserId(),
                 IncludeAddresses = true,
                 IncludeEvents = true
@@ -66,8 +66,8 @@ namespace BTCPayServer.Controllers
                 Fiat = _CurrencyNameTable.DisplayFormatCurrency(prodInfo.Price, prodInfo.Currency),
                 TaxIncluded = _CurrencyNameTable.DisplayFormatCurrency(prodInfo.TaxIncluded, prodInfo.Currency),
                 NotificationEmail = invoice.NotificationEmail,
-                NotificationUrl = invoice.NotificationURL,
-                RedirectUrl = invoice.RedirectURL,
+                NotificationUrl = invoice.NotificationURL?.AbsoluteUri,
+                RedirectUrl = invoice.RedirectURL?.AbsoluteUri,
                 ProductInformation = invoice.ProductInformation,
                 StatusException = invoice.ExceptionStatus,
                 Events = invoice.Events,
@@ -179,7 +179,7 @@ namespace BTCPayServer.Controllers
                 paymentMethodId = store.GetDefaultPaymentId(_NetworkProvider);
                 isDefaultPaymentId = true;
             }
-            BTCPayNetworkBase network = _NetworkProvider.GetNetwork<BTCPayNetwork>(paymentMethodId.CryptoCode);
+            BTCPayNetworkBase network = _NetworkProvider.GetNetwork<BTCPayNetworkBase>(paymentMethodId.CryptoCode);
             if (network == null && isDefaultPaymentId)
             {
                 //TODO: need to look into a better way for this as it does not scale
@@ -238,7 +238,6 @@ namespace BTCPayServer.Controllers
                 CustomCSSLink = storeBlob.CustomCSS?.AbsoluteUri,
                 CustomLogoLink = storeBlob.CustomLogo?.AbsoluteUri,
                 CryptoImage = Request.GetRelativePathOrAbsolute(paymentMethodHandler.GetCryptoImage(paymentMethodId)),
-                LightningAmountInSatoshi = storeBlob.LightningAmountInSatoshi,
                 BtcAddress = paymentMethodDetails.GetPaymentDestination(),
                 BtcDue = accounting.Due.ToString(),
                 OrderAmount = (accounting.TotalDue - accounting.NetworkFee).ToString(),
@@ -250,7 +249,7 @@ namespace BTCPayServer.Controllers
                 MaxTimeMinutes = (int)(invoice.ExpirationTime - invoice.InvoiceTime).TotalMinutes,
                 ItemDesc = invoice.ProductInformation.ItemDesc,
                 Rate = ExchangeRate(paymentMethod),
-                MerchantRefLink = invoice.RedirectURL ?? "/",
+                MerchantRefLink = invoice.RedirectURL?.AbsoluteUri ?? "/",
                 RedirectAutomatically = invoice.RedirectAutomatically,
                 StoreName = store.StoreName,
                 PeerInfo = (paymentMethodDetails as LightningLikePaymentMethodDetails)?.NodeInfo,
@@ -295,7 +294,7 @@ namespace BTCPayServer.Controllers
                                           .ToList()
             };
 
-            paymentMethodHandler.PreparePaymentModel(model, dto);
+            paymentMethodHandler.PreparePaymentModel(model, dto, storeBlob);
             model.UISettings = paymentMethodHandler.GetCheckoutUISettings();
             model.PaymentMethodId = paymentMethodId.ToString();
             var expiration = TimeSpan.FromSeconds(model.ExpirationSeconds);
@@ -428,7 +427,7 @@ namespace BTCPayServer.Controllers
                     Date = invoice.InvoiceTime,
                     InvoiceId = invoice.Id,
                     OrderId = invoice.OrderId ?? string.Empty,
-                    RedirectUrl = invoice.RedirectURL ?? string.Empty,
+                    RedirectUrl = invoice.RedirectURL?.AbsoluteUri ?? string.Empty,
                     AmountCurrency = _CurrencyNameTable.DisplayFormatCurrency(invoice.ProductInformation.Price, invoice.ProductInformation.Currency),
                     CanMarkInvalid = state.CanMarkInvalid(),
                     CanMarkComplete = state.CanMarkComplete(),
@@ -587,7 +586,7 @@ namespace BTCPayServer.Controllers
         {
             var invoice = (await _InvoiceRepository.GetInvoices(new InvoiceQuery()
             {
-                InvoiceId = invoiceId,
+                InvoiceId = new[] {invoiceId},
                 UserId = GetUserId()
             })).FirstOrDefault();
 

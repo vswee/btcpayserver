@@ -1,4 +1,4 @@
-@inject SignInManager<ApplicationUser> SignInManager
+﻿@inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject RoleManager<IdentityRole> RoleManager
 @inject BTCPayServer.Services.BTCPayServerEnvironment env
@@ -6,7 +6,7 @@
 @inject BTCPayServer.HostedServices.CssThemeManager themeManager
 
 @{
-  ViewBag.ShowMenu = ViewBag.ShowMenu ?? true;
+    ViewBag.ShowMenu = ViewBag.ShowMenu ?? true;
 }
 
 @addTagHelper *, BundlerMinifier.TagHelpers
@@ -30,10 +30,9 @@
 </head>
 
 <body>
-  
-          @RenderBody()
-        
-    <bundle name="wwwroot/bundles/frame-bundle-post-body.min.js" />
 
+    @RenderBody()
+
+    <bundle name="wwwroot/bundles/frame-bundle.min.js" />
 </body>
 </html>

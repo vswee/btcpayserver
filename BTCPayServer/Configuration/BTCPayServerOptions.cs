@@ -194,7 +194,7 @@ namespace BTCPayServer.Configuration
                 {
                     if (!SSHFingerprint.TryParse(fingerprint, out var f))
                         throw new ConfigException($"Invalid ssh fingerprint format {fingerprint}");
-                    TrustedFingerprints.Add(f);
+                    SSHSettings?.TrustedFingerprints.Add(f);
                 }
             }
 
@@ -245,13 +245,9 @@ namespace BTCPayServer.Configuration
             }
             settings.Password = conf.GetOrDefault<string>("sshpassword", "");
             settings.KeyFile = conf.GetOrDefault<string>("sshkeyfile", "");
+            settings.AuthorizedKeysFile = conf.GetOrDefault<string>("sshauthorizedkeys", "");
             settings.KeyFilePassword = conf.GetOrDefault<string>("sshkeyfilepassword", "");
             return settings;
-        }
-
-        internal bool IsTrustedFingerprint(byte[] fingerPrint, byte[] hostKey)
-        {
-            return TrustedFingerprints.Any(f => f.Match(fingerPrint, hostKey));
         }
 
         public string RootPath { get; set; }
@@ -277,7 +273,6 @@ namespace BTCPayServer.Configuration
             set;
         }
         public bool AllowAdminRegistration { get; set; }
-        public List<SSHFingerprint> TrustedFingerprints { get; set; } = new List<SSHFingerprint>();
         public SSHSettings SSHSettings
         {
             get;

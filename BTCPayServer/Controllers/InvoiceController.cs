@@ -81,13 +81,7 @@ namespace BTCPayServer.Controllers
             entity.ServerUrl = serverUrl;
             entity.FullNotifications = invoice.FullNotifications || invoice.ExtendedNotifications;
             entity.ExtendedNotifications = invoice.ExtendedNotifications;
-            
-            if (invoice.NotificationURL != null &&
-                Uri.TryCreate(invoice.NotificationURL, UriKind.Absolute, out var notificationUri) &&
-                (notificationUri.Scheme == "http" || notificationUri.Scheme == "https"))
-            {
-                entity.NotificationURL = notificationUri.AbsoluteUri;
-            }
+            entity.NotificationURLTemplate = invoice.NotificationURL;
             entity.NotificationEmail = invoice.NotificationEmail;
             entity.BuyerInformation = Map<CreateInvoiceRequest, BuyerInformation>(invoice);
             entity.PaymentTolerance = storeBlob.PaymentTolerance;
@@ -119,9 +113,7 @@ namespace BTCPayServer.Controllers
             entity.ProductInformation = Map<CreateInvoiceRequest, ProductInformation>(invoice);
 
 
-            entity.RedirectURL = invoice.RedirectURL ?? store.StoreWebsite;
-            if (!Uri.IsWellFormedUriString(entity.RedirectURL, UriKind.Absolute))
-                entity.RedirectURL = null;
+            entity.RedirectURLTemplate = invoice.RedirectURL ?? store.StoreWebsite;
 
             entity.RedirectAutomatically =
                 invoice.RedirectAutomatically.GetValueOrDefault(storeBlob.RedirectAutomatically);
@@ -149,6 +141,7 @@ namespace BTCPayServer.Controllers
                                                 .Where(c => c != null))
             {
                 currencyPairsToFetch.Add(new CurrencyPair(network.CryptoCode, invoice.Currency));
+                //TODO: abstract
                 if (storeBlob.LightningMaxValue != null)
                     currencyPairsToFetch.Add(new CurrencyPair(network.CryptoCode, storeBlob.LightningMaxValue.Currency));
                 if (storeBlob.OnChainMinValue != null)
@@ -183,7 +176,7 @@ namespace BTCPayServer.Controllers
             if (supported.Count == 0)
             {
                 StringBuilder errors = new StringBuilder();
-                errors.AppendLine("Warning: No wallet has been linked to your BTCPay Store. See the following link for more information on how to connect your store and wallet. (https://docs.btcpayserver.org/btcpay-basics/gettingstarted#connecting-btcpay-store-to-your-wallet)");
+                errors.AppendLine("Warning: No wallet has been linked to your BTCPay Store. See the following link for more information on how to connect your store and wallet. (https://docs.btcpayserver.org/getting-started/connectwallet)");
                 foreach (var error in logs.ToList())
                 {
                     errors.AppendLine(error.ToString());

@@ -14,16 +14,19 @@ using BTCPayServer.Configuration;
 using System.IO;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using AspNet.Security.OpenIdConnect.Primitives;
-using BTCPayServer.Authentication.OpenId.Models;
 using BTCPayServer.Security;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using OpenIddict.Abstractions;
 using OpenIddict.EntityFrameworkCore.Models;
 using System.Net;
+using BTCPayServer.Authentication;
 using BTCPayServer.Authentication.OpenId;
+using BTCPayServer.Altcoins.Monero;
 using BTCPayServer.PaymentRequest;
 using BTCPayServer.Services.Apps;
 using BTCPayServer.Storage;
+using Microsoft.Extensions.Options;
+using OpenIddict.Core;
 
 namespace BTCPayServer.Hosting
 {
@@ -46,6 +49,10 @@ namespace BTCPayServer.Hosting
         {
             Logs.Configure(LoggerFactory);
             services.ConfigureBTCPayServer(Configuration);
+            if (Configuration.AnyMoneroLikeCoinsConfigured())
+            {
+                services.AddMoneroLike();
+            }
             services.AddMemoryCache();
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -147,7 +154,8 @@ namespace BTCPayServer.Hosting
                 })
                 .AddServer(options =>
                 {
-
+                    options.EnableRequestCaching();
+                    
                     //Disabled so that Tor works with OpenIddict too
                     options.DisableHttpsRequirement();
                     // Register the ASP.NET Core MVC binder used by OpenIddict.
@@ -161,7 +169,7 @@ namespace BTCPayServer.Hosting
                     options.EnableLogoutEndpoint("/connect/logout");
 
                     //we do not care about these granular controls for now
-                    options.DisableScopeValidation();
+                    options.IgnoreScopePermissions();
                     options.IgnoreEndpointPermissions();
                     // Allow client applications various flows
                     options.AllowImplicitFlow();
@@ -177,12 +185,18 @@ namespace BTCPayServer.Hosting
                         OpenIdConnectConstants.Scopes.OfflineAccess,
                         OpenIdConnectConstants.Scopes.Email,
                         OpenIdConnectConstants.Scopes.Profile,
-                        OpenIddictConstants.Scopes.Roles);
+                        OpenIddictConstants.Scopes.Roles,
+                        RestAPIPolicies.BTCPayScopes.ViewStores,
+                        RestAPIPolicies.BTCPayScopes.CreateInvoices,
+                        RestAPIPolicies.BTCPayScopes.StoreManagement,
+                        RestAPIPolicies.BTCPayScopes.ViewApps,
+                        RestAPIPolicies.BTCPayScopes.AppManagement
+                        );
+                    
                     options.AddEventHandler<PasswordGrantTypeEventHandler>();
                     options.AddEventHandler<AuthorizationCodeGrantTypeEventHandler>();
                     options.AddEventHandler<RefreshTokenGrantTypeEventHandler>();
                     options.AddEventHandler<ClientCredentialsGrantTypeEventHandler>();
-                    options.AddEventHandler<AuthorizationEventHandler>();
                     options.AddEventHandler<LogoutEventHandler>();
 
                     options.ConfigureSigningKey(Configuration);

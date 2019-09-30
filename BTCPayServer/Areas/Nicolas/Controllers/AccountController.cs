@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using BTCPayServer.CommonExtenders;
+using BTCPayServer.Data;
 
 namespace BTCPayServer.Areas.Nicolas.Controllers
 {

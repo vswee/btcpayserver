@@ -86,16 +86,7 @@ namespace BTCPayServer.Controllers
             viewResult = await GoToApp(_cachedServerSettings.RootAppId, _cachedServerSettings.RootAppType);
 
             if (viewResult == null)
-            {
-                if (User.Identity.IsAuthenticated)
-                {
-                    viewResult = Redirect("/Account");
-                }
-                else
-                {
-                    viewResult = View("/Views/NewStuff/Home.cshtml");
-                }
-            }
+                viewResult = View("/Views/Home/Home.cshtml");
 
             return viewResult;
         }

@@ -18,7 +18,7 @@
     <bundle name="wwwroot/bundles/checkout-bundle.min.css" />
 
     <script type="text/javascript">
-        var srvModel = @Safe.Json(Model);
+        var initialSrvModel = @Safe.Json(Model);
     </script>
 
     <bundle name="wwwroot/bundles/checkout-bundle.min.js" />
@@ -84,6 +84,7 @@
 
                         <select asp-for="DefaultLang"
                                 class="cmblang reverse invisible"
+                                onkeypress="if(event.keyCode==13){ $(this).click();}"
                                 onchange="changeLanguage($(this).val())"
                                 asp-items="@langService.GetLanguages().Select((language) => new SelectListItem(language.DisplayName,language.Code, false))"></select>
 
@@ -162,7 +163,7 @@
         i18n: i18n,
         el: '#checkoutCtrl',
         data: {
-            srvModel: srvModel,
+            srvModel: initialSrvModel,
             end: new Date(),
             expirationPercentage: 0,
             timerText: "@Model.TimeLeft",
@@ -212,12 +213,6 @@
                 this.lineItemsExpanded ? $("line-items").slideUp() : $("line-items").slideDown();
                 this.lineItemsExpanded = !this.lineItemsExpanded;
             },
-            numberFormatted: function(x) {
-                var rounded = Math.round(x);
-                var parts = rounded.toString().split(".");
-                parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-                return parts.join(".");
-            },
             openPaymentMethodDialog: function() {
                 var content = $("#vexPopupDialog").html();
                 vex.open({
@@ -229,9 +224,9 @@
                 this.changeCurrency(currencyId);
             },   
             changeCurrency: function (currency) {
-                if (currency !== null && srvModel.paymentMethodId !== currency) {
+                if (currency !== null && this.srvModel.paymentMethodId !== currency) {
                     this.changingCurrencies = true;
-                    srvModel.paymentMethodId = currency;
+                    this.srvModel.paymentMethodId = currency;
                     this.fetchData();
                     this.closePaymentMethodDialog(null);
                 }
@@ -265,6 +260,7 @@
                 }
             },
             listenIn: function(){
+                var self = this;
                 var socket = null;
                 var supportsWebSockets = 'WebSocket' in window && window.WebSocket.CLOSING === 2;
                 if (supportsWebSockets) {
@@ -279,7 +275,7 @@
                     try {
                         socket = new WebSocket(ws_uri);
                         socket.onmessage = function (e) {
-                            this.fetchData();
+                            self.fetchData();
                         };
                         socket.onerror = function (e) {
                             console.error("Error while connecting to websocket for invoice notifications (callback)");
@@ -289,11 +285,11 @@
                         console.error("Error while connecting to websocket for invoice notifications");
                     }
                 }
-                    
+                var self = this;
                 function watcher(){
                     setTimeout(function(){
                         if (socket === null || socket.readyState !== 1) {
-                            this.fetchData();
+                            self.fetchData();
                         }
                         watcher();
                     }, 2000);
@@ -303,7 +299,7 @@
             fetchData: function(){
                 var self = this;
                 $.ajax({
-                    url: window.location.pathname + "/status?invoiceId=" + srvModel.invoiceId + "&paymentMethodId=" + srvModel.paymentMethodId,
+                    url: window.location.pathname + "/status?invoiceId=" + this.srvModel.invoiceId + "&paymentMethodId=" + this.srvModel.paymentMethodId,
                     type: "GET",
                     cache: false
                 })
@@ -313,21 +309,13 @@
             },
             onDataCallback : function(jsonData){
                 if (this.srvModel.status !== jsonData.status) {
-                    window.parent.postMessage({ "invoiceId": srvModel.invoiceId, "status": jsonData.status }, "*");
+                    window.parent.postMessage({ "invoiceId": this.srvModel.invoiceId, "status": jsonData.status }, "*");
                 }
                 if (jsonData.paymentMethodId === this.srvModel.paymentMethodId) {
                     this.changingCurrencies = false;
                 }
                 // displaying satoshis for lightning payments
                 jsonData.cryptoCodeSrv = jsonData.cryptoCode;
-                if (jsonData.isLightning && jsonData.lightningAmountInSatoshi && jsonData.cryptoCode === "BTC") {
-                    var SATOSHIME = 100000000;
-                    jsonData.cryptoCode = "Sats";
-                    jsonData.btcDue = numberFormatted(jsonData.btcDue * SATOSHIME);
-                    jsonData.btcPaid = numberFormatted(jsonData.btcPaid * SATOSHIME);
-                    jsonData.networkFee = numberFormatted(jsonData.networkFee * SATOSHIME);
-                    jsonData.orderAmount = numberFormatted(jsonData.orderAmount * SATOSHIME);
-                }
                 // expand line items to show details on amount due for multi-transaction payment
                 if (this.srvModel.txCount === 1 && jsonData.txCount > 1) {
                     this.onlyExpandLineItems();
