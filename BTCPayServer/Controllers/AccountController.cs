@@ -431,8 +431,9 @@ namespace BTCPayServer.Controllers
             return View(model);
         }
 
+        // TODO: Find a better way, maybe dedicated class for this type of stuff?
         /// <summary> 
-        /// Test property
+        /// Property used by test for communicating result of register
         /// </summary>
         public string RegisteredUserId
         {

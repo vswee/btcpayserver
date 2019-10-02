@@ -1,0 +1,81 @@
+﻿@model RegisterViewModel
+@{
+    Layout = "_LayoutSingleForm";
+    ViewData["Title"] = "Register";
+}
+
+<div class="build-in-up" id="loginForm_" style="display:none;">
+    <form asp-route-returnurl="@ViewData[" ReturnUrl"]" method="post">
+        <span class="form-name">Sign in</span>
+        <div class="f-el">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <span class="form-lab">email</span>
+            <input asp-for="Email" class="form-input" placeholder="" required="required" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="f-el">
+            <span class="form-lab">password</span>
+            <input asp-for="Password" class="form-input" placeholder="" required="required"
+                   type="password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="f-el">
+            <button type="submit" class="fp-button" id="LoginButton"
+                    asp-controller="Account" asp-action="Login">
+                login
+            </button>
+        </div>
+    </form>
+
+    <a class="fp-button-sec" asp-controller="Account" asp-action="ForgotPassword">
+        Forgot
+        your password?
+    </a>
+
+    <a class="fp-button-sec" id="Register">Register</a>
+</div>
+<div class="build-in-up" id="registerForm_">
+
+    <form asp-route-returnurl="@ViewData[" ReturnUrl"]" method="post">
+        <span class="form-name">Register</span>
+        <div class="f-el">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <span class="form-lab">email</span>
+            <input asp-for="Email" class="form-input" placeholder="" required="required" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="f-el">
+            <span class="form-lab">password</span>
+            <input asp-for="Password" class="form-input" placeholder="" required="required"
+                   type="password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="f-el">
+            <span class="form-lab">confirm password</span>
+            <input asp-for="ConfirmPassword" class="form-input" placeholder=""
+                   required="required" type="password" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+
+        @if (ViewData["AllowIsAdmin"] is true)
+        {
+            <div class="f-el">
+                <span class="form-lab">
+                    Administrator Acount &nbsp;&nbsp;
+                    <input asp-for="IsAdmin" type="checkbox" class="form-check-inline" />
+                </span>
+                <span asp-validation-for="IsAdmin" class="text-danger"></span>
+            </div>
+        }
+        <div class="f-el">
+            <button type="submit" class="fp-button" id="RegisterButton">
+                create
+                account
+            </button>
+        </div>
+    </form>
+
+    <a class="fp-button-sec" id="SignIn">Sign in</a>
+
+</div>
+@await Html.PartialAsync("_ValidationScriptsPartial")
