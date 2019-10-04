@@ -59,7 +59,7 @@
 
                 <div class="modern-login-register-inner">
                     <div class="build-in-up" id="loginForm_">
-                        <form asp-route-returnurl="@ViewData[" ReturnUrl"]" method="post">
+                        <form asp-area="Nicolas" asp-area="Nicolas" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
                             <span class="form-name">Sign in</span>
                             <div class="f-el">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -93,7 +93,7 @@
                     </div>
 
                     <div class="build-in-up" id="registerForm_" style="display:none;">
-                        <form asp-route-returnurl="@ViewData[" ReturnUrl"]" method="post">
+                        <form asp-area="Nicolas" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
                             <span class="form-name">Register</span>
                             <div class="f-el">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>

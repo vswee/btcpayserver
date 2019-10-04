@@ -25,9 +25,8 @@ using BTCPayServer.Services.Mails;
 
 namespace BTCPayServer.Areas.Nicolas.Controllers
 {
-    [Area("Nicolas")]
     [Authorize(AuthenticationSchemes = Policies.CookieAuthentication)]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private StoreRepository _storeRepo;
         private UserManager<ApplicationUser> _userManager;
@@ -51,8 +50,7 @@ namespace BTCPayServer.Areas.Nicolas.Controllers
             _emailSenderFactory = emailSenderFactory;
             _logger = Logs.PayServer;
         }
-
-        [Route("/Account/")]
+        
         public IActionResult Index()
         {
             var model = new AccountIndexViewModel
@@ -61,7 +59,7 @@ namespace BTCPayServer.Areas.Nicolas.Controllers
                 //StoresPartialModel = _Repo.fetchStoresAsync(GetUserId())
             };
 
-            return View("/Views/NewStuff/AccountIndex.cshtml", model);
+            return View(model);
         }
 
         private async Task<StoresViewModel> fetchStoresAsync(StoreRepository repo, string v)
@@ -212,18 +210,6 @@ namespace BTCPayServer.Areas.Nicolas.Controllers
 
 
 
-        private IActionResult RedirectToLocal(string returnUrl = null)
-        {
-            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
-            }
-        }
-
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Lockout()
@@ -291,6 +277,14 @@ namespace BTCPayServer.Areas.Nicolas.Controllers
         public IActionResult ForgotPasswordConfirmation()
         {
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User logged out.");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
     }
 }

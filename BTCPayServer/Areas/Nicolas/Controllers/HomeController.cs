@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BTCPayServer.Areas.Nicolas.Controllers
 {
-    [Area("Nicolas")]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction(nameof(AccountController.Index), "Account");
+
             return View();
         }
     }
