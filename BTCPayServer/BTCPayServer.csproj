@@ -3,6 +3,7 @@
   <Import Project="../Build/Common.csproj" />
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Build\**" />
