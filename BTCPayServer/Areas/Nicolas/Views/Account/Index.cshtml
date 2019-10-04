@@ -8,10 +8,10 @@
         <div class="user-cluster">
             <div class="profile-pic"></div>
             <div class="controls-hor">
-                <a class="control-icon-button" id="settings_">
+                <a class="control-icon-button" href="#">
                     <img src="~/main-new/img/sidebar/gear.svg" />
                 </a>
-                <a class="control-icon-button" asp-area="Nicolas" asp-controller="Manage" asp-action="Index"
+                <a class="control-icon-button" href="#"
                    title="My settings" id="MySettings">
                     <img src="~/main-new/img/sidebar/profile.svg" />
                 </a>
@@ -23,42 +23,41 @@
         </div>
         <ul class="sidebar-menu">
             <li>
-                <a href="/" class="focus-override">
+                <a asp-area="Nicolas" asp-controller="Account" asp-action="Index" class="focus-override">
                     <img src="~/main-new/img/sidebar/overview.svg" />
                     Overview
                 </a>
             </li>
             <li>
-                <a asp-area="Nicolas" asp-controller="UserStores" asp-action="ListStores" class="js-scroll-trigger"
+                <a href="#" class="js-scroll-trigger"
                    id="Stores">
                     <img src="~/main-new/img/sidebar/stores.svg" />
                     Stores
                 </a>
             </li>
             <li>
-                <a asp-area="Nicolas" asp-controller="Apps" asp-action="ListApps" class="js-scroll-trigger"
+                <a href="#" class="js-scroll-trigger"
                    id="Apps">
                     <img src="~/main-new/img/sidebar/apps.svg" />
                     Apps
                 </a>
             </li>
             <li>
-                <a asp-area="Nicolas" asp-controller="Wallets" asp-action="ListWallets" class="js-scroll-trigger"
+                <a href="#" class="js-scroll-trigger"
                    id="Wallets">
                     <img src="~/main-new/img/sidebar/wallets.svg" />
                     Wallets
                 </a>
             </li>
             <li>
-                <a asp-area="" asp-controller="Invoice" asp-action="ListInvoices" class="js-scroll-trigger"
+                <a href="#" class="js-scroll-trigger"
                    id="Invoices">
                     <img src="~/main-new/img/sidebar/invoices.svg" />
                     Invoices
                 </a>
             </li>
             <li>
-                <a asp-area="" asp-controller="PaymentRequest" asp-action="GetPaymentRequests"
-                   class="js-scroll-trigger" id="PaymentRequests">
+                <a href="#" class="js-scroll-trigger">
                     <img src="~/main-new/img/sidebar/paymentRequests.svg" />
                     Payment Requests
                 </a>
@@ -66,7 +65,7 @@
             @if (User.IsInRole(Roles.ServerAdmin))
             {
                 <li>
-                    <a asp-area="Nicolas" asp-controller="Server" asp-action="ListUsers" class=" js-scroll-trigger"
+                    <a href="#" class=" js-scroll-trigger"
                        id="ServerSettings">
                         <img src="~/main-new/img/sidebar/server.svg" />
                         Server settings
@@ -200,8 +199,8 @@
                                                 The node is synchronized (Height: @line.Status.BitcoinStatus.Headers)
                                             </li>
                                             @if (line.Status.BitcoinStatus.IsSynched &&
-                                        line.Status.SyncHeight.HasValue &&
-                                        line.Status.SyncHeight.Value < line.Status.BitcoinStatus.Headers)
+                                       line.Status.SyncHeight.HasValue &&
+                                       line.Status.SyncHeight.Value < line.Status.BitcoinStatus.Headers)
                                             {
                                                 <li>
                                                     NBXplorer is synchronizing... (Height: @line.Status.SyncHeight.Value)
@@ -250,15 +249,17 @@
                     </a>
                 </span>
             }
+
+            <span style="top: -8px;display: inline-block;color: white;position: relative; font-size:10px">&lt;&lt; Old Design</span>
         </div>
         <div class="social-link">
-            <a href="" class="social-link-item" target="_blank">
+            <a href="https://chat.btcpayserver.org" class="social-link-item" target="_blank">
                 <img src="~/main-new/img/footer/mattermost.svg" />
             </a>
-            <a href="" class="social-link-item" target="_blank">
+            <a href="https://twitter.com/btcpayserver" class="social-link-item" target="_blank">
                 <img src="~/main-new/img/footer/twitter.svg" />
             </a>
-            <a href="" class="social-link-item" target="_blank">
+            <a href="https://github.com/btcpayserver" class="social-link-item" target="_blank">
                 <img src="~/main-new/img/footer/github.svg" style="height: 18px" />
             </a>
         </div>
