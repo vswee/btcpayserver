@@ -200,8 +200,8 @@
                                                 The node is synchronized (Height: @line.Status.BitcoinStatus.Headers)
                                             </li>
                                             @if (line.Status.BitcoinStatus.IsSynched &&
-                                         line.Status.SyncHeight.HasValue &&
-                                         line.Status.SyncHeight.Value < line.Status.BitcoinStatus.Headers)
+                                        line.Status.SyncHeight.HasValue &&
+                                        line.Status.SyncHeight.Value < line.Status.BitcoinStatus.Headers)
                                             {
                                                 <li>
                                                     NBXplorer is synchronizing... (Height: @line.Status.SyncHeight.Value)

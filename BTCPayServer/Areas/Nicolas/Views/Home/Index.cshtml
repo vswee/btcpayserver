@@ -7,13 +7,13 @@
     <div class="header-content">
         <div class="header-content-inner">
             <div class="iconography">
-                <a class="navbar-brand js-scroll-trigger" href="~/Nicolas">
+                <a class="navbar-brand js-scroll-trigger" asp-area="Nicolas" asp-controller="Home" asp-action="Index">
                     <img src="~/main-new/img/logo.svg" />
                     @if (env.NetworkType != NBitcoin.NetworkType.Mainnet)
                     {
                         <span class="badge badge-warning"
                               style="font-size:10px;">@env.NetworkType.ToString()</span>
-                        }
+                    }
                 </a>
                 @if (env.OnionUrl != null)
                 {
