@@ -251,6 +251,10 @@ namespace BTCPayServer.Hosting
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "Nicolas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });

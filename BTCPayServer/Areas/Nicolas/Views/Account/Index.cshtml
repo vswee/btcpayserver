@@ -1,0 +1,266 @@
+@model AccountIndexViewModel
+
+@inject BTCPayServer.Services.BTCPayServerEnvironment env
+@inject BTCPayServer.HostedServices.NBXplorerDashboard dashboard
+
+<dashboard>
+    <sidebar>
+        <div class="user-cluster">
+            <div class="profile-pic"></div>
+            <div class="controls-hor">
+                <a class="control-icon-button" id="settings_">
+                    <img src="~/main-new/img/sidebar/gear.svg" />
+                </a>
+                <a class="control-icon-button" asp-area="Nicolas" asp-controller="Manage" asp-action="Index"
+                   title="My settings" id="MySettings">
+                    <img src="~/main-new/img/sidebar/profile.svg" />
+                </a>
+                <a class="control-icon-button" asp-area="Nicolas" asp-controller="Account" asp- asp-action="Logout"
+                   title="Logout" id="Logout">
+                    <img src="~/main-new/img/sidebar/logout.svg" />
+                </a>
+            </div>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="/" class="focus-override">
+                    <img src="~/main-new/img/sidebar/overview.svg" />
+                    Overview
+                </a>
+            </li>
+            <li>
+                <a asp-area="Nicolas" asp-controller="UserStores" asp-action="ListStores" class="js-scroll-trigger"
+                   id="Stores">
+                    <img src="~/main-new/img/sidebar/stores.svg" />
+                    Stores
+                </a>
+            </li>
+            <li>
+                <a asp-area="Nicolas" asp-controller="Apps" asp-action="ListApps" class="js-scroll-trigger"
+                   id="Apps">
+                    <img src="~/main-new/img/sidebar/apps.svg" />
+                    Apps
+                </a>
+            </li>
+            <li>
+                <a asp-area="Nicolas" asp-controller="Wallets" asp-action="ListWallets" class="js-scroll-trigger"
+                   id="Wallets">
+                    <img src="~/main-new/img/sidebar/wallets.svg" />
+                    Wallets
+                </a>
+            </li>
+            <li>
+                <a asp-area="" asp-controller="Invoice" asp-action="ListInvoices" class="js-scroll-trigger"
+                   id="Invoices">
+                    <img src="~/main-new/img/sidebar/invoices.svg" />
+                    Invoices
+                </a>
+            </li>
+            <li>
+                <a asp-area="" asp-controller="PaymentRequest" asp-action="GetPaymentRequests"
+                   class="js-scroll-trigger" id="PaymentRequests">
+                    <img src="~/main-new/img/sidebar/paymentRequests.svg" />
+                    Payment Requests
+                </a>
+            </li>
+            @if (User.IsInRole(Roles.ServerAdmin))
+            {
+                <li>
+                    <a asp-area="Nicolas" asp-controller="Server" asp-action="ListUsers" class=" js-scroll-trigger"
+                       id="ServerSettings">
+                        <img src="~/main-new/img/sidebar/server.svg" />
+                        Server settings
+                    </a>
+                </li>
+            }
+        </ul>
+        <div class="environment">@env.ToString()</div>
+    </sidebar>
+    <workspaceControls>
+        <!-- TO BE BOUND BBY IF -->
+        <div class="hover-dropdown filter-stores-element">
+            <svg enable-background="new 0 0 500 500" height="20" viewBox="0 0 500 500" width="20"
+                 xmlns="http://www.w3.org/2000/svg">
+                <g stroke-linecap="round" stroke-miterlimit="10" stroke-width="40">
+                    <path d="m86.539 85.16h324.104" />
+                    <path d="m272.797 250.065h-186.258" />
+                    <path d="m152.235 415.324h-65.696" />
+                </g>
+            </svg>
+            <span class="button-name">&nbsp;Filter by Store</span>
+            <ul>
+                <li>Store 01</li>
+                <!-- IF HAS PERMISSIONS SO TO DO -->
+                <li class="add-store">
+                    <a href="/stores/create">
+                        <svg enable-background="new 0 0 500 500"
+                             height="16" viewBox="0 0 500 500" width="16" xmlns="http://www.w3.org/2000/svg">
+                            <g fill="#fff" stroke="#000" stroke-linecap="round" stroke-miterlimit="10"
+                               stroke-width="40">
+                                <path d="m87.948 250h324.104" />
+                                <path d="m250 412.052v-324.104" />
+                            </g>
+                        </svg>
+                        &nbsp;Add store
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </workspaceControls>
+    <workspace>
+        <div class="dashboard-modal overview-frame">
+            <div class="modal-content">
+                <h4 class="status-text">Server Users</h4>
+                <div class="status-detail">
+                    <p>
+                        User Accounts on your BTCPay Server instance.
+                    </p>
+                </div>
+                <div class="modal-payload">
+                    <partial name="/Areas/Nicolas/Views/Partials/ListUsersFrame.cshtml" model="Model.UsersPartialModel" />
+                </div>
+            </div>
+        </div>
+        <div class="dashboard-modal overview-frame">
+            <div class="modal-content">
+                <h4 class="status-text">Invoices Overview</h4>
+                <div class="status-detail">
+                    <p>
+                        Recent Invoices.
+                    </p>
+                </div>
+                <div class="modal-payload ps-fra">
+                    <partial name="/Areas/Nicolas/Views/Partials/ListInvoicesFrame.cshtml" model="Model.InvoicesPartialModel" />
+                </div>
+            </div>
+        </div>
+        <div class="dashboard-modal node-statuses">
+            <div class="modal-content">
+                <h4 class="status-text">Your nodes are syncing</h4>
+                <div class="status-detail">
+                    <p>
+                        Your node is syncing the entire blockchain and validating the consensus rules.
+                    </p>
+                </div>
+                <div class="modal-payload">
+                    @foreach (var line in dashboard.GetAll())
+                    {
+                        <div class="tile-ske">
+                            <!-- <div class="tile-indicator"> -->
+                            @if (line.Status == null)
+                            {
+                                @if (line.Error != null)
+                                {
+                                    <i class="modal-indicator indicator-red"></i>
+                                }
+                                else
+                                {
+                                    <i class="modal-indicator indicator-amber"></i>
+                                }
+                            }
+                            else
+                            {
+                                <i class="modal-indicator indicator-green"></i>
+                            }
+                            <!-- </div> -->
+                            <div class="tile-right">
+                                <h4>@line.Network.CryptoCode</h4>
+                                @if (line.Status == null)
+                                {
+                                    <ul>
+                                        <li>The node is offline</li>
+                                        @if (line.Error != null)
+                                        {
+                                            <li>Last error: @line.Error</li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <ul>
+                                        <li>NBXplorer headers height: @line.Status.ChainHeight</li>
+                                        @if (line.Status.BitcoinStatus == null)
+                                        {
+                                            if (line.State == BTCPayServer.HostedServices.NBXplorerState.Synching)
+                                            {
+                                                <li>The node is starting...</li>
+                                            }
+                                            else
+                                            {
+                                                <li>The node is offline</li>
+                                                @if (line.Error != null)
+                                                {
+                                                    <li>Last error: @line.Error</li>
+                                                }
+                                            }
+                                        }
+                                        else if (line.Status.BitcoinStatus.IsSynched)
+                                        {
+                                            <li>
+                                                The node is synchronized (Height: @line.Status.BitcoinStatus.Headers)
+                                            </li>
+                                            @if (line.Status.BitcoinStatus.IsSynched &&
+                                        line.Status.SyncHeight.HasValue &&
+                                        line.Status.SyncHeight.Value < line.Status.BitcoinStatus.Headers)
+                                            {
+                                                <li>
+                                                    NBXplorer is synchronizing... (Height: @line.Status.SyncHeight.Value)
+                                                </li>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <li>Node headers height: @line.Status.BitcoinStatus.Headers</li>
+                                            <li>Validated blocks: @line.Status.BitcoinStatus.Blocks</li>
+                                        }
+                                    </ul>
+                                    @if (!line.Status.IsFullySynched && line.Status.BitcoinStatus != null)
+                                    {
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar"
+                                                 aria-valuenow="@((int)(line.Status.BitcoinStatus.VerificationProgress * 100))"
+                                                 aria-valuemin="0" aria-valuemax="100"
+                                                 style="width:@((int)(line.Status.BitcoinStatus.VerificationProgress * 100))%">
+                                                @((int)(line.Status.BitcoinStatus.VerificationProgress * 100))%
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </workspace>
+    <possiblyPointlessShortcuts>
+        <div class="iconography">
+            <a class="navbar-brand js-scroll-trigger" href="~/">
+                <partial name="/wwwroot/main-new/img/footer/btcpay.svg">
+                    @if (env.NetworkType != NBitcoin.NetworkType.Mainnet)
+                    {
+                        <span class="badge badge-warning" style="font-size:10px;">@env.NetworkType.ToString()</span>
+                    }
+            </a>
+            @if (env.OnionUrl != null)
+            {
+                <span>
+                    <a href="@env.OnionUrl" target="_blank">
+                        <img src="~/img/icons/onion.svg" width="26" height="32" />
+                    </a>
+                </span>
+            }
+        </div>
+        <div class="social-link">
+            <a href="" class="social-link-item" target="_blank">
+                <img src="~/main-new/img/footer/mattermost.svg" />
+            </a>
+            <a href="" class="social-link-item" target="_blank">
+                <img src="~/main-new/img/footer/twitter.svg" />
+            </a>
+            <a href="" class="social-link-item" target="_blank">
+                <img src="~/main-new/img/footer/github.svg" style="height: 18px" />
+            </a>
+        </div>
+    </possiblyPointlessShortcuts>
+</dashboard>

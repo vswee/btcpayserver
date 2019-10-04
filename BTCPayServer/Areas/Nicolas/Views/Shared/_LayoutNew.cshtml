@@ -1,0 +1,66 @@
+﻿@inject BTCPayServer.Services.BTCPayServerEnvironment env
+@inject BTCPayServer.HostedServices.NBXplorerDashboard dashboard
+@inject BTCPayServer.HostedServices.CssThemeManager themeManager
+
+@addTagHelper *, BundlerMinifier.TagHelpers
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    @if (themeManager.DiscourageSearchEngines)
+    {
+        <META NAME="robots" CONTENT="noindex">
+    }
+
+    <title>BTCPay Server</title>
+
+    @* CSS *@
+    <!-- <link href="@this.Context.Request.GetRelativePathOrAbsolute(themeManager.BootstrapUri)" rel="stylesheet" /> -->
+    <!-- <link href="@this.Context.Request.GetRelativePathOrAbsolute(themeManager.CreativeStartUri)" rel="stylesheet" /> -->
+
+    <bundle name="wwwroot/bundles/NEW-main-bundle.min.css" />
+
+    @* JS *@
+    <bundle name="wwwroot/bundles/main-bundle.min.js" />
+    @RenderSection("HeadScripts", required: false)
+    @RenderSection("HeaderContent", false)
+</head>
+
+
+<body id="page-top">
+    @{
+        if (ViewBag.AlwaysShrinkNavBar == null)
+        {
+            ViewBag.AlwaysShrinkNavBar = true;
+        }
+        var additionalStyle = ViewBag.AlwaysShrinkNavBar ? "navbar-shrink always-shrinked" : "";
+    }
+
+    @RenderBody()
+
+    @if (!dashboard.IsFullySynched())
+    {
+        <partial name="SyncModal" />
+    }
+
+    @RenderSection("Scripts", required: false)
+
+    <script type="text/javascript">
+        var expectedDomain = @Safe.Json(env.ExpectedHost);
+        var expectedProtocol = @Safe.Json(env.ExpectedProtocol);
+        if (window.location.host != expectedDomain || window.location.protocol != expectedProtocol + ":") {
+            document.getElementById("badUrl").style.display = "block";
+            document.getElementById("browserScheme").innerText = window.location.protocol.substr(0, window.location.protocol.length -1);
+        }
+    </script>
+
+    <bundle name="wwwroot/bundles/main-bundle-post-body.min.js" />
+
+</body>
+</html>

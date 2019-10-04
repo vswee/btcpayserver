@@ -1,0 +1,147 @@
+﻿@model HomeIndexViewModel
+
+@inject BTCPayServer.Services.BTCPayServerEnvironment env
+@inject BTCPayServer.HostedServices.CssThemeManager themeManager
+
+<masterLand>
+    <div class="header-content">
+        <div class="header-content-inner">
+            <div class="iconography">
+                <a class="navbar-brand js-scroll-trigger" asp-area="Nicolas" asp-controller="Home" asp-action="Index">
+                    <img src="~/main-new/img/logo.svg" />
+                    @if (env.NetworkType != NBitcoin.NetworkType.Mainnet)
+                    {
+                        <span class="badge badge-warning"
+                              style="font-size:10px;">@env.NetworkType.ToString()</span>
+                    }
+                </a>
+                @if (env.OnionUrl != null)
+                {
+                    <span>
+                        <a href="@env.OnionUrl" target="_blank">
+                            <img src="~/img/icons/onion.svg" width="26" height="32" />
+                        </a>
+                    </span>
+                }
+            </div>
+            <h1>Welcome to BTCPay Server</h1>
+            <span class="short-horiz"></span>
+            <p>
+                BTCPay Server is a free and open source server for merchants wanting to accept Bitcoin for
+                their
+                business.
+            </p>
+            <div class="supporter-showcase">
+                <span class="small-uppercase">our supporters</span>
+                <div class="supporters-icon-flex">
+                    <div class="supporter-icon">
+                        <a href="https://twitter.com/sqcrypto">
+                            <img src="~/main-new/img/supporters/sqcrypto.svg" />
+                        </a>
+                    </div>
+                    <div class="supporter-icon">
+                        <a href="https://twitter.com/dglab_official">
+                            <img src="~/main-new/img/supporters/dglab.png" style="width: 66px; padding-left: 13px; padding-top:12px;" />
+                        </a>
+                    </div>
+                    <div class="supporter-icon"></div>
+                    <div class="supporter-icon"></div>
+                    <div class="supporter-icon"></div>
+                </div>
+            </div>
+        </div>
+
+        @if (env.IsSecure)
+        {
+            <div class="modern-login-register">
+                <partial name="/wwwroot/main-new/img/triangle1.cshtml" />
+                <partial name="/wwwroot/main-new/img/square1.cshtml" />
+
+                <div class="modern-login-register-inner">
+                    <div class="build-in-up" id="loginForm_">
+                        <form asp-area="Nicolas" asp-area="Nicolas" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                            <span class="form-name">Sign in</span>
+                            <div class="f-el">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <span class="form-lab">email</span>
+                                <input asp-for="Email" class="form-input" placeholder="" required="required" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="f-el">
+                                <span class="form-lab">password</span>
+                                <input asp-for="Password" class="form-input" placeholder="" required="required"
+                                       type="password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="f-el">
+                                <button type="submit" class="fp-button" id="LoginButton"
+                                        asp-area="Nicolas" asp-controller="Account" asp-action="Login">
+                                    login
+                                </button>
+                            </div>
+                        </form>
+
+                        <a class="fp-button-sec" asp-area="Nicolas" asp-controller="Account" asp-action="ForgotPassword">
+                            Forgot your password?
+                        </a>
+
+                        @if (themeManager.ShowRegister)
+                        {
+
+                            <a class="fp-button-sec" id="Register">Register</a>
+                        }
+                    </div>
+
+                    <div class="build-in-up" id="registerForm_" style="display:none;">
+                        <form asp-area="Nicolas" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                            <span class="form-name">Register</span>
+                            <div class="f-el">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <span class="form-lab">email</span>
+                                <input asp-for="Email" class="form-input" placeholder="" required="required" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="f-el">
+                                <span class="form-lab">password</span>
+                                <input asp-for="Password" class="form-input" placeholder="" required="required"
+                                       type="password" />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="f-el">
+                                <span class="form-lab">confirm password</span>
+                                <input asp-for="ConfirmPassword" class="form-input" placeholder=""
+                                       required="required" type="password" />
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </div>
+
+                            @if (ViewData["AllowIsAdmin"] is true)
+                            {
+                                <div class="f-el">
+                                    <span class="form-lab">Administrator Acount?</span>
+                                    <input asp-for="IsAdmin" type="checkbox" class="form-check-inline" />
+                                    <span asp-validation-for="IsAdmin" class="text-danger"></span>
+                                </div>
+                            }
+                            <div class="f-el">
+                                <button type="submit" class="fp-button" id="RegisterButton">
+                                    create
+                                    account
+                                </button>
+                            </div>
+                        </form>
+
+                        <a class="fp-button-sec" id="SignIn">Sign in</a>
+                        @section Scripts {
+                            @await Html.PartialAsync("_ValidationScriptsPartial")
+                        }
+
+                    </div>
+
+                </div>
+                <partial name="/wwwroot/main-new/img/triangle2.cshtml" />
+                <partial name="/wwwroot/main-new/img/square2.cshtml" />
+            </div>
+        }
+    </div>
+
+</masterLand>

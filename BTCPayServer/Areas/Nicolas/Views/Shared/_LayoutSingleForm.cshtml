@@ -1,0 +1,95 @@
+﻿@inject BTCPayServer.Services.BTCPayServerEnvironment env
+@inject BTCPayServer.HostedServices.NBXplorerDashboard dashboard
+@inject BTCPayServer.HostedServices.CssThemeManager themeManager
+
+@{
+    ViewBag.ShowMenu = ViewBag.ShowMenu ?? true;
+}
+
+@addTagHelper *, BundlerMinifier.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    @if (themeManager.DiscourageSearchEngines)
+    {
+        <META NAME="robots" CONTENT="noindex">
+    }
+
+    <title>@ViewData["Title"]</title>
+
+    @* CSS *@
+    <!-- <link href="@this.Context.Request.GetRelativePathOrAbsolute(themeManager.BootstrapUri)" rel="stylesheet" /> -->
+    <!-- <link href="@this.Context.Request.GetRelativePathOrAbsolute(themeManager.CreativeStartUri)" rel="stylesheet" /> -->
+
+    <bundle name="wwwroot/bundles/NEW-main-bundle.min.css" />
+
+    @* JS *@
+    <!-- <bundle name="wwwroot/bundles/main-bundle.min.js" /> -->
+    @RenderSection("HeadScripts", required: false)
+    @RenderSection("HeaderContent", false)
+</head>
+
+<body id="page-top">
+    <section>
+        <div class="iconography">
+            <a class="navbar-brand js-scroll-trigger" asp-area="Nicolas" asp-controller="Home" asp-action="Index">
+                <img src="~/main-new/img/logo.svg" />
+                @if (env.NetworkType != NBitcoin.NetworkType.Mainnet)
+                {
+                    <span class="badge badge-warning"
+                          style="font-size:10px;">@env.NetworkType.ToString()</span>
+                    }
+            </a>
+            @if (env.OnionUrl != null)
+            {
+                <span>
+                    <a href="@env.OnionUrl" target="_blank">
+                        <img src="~/img/icons/onion.svg" width="26" height="32" />
+                    </a>
+                </span>
+            }
+        </div>
+
+
+        <div class="modern-login-register" style="margin: auto;">
+            <div class="shape-hold triangle_"
+                 style="transform: rotate(-14deg)translate(-18px,-46px)scale(2);">
+                <svg style="animation-duration:120s;animation-direction:reverse;" class="s-sh-a" enable-background="new 0 0 50 50"
+                     height="50" viewBox="0 0 50 50" width="50" xmlns="http://www.w3.org/2000/svg">
+                    <path d="m25 6.514-25 36.972h50z" fill="#1e7a44" />
+                </svg>
+            </div>
+            <div class="modern-login-register-inner">
+                <div class="build-in-up">
+                    @RenderBody()
+
+
+                </div>
+            </div>
+
+            <div class="shape-hold triangle_"
+                 style="transform: rotate(52deg)translate(-13px,-40px)scale(1.4);z-index:2;float: right;position: relative;">
+                <svg style="animation-duration:50s;animation-direction:normal;" class="s-sh-a" enable-background="new 0 0 50 50" height="50" viewBox="0 0 50 50"
+                     width="50" xmlns="http://www.w3.org/2000/svg">
+                    <path d="m25 6.514-25 36.972h50z" fill="#cedc21" />
+                </svg>
+            </div>
+
+            <div class="shape-hold square_ "
+                 style="transform: rotate(11deg)translate(68px,-108px)scale(0.8);z-index: 3;float: right;position: relative;">
+                <svg style="animation-duration:110s;animation-direction:normal;" class="s-sh-a" enable-background="new 0 0 50 50"
+                     height="50" viewBox="0 0 50 50" width="50" xmlns="http://www.w3.org/2000/svg">
+                    <path d="m0 0h50v50h-50z" fill="#51B13E" />
+                </svg>
+            </div>
+    </section>
+    <bundle name="wwwroot/bundles/main-bundle-post-body.min.js" />
+
+</body>
+</html>

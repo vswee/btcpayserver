@@ -1,0 +1,95 @@
+﻿@model LoginViewModel
+@inject BTCPayServer.Services.BTCPayServerEnvironment env
+@inject BTCPayServer.HostedServices.CssThemeManager themeManager
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<section>
+    <div class="iconography">
+        <a class="navbar-brand js-scroll-trigger" asp-area="Nicolas" asp-controller="Home" asp-action="Index">
+            <img src="~/main-new/img/logo.svg" />
+            @if (env.NetworkType != NBitcoin.NetworkType.Mainnet)
+            {
+                <span class="badge badge-warning"
+                      style="font-size:10px;">@env.NetworkType.ToString()</span>
+                }
+        </a>
+        @if (env.OnionUrl != null)
+        {
+            <span>
+                <a href="@env.OnionUrl" target="_blank">
+                    <img src="~/img/icons/onion.svg" width="26" height="32" />
+                </a>
+            </span>
+        }
+    </div>
+
+
+    <div class="modern-login-register" style="margin: auto;">
+        <div class="shape-hold triangle_"
+             style="transform: rotate(-14deg)translate(-18px,-46px)scale(2);">
+            <svg style="animation-delay:1.5s;" class="s-sh-a" enable-background="new 0 0 50 50"
+                 height="50" viewBox="0 0 50 50" width="50" xmlns="http://www.w3.org/2000/svg">
+                <path d="m25 6.514-25 36.972h50z" fill="#1e7a44" />
+            </svg>
+        </div>
+
+        <div class="modern-login-register-inner">
+            <div class="build-in-up" id="loginForm_">
+                <form asp-route-returnurl="@ViewData[" ReturnUrl"]" method="post">
+                    <span class="form-name">Sign in</span>
+                    <div class="f-el">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <span class="form-lab">email</span>
+                        <input asp-for="Email" class="form-input" placeholder="" required="required" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="f-el">
+                        <span class="form-lab">password</span>
+                        <input asp-for="Password" class="form-input" placeholder="" required="required"
+                               type="password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="f-el">
+                        <button type="submit" class="fp-button" id="LoginButton"
+                                asp-area="Nicolas" asp-controller="Account" asp-action="Login">
+                            login
+                        </button>
+                    </div>
+                </form>
+
+                <a class="fp-button-sec" asp-area="Nicolas" asp-controller="Account" asp-action="ForgotPassword">
+                    Forgot
+                    your password?
+                </a>
+
+                @if (themeManager.ShowRegister)
+                {
+                    <a class="fp-button-sec" asp-area="Nicolas" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register</a>
+                }
+            </div>
+        </div>
+
+
+        <div class="shape-hold triangle_"
+             style="transform: rotate(52deg)translate(-13px,-40px)scale(1.4);z-index:2;float: right;position: relative;">
+            <svg class="s-sh-a" enable-background="new 0 0 50 50" height="50" viewBox="0 0 50 50"
+                 width="50" xmlns="http://www.w3.org/2000/svg">
+                <path d="m25 6.514-25 36.972h50z" fill="#cedc21" />
+            </svg>
+        </div>
+
+        <div class="shape-hold square_ "
+             style="transform: rotate(11deg)translate(68px,-108px)scale(0.8);z-index: 3;float: right;position: relative;">
+            <svg style="animation-delay:2s;" class="s-sh-a" enable-background="new 0 0 50 50"
+                 height="50" viewBox="0 0 50 50" width="50" xmlns="http://www.w3.org/2000/svg">
+                <path d="m0 0h50v50h-50z" fill="#51B13E" />
+            </svg>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
