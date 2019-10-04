@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using BTCPayServer.Areas.Nicolas.Models.Account;
-using BTCPayServer.Models;
-using BTCPayServer.Models.ServerViewModels;
-using BTCPayServer.Models.StoreViewModels;
 using BTCPayServer.Security;
 using BTCPayServer.Services.Stores;
 using Microsoft.AspNetCore.Authorization;
@@ -22,6 +16,8 @@ using BTCPayServer.Logging;
 using Microsoft.Extensions.Logging;
 using BTCPayServer.Services;
 using BTCPayServer.Services.Mails;
+using BTCPayServer.Areas.Nicolas.Models.Partials;
+using System.Linq;
 
 namespace BTCPayServer.Areas.Nicolas.Controllers
 {
@@ -35,8 +31,8 @@ namespace BTCPayServer.Areas.Nicolas.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly EmailSenderFactory _emailSenderFactory;
         ILogger _logger;
-        public AccountController(StoreRepository storeRepo, 
-            UserManager<ApplicationUser> userManager, 
+        public AccountController(StoreRepository storeRepo,
+            UserManager<ApplicationUser> userManager,
             U2FService u2FService,
             BTCPayServerEnvironment btcPayServerEnvironment,
             SignInManager<ApplicationUser> signInManager,
@@ -50,35 +46,53 @@ namespace BTCPayServer.Areas.Nicolas.Controllers
             _emailSenderFactory = emailSenderFactory;
             _logger = Logs.PayServer;
         }
-        
+
         public IActionResult Index()
         {
             var model = new AccountIndexViewModel
             {
-                UsersPartialModel = _userManager.getUsersFromDatabase(0, 50),
+                UsersPartialModel = getUsersFromDatabase(_userManager, 0, 50),
+                InvoicesPartialModel = new Models.Partials.InvoicesFrameViewModel()
                 //StoresPartialModel = _Repo.fetchStoresAsync(GetUserId())
             };
 
             return View(model);
         }
 
-        private async Task<StoresViewModel> fetchStoresAsync(StoreRepository repo, string v)
+        public static UsersViewModel getUsersFromDatabase(UserManager<ApplicationUser> userManager, int skip, int count)
         {
-            var result = new StoresViewModel();
-            var stores = await repo.GetStoresByUserId(v);
-            for (int i = 0; i < stores.Length; i++)
-            {
-                var store = stores[i];
-                result.Stores.Add(new StoresViewModel.StoreViewModel()
+            var users = new UsersViewModel();
+            users.Users = userManager.Users.Skip(skip).Take(count)
+                .Select(u => new UsersViewModel.UserListItem
                 {
-                    Id = store.Id,
-                    Name = store.StoreName,
-                    WebSite = store.StoreWebsite,
-                    IsOwner = store.HasClaim(Policies.CanModifyStoreSettings.Key)
-                });
-            }
-            return result;
+                    Name = u.UserName,
+                    Email = u.Email,
+                    Id = u.Id
+                }).ToList();
+            users.Skip = skip;
+            users.Count = count;
+            users.Total = userManager.Users.Count();
+
+            return users;
         }
+
+        //private async Task<StoresViewModel> fetchStoresAsync(StoreRepository repo, string v)
+        //{
+        //    var result = new StoresViewModel();
+        //    var stores = await repo.GetStoresByUserId(v);
+        //    for (int i = 0; i < stores.Length; i++)
+        //    {
+        //        var store = stores[i];
+        //        result.Stores.Add(new StoresViewModel.StoreViewModel()
+        //        {
+        //            Id = store.Id,
+        //            Name = store.StoreName,
+        //            WebSite = store.StoreWebsite,
+        //            IsOwner = store.HasClaim(Policies.CanModifyStoreSettings.Key)
+        //        });
+        //    }
+        //    return result;
+        //}
 
         private string GetUserId()
         {

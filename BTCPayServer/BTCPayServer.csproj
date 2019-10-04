@@ -6,15 +6,19 @@
     <MvcRazorExcludeRefAssembliesFromPublish>false</MvcRazorExcludeRefAssembliesFromPublish>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Views\NewStuff\**" />
     <Compile Remove="wwwroot\bundles\jqueryvalidate\**" />
     <Compile Remove="wwwroot\css\**" />
     <Compile Remove="wwwroot\vendor\jquery-nice-select\**" />
+    <Content Remove="Views\NewStuff\**" />
     <Content Remove="wwwroot\bundles\jqueryvalidate\**" />
     <Content Remove="wwwroot\css\**" />
     <Content Remove="wwwroot\vendor\jquery-nice-select\**" />
+    <EmbeddedResource Remove="Views\NewStuff\**" />
     <EmbeddedResource Remove="wwwroot\bundles\jqueryvalidate\**" />
     <EmbeddedResource Remove="wwwroot\css\**" />
     <EmbeddedResource Remove="wwwroot\vendor\jquery-nice-select\**" />
+    <None Remove="Views\NewStuff\**" />
     <None Remove="wwwroot\bundles\jqueryvalidate\**" />
     <None Remove="wwwroot\css\**" />
     <None Remove="wwwroot\vendor\jquery-nice-select\**" />
@@ -126,7 +130,6 @@
 	<ItemGroup>
 	  <Folder Include="Authentication\OpenId\Models\" />
 	  <Folder Include="U2F\Services" />
-	  <Folder Include="Views\NewStuff\" />
 	  <Folder Include="wwwroot\vendor\clipboard.js\" />
 	  <Folder Include="wwwroot\vendor\highlightjs\" />
 	  <Folder Include="wwwroot\vendor\summernote" />

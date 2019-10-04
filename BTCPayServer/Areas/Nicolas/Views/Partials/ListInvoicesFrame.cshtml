@@ -1,8 +1,8 @@
-@model InvoicesFrameModel
+@model InvoicesFrameViewModel
 @{
-    Layout = "_FrameLayout";
+    Layout = null;
     ViewData["Title"] = "Invoices";
-    ViewData["Current"] = "Invoices";
+    //ViewData["Current"] = "Invoices";
 }
 @section HeadScripts {
     <script src="~/modal/btcpay.js"></script>
@@ -61,4 +61,3 @@
                 </tbody>
             </table>
 
-          
