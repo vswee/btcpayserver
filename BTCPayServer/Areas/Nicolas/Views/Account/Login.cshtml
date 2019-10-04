@@ -8,8 +8,8 @@
 
 <section>
 <div class="iconography">
-    <a class="navbar-brand js-scroll-trigger" href="~/Nicolas">
-        <svg class="_Logo" onclick="window.location=\'/\'" version="1.1" id="_Logo_1"
+    <a class="navbar-brand js-scroll-trigger" asp-area="Nicolas" asp-controller="Home" asp-action="Index">
+        <svg class="_Logo" version="1.1" id="_Logo_1"
             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             x="0px" y="0px" width="200px" height="100px" viewBox="0 0 200 100"
             enable-background="new 0 0 200 100" xml:space="preserve">
@@ -89,17 +89,16 @@
                                     </div>
                                     <div class="f-el">
                                         <button type="submit" class="fp-button" id="LoginButton"
-                                            asp-controller="Account" asp-action="Login">login</button>
+                                           asp-area="Nicolas" asp-controller="Account" asp-action="Login">login</button>
                                     </div>
                                 </form>
 
-                                <a class="fp-button-sec" asp-controller="Account" asp-action="ForgotPassword">Forgot
+                                <a class="fp-button-sec" asp-area="Nicolas" asp-controller="Account" asp-action="ForgotPassword">Forgot
                                     your password?</a>
 
                                 @if (themeManager.ShowRegister)
                                 {
-
-                                <a class="fp-button-sec" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register</a>
+                                <a class="fp-button-sec" asp-area="Nicolas" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Register</a>
                                 }
                             </div>
                             </div>

@@ -11,11 +11,11 @@
                 <a class="control-icon-button" id="settings_">
                     <img src="~/main-new/img/sidebar/gear.svg" />
                 </a>
-                <a class="control-icon-button" asp-area="" asp-controller="Manage" asp-action="Index"
+                <a class="control-icon-button" asp-area="Nicolas" asp-controller="Manage" asp-action="Index"
                    title="My settings" id="MySettings">
                     <img src="~/main-new/img/sidebar/profile.svg" />
                 </a>
-                <a class="control-icon-button" asp-area="" asp-controller="Account" asp- asp-action="Logout"
+                <a class="control-icon-button" asp-area="Nicolas" asp-controller="Account" asp- asp-action="Logout"
                    title="Logout" id="Logout">
                     <img src="~/main-new/img/sidebar/logout.svg" />
                 </a>
@@ -29,21 +29,21 @@
                 </a>
             </li>
             <li>
-                <a asp-area="" asp-controller="UserStores" asp-action="ListStores" class="js-scroll-trigger"
+                <a asp-area="Nicolas" asp-controller="UserStores" asp-action="ListStores" class="js-scroll-trigger"
                    id="Stores">
                     <img src="~/main-new/img/sidebar/stores.svg" />
                     Stores
                 </a>
             </li>
             <li>
-                <a asp-area="" asp-controller="Apps" asp-action="ListApps" class="js-scroll-trigger"
+                <a asp-area="Nicolas" asp-controller="Apps" asp-action="ListApps" class="js-scroll-trigger"
                    id="Apps">
                     <img src="~/main-new/img/sidebar/apps.svg" />
                     Apps
                 </a>
             </li>
             <li>
-                <a asp-area="" asp-controller="Wallets" asp-action="ListWallets" class="js-scroll-trigger"
+                <a asp-area="Nicolas" asp-controller="Wallets" asp-action="ListWallets" class="js-scroll-trigger"
                    id="Wallets">
                     <img src="~/main-new/img/sidebar/wallets.svg" />
                     Wallets
@@ -66,7 +66,7 @@
             @if (User.IsInRole(Roles.ServerAdmin))
             {
                 <li>
-                    <a asp-area="" asp-controller="Server" asp-action="ListUsers" class=" js-scroll-trigger"
+                    <a asp-area="Nicolas" asp-controller="Server" asp-action="ListUsers" class=" js-scroll-trigger"
                        id="ServerSettings">
                         <img src="~/main-new/img/sidebar/server.svg" />
                         Server settings

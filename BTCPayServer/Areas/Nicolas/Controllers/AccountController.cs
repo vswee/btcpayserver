@@ -21,6 +21,7 @@ using BTCPayServer.Services.U2F.Models;
 using BTCPayServer.Logging;
 using Microsoft.Extensions.Logging;
 using BTCPayServer.Services;
+using BTCPayServer.Services.Mails;
 
 namespace BTCPayServer.Areas.Nicolas.Controllers
 {
@@ -30,21 +31,24 @@ namespace BTCPayServer.Areas.Nicolas.Controllers
     {
         private StoreRepository _storeRepo;
         private UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly U2FService _u2FService;
         private readonly BTCPayServerEnvironment _btcPayServerEnvironment;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly EmailSenderFactory _emailSenderFactory;
         ILogger _logger;
         public AccountController(StoreRepository storeRepo, 
             UserManager<ApplicationUser> userManager, 
             U2FService u2FService,
             BTCPayServerEnvironment btcPayServerEnvironment,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            EmailSenderFactory emailSenderFactory)
         {
             _storeRepo = storeRepo;
             _userManager = userManager;
             _u2FService = u2FService;
             _btcPayServerEnvironment = btcPayServerEnvironment;
             _signInManager = signInManager;
+            _emailSenderFactory = emailSenderFactory;
             _logger = Logs.PayServer;
         }
 
@@ -223,6 +227,68 @@ namespace BTCPayServer.Areas.Nicolas.Controllers
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Lockout()
+        {
+            return View();
+        }
+
+
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string userId, string code)
+        {
+            if (userId == null || code == null)
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{userId}'.");
+            }
+            var result = await _userManager.ConfirmEmailAsync(user, code);
+            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                {
+                    // Don't reveal that the user does not exist or is not confirmed
+                    return RedirectToAction(nameof(ForgotPasswordConfirmation));
+                }
+
+                // For more information on how to enable account confirmation and password reset please
+                // visit https://go.microsoft.com/fwlink/?LinkID=532713
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
+                _emailSenderFactory.GetEmailSender().SendEmail(model.Email, "Reset Password",
+                    $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+
+                return RedirectToAction(nameof(ForgotPasswordConfirmation));
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgotPasswordConfirmation()
         {
             return View();
         }

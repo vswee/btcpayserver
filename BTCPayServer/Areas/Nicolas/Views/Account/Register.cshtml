@@ -21,15 +21,14 @@
         </div>
         <div class="f-el">
             <button type="submit" class="fp-button" id="LoginButton"
-                    asp-controller="Account" asp-action="Login">
+                    asp-area="Nicolas" asp-controller="Account" asp-action="Login">
                 login
             </button>
         </div>
     </form>
 
-    <a class="fp-button-sec" asp-controller="Account" asp-action="ForgotPassword">
-        Forgot
-        your password?
+    <a class="fp-button-sec" asp-area="Nicolas" asp-controller="Account" asp-action="ForgotPassword">
+        Forgot your password?
     </a>
 
     <a class="fp-button-sec" id="Register">Register</a>
